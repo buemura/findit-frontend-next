@@ -1,15 +1,19 @@
-import { Container, Header } from '../styles/components/HeaderDefault.module';
-import Switch from './Switch';
+import { Container, Header } from "../styles/components/HeaderDefault.module";
+import Switch from "./Switch";
 
-export function HeaderDefault() {  
+import Link from "next/link";
+
+export function HeaderDefault() {
   return (
     <Container>
       <Header>
         <div className="divLogo">
-          <a href="http://localhost:3000/">
-            <img src="icons/logo.png" alt="Logo"/>
-            Find It
-          </a>
+          <Link href="/">
+            <a>
+              <img src="icons/logo.png" alt="Logo" />
+              Find It
+            </a>
+          </Link>
         </div>
 
         <div className="containerLinks">
@@ -21,15 +25,25 @@ export function HeaderDefault() {
 
           <div className="menuItems">
             <div className="pageLinks">
-              <a href={"/home"}>Home</a>
-              <a href={"/about"}>About</a>
-              <a href={"/contact"}>Contact</a>
+              <Link href="/">
+                <a>Home</a>
+              </Link>
+              <Link href="/about">
+                <a>About</a>
+              </Link>
+              <Link href="/contact">
+                <a>Contact</a>
+              </Link>
             </div>
 
             <div className="loginLinks">
-              <a className="login" href={"/users/login"}>Login</a>
-              <a className="register" href={"/users/register"}>Register</a>
-            </div>            
+              <Link href="/login">
+                <a className="login">Login</a>
+              </Link>
+              <Link href="/register">
+                <a className="register">Register</a>
+              </Link>
+            </div>
           </div>
 
           <Switch className="menu" id="switchButton"></Switch>

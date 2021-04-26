@@ -290,6 +290,7 @@ export const Header = styled.div`
       flex-direction: column;
       width: 100%;
       height: calc((100vh - 60px) / 5 * 2);
+      min-height: 300px;
       transform: translate(0%, 60px);
       background: #5179f1;
     }
