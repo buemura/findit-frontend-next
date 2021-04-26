@@ -1,5 +1,6 @@
-import { HeaderDefault } from "../components/HeaderDefault"
-import styled from 'styled-components';
+import { HeaderDefault } from "../components/HeaderDefault";
+
+import { Div, MiddleSection  } from "../styles/pages/index.module";
 
 import Head from 'next/head';
 
@@ -10,16 +11,9 @@ export default function Home() {
         <title>Home | Find.it</title>
       </Head>
       <HeaderDefault />
+      <MiddleSection>
+        <p>Home Page.</p>
+      </MiddleSection>
     </Div>
   );
 }
-
-const Div = styled.div`
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  
-  * {
-    font-family: 'Roboto', sans-serif;
-  }
-`;
