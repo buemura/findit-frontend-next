@@ -1,16 +1,16 @@
-import { Container, Header } from '../styles/components/HeaderDefault.module';
-import Switch from './Switch';
+import { Container, Header } from "../styles/components/HeaderDefault.module";
+import Switch from "./Switch";
 
-import Link from 'next/link'
+import Link from "next/link";
 
-export function HeaderDefault() {  
+export function HeaderDefault() {
   return (
     <Container>
       <Header>
         <div className="divLogo">
           <Link href="/">
             <a>
-              <img src="icons/logo.png" alt="Logo"/>
+              <img src="icons/logo.png" alt="Logo" />
               Find It
             </a>
           </Link>
@@ -25,15 +25,25 @@ export function HeaderDefault() {
 
           <div className="menuItems">
             <div className="pageLinks">
-              <Link href="/"><a>Home</a></Link>
-              <Link href="/about"><a>About</a></Link>
-              <Link href="/contact"><a>Contact</a></Link>
+              <Link href="/">
+                <a>Home</a>
+              </Link>
+              <Link href="/about">
+                <a>About</a>
+              </Link>
+              <Link href="/contact">
+                <a>Contact</a>
+              </Link>
             </div>
 
             <div className="loginLinks">
-              <Link href="/login"><a className="login">Login</a></Link>
-              <Link href="/register"><a className="register">Register</a></Link>
-            </div>            
+              <Link href="/login">
+                <a className="login">Login</a>
+              </Link>
+              <Link href="/register">
+                <a className="register">Register</a>
+              </Link>
+            </div>
           </div>
 
           <Switch className="menu" id="switchButton"></Switch>

@@ -2,17 +2,18 @@ import React from "react";
 
 import { HeaderDefault } from "../components/HeaderDefault";
 
-import { BodyStyled, MiddleSection } from "../styles/components/middleSection.module";
+import {
+  BodyStyled,
+  MiddleSection,
+} from "../styles/components/middleSection.module";
 
-const myVar = () => {
+export default function Register() {
   return (
     <BodyStyled>
       <HeaderDefault />
       <MiddleSection>
-        <p>Register Page.</p>        
+        <p>Register Page.</p>
       </MiddleSection>
     </BodyStyled>
   );
-};
-
-export default myVar;
+}
