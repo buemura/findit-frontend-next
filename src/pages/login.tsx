@@ -12,7 +12,7 @@ export default function LoginPage() {
     <BodyStyled>
       <HeaderDefault />
       <MiddleSection>
-        <p>Login Page.</p>
+        <p>Login Page.....</p>
       </MiddleSection>
     </BodyStyled>
   );
