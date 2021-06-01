@@ -1,4 +1,4 @@
-import { Container, Header } from "../styles/components/HeaderDefault.module";
+import { Container, Header } from "../styles/components/HeaderDefault";
 import Switch from "./Switch";
 
 import Link from "next/link";

@@ -1,6 +1,6 @@
 import { HeaderDefault } from "../components/HeaderDefault";
 
-import { Div, MiddleSection } from "../styles/pages/index.module";
+import { Div, MiddleSection } from "../styles/pages/index";
 
 import Head from "next/head";
 
