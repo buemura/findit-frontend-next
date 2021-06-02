@@ -32,6 +32,7 @@ export default function HomePage() {
         <CategoryList>
           {items.map((i) => (
             <ListItem>
+              <img src={`icons/categories/${i}.png`} alt={i} />
               <p>{i}</p>
             </ListItem>
           ))}

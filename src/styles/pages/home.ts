@@ -19,10 +19,11 @@ export const CategoryList = styled.ul`
 
 export const ListItem = styled.li`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0 15px 0 15px;
-  width: 90px;
+  margin: 0px 15px 0px 15px;
+  width: 100px;
   transition: 0.15s;
 
   word-wrap: break-word;
