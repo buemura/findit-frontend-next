@@ -14,8 +14,7 @@ export const CategoryList = styled.ul`
   margin-top: 60px;
   padding: 15px 0 15px 0;
   width: 100%;
-  height: 100%;
-  background-color: #efefef;
+  background-color: #fff;
 `;
 
 export const ListItem = styled.li`
@@ -24,20 +23,26 @@ export const ListItem = styled.li`
   align-items: center;
   margin: 0 15px 0 15px;
   width: 90px;
+  transition: 0.15s;
+
   word-wrap: break-word;
   list-style: none;
-  background-color: #fff;
+  background-color: #efefef;
   color: #000;
   border-radius: 10px;
   p {
     text-align: center;
+  }
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.08);
   }
 `;
 
 export const MainSection = styled.div`
   width: 70vw;
   min-height: calc(100vh - 60px);
-  background: #e3e3e3;
+  background: #fff;
   padding: 15px 30px 30px 30px;
 `;
 
@@ -62,6 +67,7 @@ export const SearchBox = styled.div`
     font-size: 14px;
     box-sizing: border-box;
     &:hover {
+      cursor: pointer;
       background: #ad3860;
     }
   }
@@ -73,6 +79,7 @@ export const SearchBox = styled.div`
     border: transparent;
     padding-left: 40px;
     box-sizing: border-box;
+    background-color: #e3e3e3;
   }
   img {
     width: 20px;
