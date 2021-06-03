@@ -1,6 +1,8 @@
 import { HeaderDefault } from "../components/HeaderDefault";
+import HomePage from "./home";
 
-import { Div, MiddleSection } from "../styles/pages/index.module";
+import { Div } from "../styles/pages/index";
+import { MiddleSection } from "../styles/components/middleSection";
 
 import Head from "next/head";
 
@@ -11,9 +13,7 @@ export default function Index() {
         <title>Home | Find.it</title>
       </Head>
       <HeaderDefault />
-      <MiddleSection>
-        <p>Home Page.</p>
-      </MiddleSection>
+      <HomePage />
     </Div>
   );
 }

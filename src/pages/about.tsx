@@ -2,11 +2,8 @@ import React from "react";
 
 import { HeaderDefault } from "../components/HeaderDefault";
 
-import { Div } from "../styles/pages/about.module";
-import {
-  BodyStyled,
-  MiddleSection,
-} from "../styles/components/middleSection.module";
+import { Div } from "../styles/pages/about";
+import { BodyStyled, MiddleSection } from "../styles/components/middleSection";
 
 export default function About() {
   return (

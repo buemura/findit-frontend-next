@@ -1,28 +1,28 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"></link>
+// <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"></link>
 
 export const ImageContainer = styled.div`
   * {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
   }
-  
+
   margin-top: 60px;
   padding: 0;
   width: 70%;
   background: #fff;
-  @media( max-width: 1000px ) {
-    width: 80%;    
+  @media (max-width: 1000px) {
+    width: 80%;
   }
-  @media( max-width: 800px ) {
-    width: 90%;    
+  @media (max-width: 800px) {
+    width: 90%;
   }
-  @media( max-width: 650px ) {
+  @media (max-width: 650px) {
     margin-top: 100px;
-    width: 100%;    
+    width: 100%;
     padding: 40px 30px 30px 30px;
   }
-`
+`;
 
 export const Div = styled.div`
   padding: 0px;
@@ -70,7 +70,7 @@ export const Div = styled.div`
           position: relative;
           border-bottom: 3px solid transparent;
           &:hover {
-            border-bottom: 3px solid #4169E1;
+            border-bottom: 3px solid #4169e1;
           }
         }
         .icone-message {
@@ -90,7 +90,7 @@ export const Div = styled.div`
           position: relative;
           border-bottom: 3px solid transparent;
           &:hover {
-            border-bottom: 3px solid #4169E1;
+            border-bottom: 3px solid #4169e1;
           }
         }
       }
@@ -100,12 +100,12 @@ export const Div = styled.div`
         border-radius: 15px;
         outline: none;
         border: none;
-        background: #4169E1;
+        background: #4169e1;
         color: #fff;
         font-weight: bold;
         padding: 0;
         margin-top: 40px;
-        transition: .2s;
+        transition: 0.2s;
         &:hover {
           background: #f7226a;
           letter-spacing: 1px;
@@ -120,7 +120,7 @@ export const Div = styled.div`
       padding-left: 25px;
       .media-container {
         a {
-          img{        
+          img {
             width: 50px;
             height: 50px;
             margin: 5px 10px;
@@ -129,4 +129,4 @@ export const Div = styled.div`
       }
     }
   }
-`
+`;

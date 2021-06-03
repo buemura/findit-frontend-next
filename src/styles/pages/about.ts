@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const Div = styled.div`
   .title {
@@ -17,6 +17,6 @@ export const Div = styled.div`
   }
   img {
     width: 50px;
-    margin-right: 20px;    
+    margin-right: 20px;
   }
-`
+`;

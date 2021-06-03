@@ -1,7 +1,7 @@
 import React from "react";
 
-import { BodyStyled } from "../styles/components/middleSection.module";
-import { ImageContainer, Div } from "../styles/pages/contact.module";
+import { BodyStyled } from "../styles/components/middleSection";
+import { ImageContainer, Div } from "../styles/pages/contact";
 
 import { Envelope } from "react-bootstrap-icons";
 import { Person } from "react-bootstrap-icons";

@@ -2,10 +2,7 @@ import React from "react";
 
 import { HeaderDefault } from "../components/HeaderDefault";
 
-import {
-  BodyStyled,
-  MiddleSection,
-} from "../styles/components/middleSection.module";
+import { BodyStyled, MiddleSection } from "../styles/components/middleSection";
 
 export default function Register() {
   return (

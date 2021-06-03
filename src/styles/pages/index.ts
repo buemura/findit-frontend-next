@@ -11,11 +11,3 @@ export const Div = styled.div`
     box-sizing: border-box;
   }
 `;
-
-export const MiddleSection = styled.section`
-  width: 70vw;
-  min-height: calc(100vh - 60px);
-  margin-top: 60px;
-  background: #e3e3e3;
-  padding: 15px 30px 30px 30px;
-`;
