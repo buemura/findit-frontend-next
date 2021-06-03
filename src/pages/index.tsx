@@ -12,7 +12,6 @@ export default function Index() {
       <Head>
         <title>Home | Find.it</title>
       </Head>
-      <HeaderDefault />
       <HomePage />
     </Div>
   );

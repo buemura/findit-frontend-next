@@ -16,16 +16,16 @@
   --blue: #5965e0;
   --blue-dark: #4953b8;
   --blue-twitter: #2aa9e0;
-  --menu-background: #4169E1;
+  --menu-background: #4169e1;
 }
 
-@media(max-width: 1080px) {
+@media (max-width: 1080px) {
   html {
     font-size: 93.75%;
   }
 }
 
-@media(max-width: 720px) {
+@media (max-width: 720px) {
   html {
     font-size: 87.5%;
   }
@@ -36,7 +36,10 @@ body {
   color: var(--text);
 }
 
-body, input, textarea, button {  
+body,
+input,
+textarea,
+button {
   font: 400 1rem "Roboto", sans-serif;
 }
 
