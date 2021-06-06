@@ -64,7 +64,7 @@ export default function HomePage() {
         <MainSection>
           <div className="main-texts">
             <p>Post your project oportunity and interact with freelancers!</p>
-            <p>Find the best freelancers in the market!</p>
+            <p>Find the best freelancers in the market now!</p>
           </div>
           <div className="buttons-container">
             <button className="post-services">Post Services</button>

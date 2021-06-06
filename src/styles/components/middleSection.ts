@@ -6,6 +6,7 @@ export const BodyStyled = styled.div`
   display: flex;
   justify-content: center;
   background-color: #e3e3e3;
+  width: 100%;
 
   * {
     font-family: "Roboto", sans-serif;
