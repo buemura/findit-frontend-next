@@ -8,7 +8,7 @@ export function HeaderDefault() {
     <Container>
       <Header>
         <div className="divLogo">
-          <Link href="/home">
+          <Link href="/home" passHref>
             <a>
               <img src="icons/logo.png" alt="Logo" />
               Find It
@@ -25,22 +25,22 @@ export function HeaderDefault() {
 
           <div className="menuItems">
             <div className="pageLinks">
-              <Link href="/home">
+              <Link href="/home" passHref>
                 <a>Home</a>
               </Link>
-              <Link href="/about">
+              <Link href="/about" passHref>
                 <a>About</a>
               </Link>
-              <Link href="/contact">
+              <Link href="/contact" passHref>
                 <a>Contact</a>
               </Link>
             </div>
 
             <div className="loginLinks">
-              <Link href="/login">
+              <Link href="/login" passHref>
                 <a className="login">Login</a>
               </Link>
-              <Link href="/register">
+              <Link href="/register" passHref>
                 <a className="register">Register</a>
               </Link>
             </div>

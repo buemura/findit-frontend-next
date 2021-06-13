@@ -22,7 +22,15 @@ export const CategoryList = styled.ul`
   overflow-x: auto;
   ::-webkit-scrollbar {
     width: 0;
-    height: 0;
+    height: 10px;
+    background: #f5f5f5;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #c4c4c4;
+    border-radius: 10px;
+  }
+  @media (max-width: 650px) {
+    margin-top: 50px;
   }
 `;
 
@@ -32,7 +40,7 @@ export const ListItem = styled.li`
   justify-content: center;
   align-items: center;
   margin: 0px 15px 0px 15px;
-  min-width: 100px;
+  min-width: 90px;
   transition: 0.2s;
   padding: 0;
 
@@ -48,10 +56,15 @@ export const ListItem = styled.li`
     cursor: pointer;
     transform: scale(1.08);
   }
+  @media (max-width: 650px) {
+    img {
+      height: 40px;
+    }
+  }
 `;
 
 export const MainSection = styled.div`
-  width: 70vw;
+  width: 100%;
   height: 100%;
   height: calc(100vh - 60px - 160px - 1px);
   background: #fff;
@@ -60,12 +73,17 @@ export const MainSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1;
 
   .main-texts p {
     display: flex;
     font-size: 2rem;
     font-style: bold;
     margin: 1.3rem;
+    
+    @media (max-width: 650px) {
+      font-size: 1.2rem;
+    }
   }
 
   .buttons-container {
@@ -107,6 +125,16 @@ export const MainSection = styled.div`
         background-color: #eee;
       }
     }
+
+    @media (max-width: 650px) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      button:first-child {
+        margin-bottom: 10px;
+      }
+    }
   }
 
   .system-information {
@@ -121,6 +149,15 @@ export const MainSection = styled.div`
       margin: 0;
       padding: 0;
       text-align: center;
+    }
+    @media (max-width: 650px) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      p:first-child {
+        margin-bottom: 10px;
+      }
     }
   }
 `;

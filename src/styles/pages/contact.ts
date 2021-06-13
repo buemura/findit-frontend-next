@@ -20,7 +20,7 @@ export const ImageContainer = styled.div`
   @media (max-width: 650px) {
     margin-top: 100px;
     width: 100%;
-    padding: 40px 30px 30px 30px;
+    padding: 0px 0px 30px 0px;
   }
 `;
 
@@ -104,7 +104,7 @@ export const Div = styled.div`
         color: #fff;
         font-weight: bold;
         padding: 0;
-        margin-top: 40px;
+        margin-top: 25px;
         transition: 0.2s;
         &:hover {
           background: #f7226a;
@@ -126,6 +126,24 @@ export const Div = styled.div`
             margin: 5px 10px;
           }
         }
+      }
+    }
+    @media (max-width: 650px) {
+      flex-direction: column;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+
+      form {
+        border: none;
+        padding: 0;
+        width: 100%;
+      }
+
+      .media-and-location-container {
+        width: 100%;
+        padding: 0;
+        margin-top: 40px;
       }
     }
   }
