@@ -66,13 +66,15 @@ export default function HomePage() {
             <p>Post your project oportunity and interact with freelancers!</p>
             <p>Find the best freelancers in the market now!</p>
           </div>
-          <div className="buttons-container">
-            <button className="post-services">Post Services</button>
-            <button className="find-services">Find Services</button>
-          </div>
-          <div className="system-information">
-            <p>Freelancers registered: {users.length}</p>
-            <p>Projects posted: {services.length}</p>
+          <div className="button-information">
+            <div className="buttons-container">
+              <button className="post-services">Post Services</button>
+              <button className="find-services">Find Services</button>
+            </div>
+            <div className="system-information">
+              <p>Freelancers registered: {users.length}</p>
+              <p>Projects posted: {services.length}</p>
+            </div>
           </div>
         </MainSection>
       </MainContainer>

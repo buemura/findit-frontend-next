@@ -85,7 +85,7 @@ export const Div = styled.div`
         color: #fff;
         font-weight: bold;
         padding: 0;
-        margin-top: 10px;
+        margin-top: 30px;
         margin-bottom: 25px;
         transition: .2s;
         font-size: 20px;
@@ -206,6 +206,7 @@ export const Div = styled.div`
       width: 100%;
       transform: translateY(30px);
       flex: 1;
+      padding: 30px 15px;
         .name-label {
           position: relative;
           transform: translateY(0);

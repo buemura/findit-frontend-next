@@ -17,11 +17,12 @@ export const BodyStyled = styled.div`
 export const MiddleSection = styled.section`
   width: 80%;
   min-height: calc(100vh - 60px);
-  margin-top: 110px;
+  margin-top: 60px;
   background: #fff;
   padding: 15px 30px 30px 30px;
-  @media (max-width: 650px) {
 
+  @media (max-width: 650px) {
+    margin-top: 110px;
     width: 100%;
   }
 `;

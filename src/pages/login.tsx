@@ -6,7 +6,7 @@ import authentication from "../services/authentication";
 import registerAccount from "../services/registerAccount";
 
 import { Container } from "../styles/components/loginContainer";
-import { Div } from "../styles/components/loginPage";
+import { Div } from "../styles/pages/loginPage";
 
 import { Envelope, Lock, Person } from "react-bootstrap-icons";
 
@@ -29,14 +29,14 @@ export default function LoginPage() {
 
   const authenticationFailed = () => {
     alert("Falha de autenticação! Verifique as informações preenchidas.");
-    window.location.href = "/login";
+    //window.location.href = "/login";
     setUsernameLogin("");
     setPasswordLogin("");
   };
 
   const incompleteFields = () => {
     alert("Favor preencher todos os campos!");
-    window.location.href = "/users/login";
+    //window.location.href = "/login";
     setUsernameLogin("");
     setPasswordLogin("");
   };
@@ -52,7 +52,7 @@ export default function LoginPage() {
         emailReg,
         passwordReg,
       });*/
-      window.location.href = "/users/login";
+      window.location.href = "/login";
     } catch (err) {
       authenticationFailed();
     }
@@ -64,7 +64,7 @@ export default function LoginPage() {
         usernameLogin,
         passwordLogin,
       });*/
-      window.location.href = "/contact";
+      window.location.href = "/home";
     } catch (err) {
       authenticationFailed();
     }
@@ -100,9 +100,9 @@ export default function LoginPage() {
                   type="email"
                   id="login-email"
                   placeholder="Email - ex: you@email.com"
-                  //defaultValue={usernameLogin}
+                  defaultValue={usernameLogin}
                   onChange={(e) => {
-                    //setUsernameLogin(e.target.value);
+                    setUsernameLogin(e.target.value);
                   }}
                 ></input>
               </div>
@@ -112,9 +112,9 @@ export default function LoginPage() {
                   type="password"
                   id="login-password"
                   placeholder="Password"
-                  //defaultValue={passwordLogin}
+                  defaultValue={passwordLogin}
                   onChange={(e) => {
-                    //setPasswordLogin(e.target.value);
+                    setPasswordLogin(e.target.value);
                   }}
                 ></input>
               </div>
@@ -127,7 +127,7 @@ export default function LoginPage() {
                 type="submit"
                 form="login-form"
                 value="Submit"
-                //onClick={login}
+                onClick={login}
               >
                 Continue
               </button>

@@ -171,7 +171,7 @@ export const Header = styled.div`
     content: "";
     position: absolute;
     width: 30px;
-    height: 5px;
+    height: 3px;
     background: #fff;
     transition: 0.2s;
     transform: translateY(-12px);
@@ -187,7 +187,7 @@ export const Header = styled.div`
     content: "";
     position: absolute;
     width: 30px;
-    height: 5px;
+    height: 3px;
     background: #fff;
     transition: 0.2s;
     transform: translateY(13px);

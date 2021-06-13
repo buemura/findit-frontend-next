@@ -6,7 +6,8 @@ export const ImageContainer = styled.div`
   * {
     font-family: "Roboto", sans-serif;
   }
-
+  
+  min-height: calc(100vh - 60px);
   margin-top: 60px;
   padding: 0;
   width: 70%;
@@ -34,6 +35,9 @@ export const Div = styled.div`
     margin-bottom: 50px;
     img {
       width: 100%;
+    }
+    @media (max-width: 650px) {
+      margin-bottom: 15px;
     }
   }
   .container {
@@ -133,6 +137,7 @@ export const Div = styled.div`
       width: 100%;
       justify-content: center;
       align-items: center;
+      padding: 0 15px 40px 15px;
 
       form {
         border: none;

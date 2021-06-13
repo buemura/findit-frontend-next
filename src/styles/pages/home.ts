@@ -14,6 +14,8 @@ export const MainContainer = styled.div`
 export const CategoryList = styled.ul`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 160px;
   padding: 15px;
@@ -29,8 +31,12 @@ export const CategoryList = styled.ul`
     background: #c4c4c4;
     border-radius: 10px;
   }
+  @media (max-width: 1250px) {
+    justify-content: flex-start;
+  }
   @media (max-width: 650px) {
     margin-top: 50px;
+    justify-content: flex-start;
   }
 `;
 
@@ -86,8 +92,11 @@ export const MainSection = styled.div`
     }
   }
 
+  .button-information {
+    width: auto;
+  }
+
   .buttons-container {
-    width: 100%;
     display: flex;
     justify-content: space-around;
     padding: 45px 20px 20px 20px;
@@ -138,14 +147,13 @@ export const MainSection = styled.div`
   }
 
   .system-information {
-    width: 100%;
     display: flex;
-    justify-content: space-around;
     flex-direction: row;
+    justify-content: space-around;
     padding: 20px;
     
     p {
-      width: 180px;
+      width: 300px;
       margin: 0;
       padding: 0;
       text-align: center;
@@ -160,4 +168,6 @@ export const MainSection = styled.div`
       }
     }
   }
+
+  
 `;
