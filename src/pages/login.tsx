@@ -13,12 +13,11 @@ import { Envelope, Lock, Person } from "react-bootstrap-icons";
 import { HeaderDefault } from "../components/HeaderDefault";
 import { BodyStyled } from "../styles/components/middleSection";
 
-export default function LoginPage() {
-  const [count, setCount] = useState("");
+import axios from "axios";
 
-  const [usernameReg, setUsernameReg] = useState("");
-  const [emailReg, setEmailReg] = useState("");
-  const [passwordReg, setPasswordReg] = useState("");
+export default function LoginPage() {
+
+  const [count, setCount] = useState("");
 
   const [usernameLogin, setUsernameLogin] = useState("");
   const [passwordLogin, setPasswordLogin] = useState("");
@@ -29,7 +28,6 @@ export default function LoginPage() {
 
   const authenticationFailed = () => {
     alert("Falha de autenticação! Verifique as informações preenchidas.");
-    //window.location.href = "/login";
     setUsernameLogin("");
     setPasswordLogin("");
   };
@@ -41,30 +39,23 @@ export default function LoginPage() {
     setPasswordLogin("");
   };
 
-  const register = async () => {
-    try {
-      if (usernameReg === "" || emailReg === "" || passwordReg === "") {
-        incompleteFields();
-        return;
-      }
-      /*await registerAccount.register({
-        usernameReg,
-        emailReg,
-        passwordReg,
-      });*/
-      window.location.href = "/login";
-    } catch (err) {
-      authenticationFailed();
-    }
-  };
-
   const login = async () => {
+    if (usernameLogin === "" || passwordLogin === "") {
+      incompleteFields();
+      return;
+    }
+
     try {
-      /*await authentication.autheticate({
-        usernameLogin,
-        passwordLogin,
-      });*/
-      window.location.href = "/home";
+      axios.post("https://findit-ts.herokuapp.com/login",{
+        email: usernameLogin,
+        password: passwordLogin
+      }
+      ).then((res) => {
+        console.log(res.data);
+        window.location.href = "/home";
+      }).catch((err) => {
+        console.error(err);
+      });
     } catch (err) {
       authenticationFailed();
     }

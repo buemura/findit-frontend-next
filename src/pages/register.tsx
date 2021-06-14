@@ -13,6 +13,8 @@ import { Envelope, Lock, Person } from "react-bootstrap-icons";
 import { HeaderDefault } from "../components/HeaderDefault";
 import { BodyStyled } from "../styles/components/middleSection";
 
+import axios from "axios";
+
 export default function Register() {
   const [count, setCount] = useState("");
 
@@ -20,53 +22,40 @@ export default function Register() {
   const [emailReg, setEmailReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
 
-  const [usernameLogin, setUsernameLogin] = useState("");
-  const [passwordLogin, setPasswordLogin] = useState("");
-
   const handleSubmit = (event) => {
     event.preventDefault();
-  };
-
-  const authenticationFailed = () => {
-    alert("Falha de autenticação! Verifique as informações preenchidas.");
-    //window.location.href = "/register";
-    setUsernameLogin("");
-    setPasswordLogin("");
   };
 
   const incompleteFields = () => {
     alert("Favor preencher todos os campos!");
     //window.location.href = "/register";
-    setUsernameLogin("");
-    setPasswordLogin("");
+    setUsernameReg("");
+    setEmailReg("");
+    setPasswordReg("");
   };
 
   const register = async () => {
-    try {
-      if (usernameReg === "" || emailReg === "" || passwordReg === "") {
-        incompleteFields();
-        return;
-      }
-      /*await registerAccount.register({
-        usernameReg,
-        emailReg,
-        passwordReg,
-      });*/
-      window.location.href = "/login";
-    } catch (err) {
-      authenticationFailed();
+    if (usernameReg === "" || emailReg === "" || passwordReg === "") {
+      incompleteFields();
+      return;
     }
-  };
 
-  const login = async () => {
     try {
-      /*await authentication.autheticate({
-        usernameLogin,
-        passwordLogin,
-      });*/
-      window.location.href = "/home";
+      axios.post("https://findit-ts.herokuapp.com/register",
+      {
+        name: usernameReg,
+        email: emailReg,
+        password: passwordReg
+      }
+      ).then((res) => {
+        console.log(res.data);
+        window.location.href = "/login";
+      }).catch((err) => {
+        console.error(err);
+      });
+      
     } catch (err) {
-      authenticationFailed();
+      alert(err.message)
     }
   };
   
