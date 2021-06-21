@@ -16,7 +16,6 @@ import { BodyStyled } from "../styles/components/middleSection";
 import axios from "axios";
 
 export default function LoginPage() {
-
   const [count, setCount] = useState("");
 
   const [usernameLogin, setUsernameLogin] = useState("");
@@ -46,16 +45,18 @@ export default function LoginPage() {
     }
 
     try {
-      axios.post("https://findit-ts.herokuapp.com/login",{
-        email: usernameLogin,
-        password: passwordLogin
-      }
-      ).then((res) => {
-        console.log(res.data);
-        window.location.href = "/home";
-      }).catch((err) => {
-        console.error(err);
-      });
+      axios
+        .post("https://findit-ts.herokuapp.com/login", {
+          email: usernameLogin,
+          password: passwordLogin,
+        })
+        .then((res) => {
+          console.log(res.data);
+          window.location.href = "/home";
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     } catch (err) {
       authenticationFailed();
     }
@@ -73,9 +74,7 @@ export default function LoginPage() {
             </span>
             <h2>Find It</h2>
             <Link href="/register">
-              <a>                
-                Register Now
-              </a>
+              <a>Register Now</a>
             </Link>
           </div>
           {/* this div is used to login */}
@@ -131,4 +130,4 @@ export default function LoginPage() {
       </Container>
     </BodyStyled>
   );
-};
+}
