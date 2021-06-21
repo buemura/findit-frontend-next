@@ -7,12 +7,12 @@ import { Envelope } from "react-bootstrap-icons";
 import { Person } from "react-bootstrap-icons";
 import { ChatLeftText } from "react-bootstrap-icons";
 
-import { HeaderDefault } from "../components/HeaderDefault";
+import { HeaderPage } from "../components/HeaderPage";
 
 export default function Contact() {
   return (
     <BodyStyled>
-      <HeaderDefault />
+      <HeaderPage />
       <ImageContainer>
         <Div>
           <div className="container-image">

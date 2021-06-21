@@ -10,7 +10,7 @@ import { Div } from "../styles/pages/registerPage";
 
 import { Envelope, Lock, Person } from "react-bootstrap-icons";
 
-import { HeaderDefault } from "../components/HeaderDefault";
+import { HeaderPage } from "../components/HeaderPage";
 import { BodyStyled } from "../styles/components/middleSection";
 
 import axios from "axios";
@@ -61,7 +61,7 @@ export default function Register() {
   
   return (
     <BodyStyled>
-      <HeaderDefault />
+      <HeaderPage />
       <Container>
         <Div>
           <div className="login-div">

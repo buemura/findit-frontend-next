@@ -10,7 +10,7 @@ import { Div } from "../styles/pages/loginPage";
 
 import { Envelope, Lock, Person } from "react-bootstrap-icons";
 
-import { HeaderDefault } from "../components/HeaderDefault";
+import { HeaderPage } from "../components/HeaderPage";
 import { BodyStyled } from "../styles/components/middleSection";
 
 import axios from "axios";
@@ -63,7 +63,7 @@ export default function LoginPage() {
 
   return (
     <BodyStyled>
-      <HeaderDefault />
+      <HeaderPage />
       <Container>
         <Div>
           {/* this div redirect to register account page */}

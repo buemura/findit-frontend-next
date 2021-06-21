@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { HeaderDefault } from "../components/HeaderDefault";
-import api from "../services/api";
+import { HeaderPage } from "../components/HeaderPage";
 
 import { BodyStyled } from "../styles/components/middleSection";
 import {
@@ -51,7 +50,7 @@ export default function HomePage() {
 
   return (
     <BodyStyled>
-      <HeaderDefault />
+      <HeaderPage />
       <MainContainer>
         <CategoryList>
           {items.map((i) => (

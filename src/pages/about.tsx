@@ -1,6 +1,6 @@
 import React from "react";
 
-import { HeaderDefault } from "../components/HeaderDefault";
+import { HeaderPage } from "../components/HeaderPage";
 
 import { Div } from "../styles/pages/about";
 import { BodyStyled, MiddleSection } from "../styles/components/middleSection";
@@ -8,7 +8,7 @@ import { BodyStyled, MiddleSection } from "../styles/components/middleSection";
 export default function About() {
   return (
     <BodyStyled>
-      <HeaderDefault />
+      <HeaderPage />
       <MiddleSection>
         <Div>
           <h1 className="title">Find It</h1>
