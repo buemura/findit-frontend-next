@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { HeaderPage } from "../components/HeaderPage";
-
 import { BodyStyled } from "../styles/components/middleSection";
 import {
   MainContainer,
@@ -67,8 +67,12 @@ export default function HomePage() {
           </div>
           <div className="button-information">
             <div className="buttons-container">
-              <button className="post-services">Post Services</button>
-              <button className="find-services">Find Services</button>
+              <Link href="/posts" passHref>
+                <button className="post-services">Post Services</button>
+              </Link>
+              <Link href="/feed" passHref>
+                <button className="find-services">Find Services</button>
+              </Link>
             </div>
             <div className="system-information">
               <p>Freelancers registered: {users.length}</p>
