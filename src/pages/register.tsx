@@ -41,37 +41,33 @@ export default function Register() {
     }
 
     try {
-      axios.post("https://findit-ts.herokuapp.com/register",
-      {
-        name: usernameReg,
-        email: emailReg,
-        password: passwordReg
-      }
-      ).then((res) => {
-        console.log(res.data);
-        window.location.href = "/login";
-      }).catch((err) => {
-        console.error(err);
-      });
-      
+      axios
+        .post(`http://localhost:4000/api/register`, {
+          name: usernameReg,
+          email: emailReg,
+          password: passwordReg,
+        })
+        .then((res) => {
+          console.log(res.data);
+          window.location.href = "/login";
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     } catch (err) {
-      alert(err.message)
+      alert(err.message);
     }
   };
-  
+
   return (
     <BodyStyled>
       <HeaderPage />
       <Container>
         <Div>
           <div className="login-div">
-            <span>
-              Do you already have an accont? Log-in now!
-            </span>
+            <span>Do you already have an accont? Log-in now!</span>
             <Link href="/login">
-              <a>
-                Login Now
-              </a>
+              <a>Login Now</a>
             </Link>
           </div>
           {/* Div for register form */}
@@ -144,27 +140,3 @@ export default function Register() {
     </BodyStyled>
   );
 }
-
-
-/*
-
-
-
-import background from "../../assets/images/unlock.svg";
-import background_register from "../../assets/images/researching.svg";
-
-const MyVar = () => {
-  
-
-  return (
-    <Container>
-      <Div>
-        
-        
-      </Div>
-    </Container>
-  );
-};
-
-export default MyVar;
-*/

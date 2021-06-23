@@ -46,7 +46,7 @@ export default function LoginPage() {
 
     try {
       axios
-        .post("https://findit-ts.herokuapp.com/login", {
+        .post(`http://localhost:4000/api/login`, {
           email: usernameLogin,
           password: passwordLogin,
         })

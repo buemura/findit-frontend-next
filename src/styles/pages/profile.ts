@@ -12,19 +12,23 @@ export const MainContainer = styled.div`
   background-color: #fff;
 `;
 
-export const CoverPhoto = styled.div`
-  width: 100%;
-`;
-
 export const MainSection = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 20px 0 0 0;
   img {
     width: 150px;
     height: 150px;
     border-radius: 50%;
+  }
+
+  .title h3 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
