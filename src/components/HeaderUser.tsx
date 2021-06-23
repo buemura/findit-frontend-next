@@ -1,9 +1,11 @@
-import { Container, Header } from "../styles/components/HeaderDefault";
+import { Container, Header } from "../styles/components/HeaderUser";
 import Switch from "./Switch";
 
 import Link from "next/link";
 
-export function HeaderDefault() {
+export function HeaderUser() {
+  let hasNotification = 1;
+
   return (
     <Container>
       <Header>
@@ -35,13 +37,18 @@ export function HeaderDefault() {
                 <a>Contact</a>
               </Link>
             </div>
-
-            <div className="loginLinks">
-              <Link href="/login" passHref>
-                <a className="login">Login</a>
+            <div className="profileLinks">
+              <Link href="/notification" passHref>
+                <a className="notification">
+                  <span>Notifications</span>
+                  <div>                    
+                    <img className="notificationImage" src="icons/notification-bell.png" alt="Notification" />
+                    { hasNotification === 1 ? <img className="warning" src="icons/warning.png" alt="Warning" /> : <span className="warningSpan"></span> }
+                  </div>
+                </a>
               </Link>
-              <Link href="/register" passHref>
-                <a className="register">Register</a>
+              <Link href="/profile" passHref>
+                <a className="profile">Profile</a>
               </Link>
             </div>
           </div>

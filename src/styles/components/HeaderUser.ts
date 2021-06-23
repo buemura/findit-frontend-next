@@ -101,14 +101,14 @@ export const Header = styled.div`
     left: 10px;
   }
   .pageLinks,
-  .loginLinks {
+  .profileLinks {
     display: flex;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
   }
   .pageLinks a,
-  .loginLinks a {
+  .profileLinks a {
     width: 70px;
     height: 100%;
     margin: 0 3px;
@@ -124,25 +124,53 @@ export const Header = styled.div`
     border: none;
     box-sizing: border-box;
   }
-  .login {
-    background: #fff;
-    border: 1px solid #fff;
-    color: #4169e1 !important;
-    font-weight: bold;
+  .notification {
+    background: transparent;
+    border: none;
     transition: 0.2s;
-    box-sizing: border-box;    
+    box-sizing: border-box;  
+
+    span {      
+      color: #fff !important;
+      display: none;
+      font-weight: normal;
+    }
+
+    .warningSpan {
+      display: none;
+    }
+
+    div {      
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .notificationImage {
+      position: absolute;
+      width: 25px;
+    }  
+
+    .warning {
+      position: absolute;
+      width: 13px;
+      transform: translate(80%, 60%);
+      background: #fff;
+      border-radius: 50%;
+    }
   }
-  .login:hover {
-      background: #eee;
+  .notification:hover {
+      background: rgba(255, 255, 255, 0.1);
   }
-  .register {
+  .profile {
     background: transparent;
     border: 1px solid #fff !important;
     color: white;
     transition: 0.2s;
     box-sizing: border-box;
   }
-  .register:hover {
+  .profile:hover {
     background: #3159d1;
     box-sizing: border-box;
   }
@@ -246,6 +274,46 @@ export const Header = styled.div`
   }
 
   @media (max-width: 800px) {
+    .notification {
+      background: transparent !important;
+      border: none;
+      transition: 0.2s;
+      box-sizing: border-box;  
+
+      span {      
+        color: #fff !important;
+        display: flex;
+        font-weight: bold;
+        margin-right: 30px;
+      }
+
+      div {      
+        position: relative;
+        display: flex;
+        justify-content: center;
+      }
+
+      .warningSpan {
+        margin-right: 30px;
+        align-items: center;
+      }
+
+      .notificationImage {
+        position: absolute;
+      }  
+
+      .warning {
+        position: absolute;
+        width: 13px;
+        transform: translate(80%, 60%);
+        background: #fff;
+        border-radius: 50%;
+      }
+
+      &:hover {        
+        background: #4169e1 !important;
+      }
+    }
     .search {
       margin-right: 25px;
     }
@@ -284,7 +352,7 @@ export const Header = styled.div`
       transform: translate(0%, 0px);
       display: flex;
     }
-    .loginLinks {
+    .profileLinks {
       position: relative;
       display: flex;
       flex-direction: column;
@@ -295,7 +363,7 @@ export const Header = styled.div`
       background: #5179f1;
     }
     .pageLinks a,
-    .loginLinks a {
+    .profileLinks a {
       color: #fff;
       font-size: 18px;
       font-weight: bold;
@@ -309,22 +377,60 @@ export const Header = styled.div`
     .pageLinks a:hover {
       background: #4169e1;
     }
-    .loginLinks .login {
+    .profileLinks .notification {
       background: #eee;
       color: #5179f1 !important;
     }
-    .loginLinks .login:hover {
+    .profileLinks .notification:hover {
       background: #d5d5d5;
     }
-    .loginLinks .register {
+    .profileLinks .profile {
       color: #eee;
       border: 3px solid #eee !important;
     }
-    .loginLinks .register:hover {
+    .profileLinks .profile:hover {
       background: #4169e1;
     }
   }
   @media (max-width: 650px) {
+    .notification {
+      background: transparent !important;
+      border: none;
+      transition: 0.2s;
+      box-sizing: border-box;  
+
+      span {      
+        color: #fff !important;
+        display: flex;
+        font-weight: bold;
+        margin-right: 30px;
+      }
+
+      .warningSpan {
+        margin-right: 30px;
+        align-items: center;
+      }
+
+      div {      
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .notificationImage {
+        position: absolute;
+        width: 25px;
+      }  
+
+      .warning {
+        position: absolute;
+        width: 13px;
+        transform: translate(80%, 60%);
+        background: #fff;
+        border-radius: 50%;
+      }
+    }
     .search {
       position: absolute;
       background: #5179f1;

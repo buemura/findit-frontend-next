@@ -5,6 +5,7 @@ export const Div = styled.div`
   padding: 0;
   display: flex;
   justify-content: center;
+  background-color: #e3e3e3;
 
   * {
     font-family: "Roboto", sans-serif;

@@ -6,7 +6,8 @@ export const ImageContainer = styled.div`
   * {
     font-family: "Roboto", sans-serif;
   }
-
+  
+  min-height: calc(100vh - 60px);
   margin-top: 60px;
   padding: 0;
   width: 70%;
@@ -20,7 +21,7 @@ export const ImageContainer = styled.div`
   @media (max-width: 650px) {
     margin-top: 100px;
     width: 100%;
-    padding: 40px 30px 30px 30px;
+    padding: 0px 0px 30px 0px;
   }
 `;
 
@@ -34,6 +35,9 @@ export const Div = styled.div`
     margin-bottom: 50px;
     img {
       width: 100%;
+    }
+    @media (max-width: 650px) {
+      margin-bottom: 15px;
     }
   }
   .container {
@@ -104,7 +108,7 @@ export const Div = styled.div`
         color: #fff;
         font-weight: bold;
         padding: 0;
-        margin-top: 40px;
+        margin-top: 25px;
         transition: 0.2s;
         &:hover {
           background: #f7226a;
@@ -126,6 +130,25 @@ export const Div = styled.div`
             margin: 5px 10px;
           }
         }
+      }
+    }
+    @media (max-width: 650px) {
+      flex-direction: column;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      padding: 0 15px 40px 15px;
+
+      form {
+        border: none;
+        padding: 0;
+        width: 100%;
+      }
+
+      .media-and-location-container {
+        width: 100%;
+        padding: 0;
+        margin-top: 40px;
       }
     }
   }
