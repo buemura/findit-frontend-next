@@ -22,6 +22,7 @@ interface IUser {
 }
 
 export default function Profile() {
+  const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [user, setUser] = useState<IUser>({
     name: "",
     email: "",
@@ -33,14 +34,20 @@ export default function Profile() {
   });
 
   //
-  const userId = "2eea1831-ac4f-4e87-b1fb-1aee22a8b8e2";
-  const userId2 = "20f1f28a-bf61-4705-abc8-c10e7d44ec36";
+  const userId = "65c22e8a-344a-4271-a80e-31a9097b8a79";
+  const userId2 = "7c6c9436-e6eb-46d4-a6e6-eea3c9d361ff";
+  const userId3 = "2e0313fb-fe0f-4dfb-a3e1-df0692762973";
 
   useEffect(() => {
+    setHasPhoto(false);
     axios
-      .get(`http://localhost:4000/api/users/${userId}`)
+      .get(`http://localhost:4000/api/users/${userId3}`)
       .then(({ data }) => {
         setUser(data);
+
+        if (data.user_photo) {
+          setHasPhoto(true);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -52,7 +59,11 @@ export default function Profile() {
       <HeaderPage />
       <MainContainer>
         <MainSection>
-          <img src={user.user_photo} alt="linus" />
+          {hasPhoto ? (
+            <img src={user.user_photo} alt="photo" />
+          ) : (
+            <img src="icons/user-icon.png" alt="photo" />
+          )}
           <div className="title">
             <h1>{user.name}</h1>
             <h3>{user.occupation}</h3>
