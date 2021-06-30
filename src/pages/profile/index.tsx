@@ -43,7 +43,7 @@ export default function Profile() {
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzIyZThhLTM0NGEtNDI3MS1hODBlLTMxYTkwOTdiOGE3OSIsImVtYWlsIjoiYnJ1bm8udWVtdXJhQGdtYWlsLmNvbSIsImlhdCI6MTYyNTAyNzI1MiwiZXhwIjoxNjI1MDMwODUyfQ.yI2IOKP1UTbFobWptp0v5QQq5OCC6riuiN7CVb0eduA";
   const tokenDecoded: any = jwt_decode(token);
-  const { id, email } = tokenDecoded;
+  const { id, email, exp } = tokenDecoded;
 
   useEffect(() => {
     setHasPhoto(false);

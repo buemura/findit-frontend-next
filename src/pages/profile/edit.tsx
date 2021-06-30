@@ -31,9 +31,22 @@ export default function Profile() {
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzIyZThhLTM0NGEtNDI3MS1hODBlLTMxYTkwOTdiOGE3OSIsImVtYWlsIjoiYnJ1bm8udWVtdXJhQGdtYWlsLmNvbSIsImlhdCI6MTYyNTAyNzI1MiwiZXhwIjoxNjI1MDMwODUyfQ.yI2IOKP1UTbFobWptp0v5QQq5OCC6riuiN7CVb0eduA";
   const tokenDecoded: any = jwt_decode(token);
-  const { id } = tokenDecoded;
+  const { id, exp } = tokenDecoded;
 
+  // Check the session expiration with jwt.exp.
+  const checkSessionExpiration = () => {
+    const currentTimestamp = new Date().getTime() / 1000;
+
+    if (exp < currentTimestamp) {
+      window.alert("Your session expired, Sign in again to continue!");
+      window.location.href = "/login";
+    }
+    return;
+  };
+
+  // Update profile by sending a PUT request do backend API.
   const updateProfile = () => {
+    checkSessionExpiration();
     axios
       .put(
         `http://localhost:4000/api/users/${id}`,
@@ -63,6 +76,7 @@ export default function Profile() {
   };
 
   useEffect(() => {
+    checkSessionExpiration();
     setHasPhoto(false);
     axios
       .get(`http://localhost:4000/api/users/${id}`)
