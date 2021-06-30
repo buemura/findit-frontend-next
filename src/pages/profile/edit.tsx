@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import jwt_decode from "jwt-decode";
 
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
@@ -12,16 +12,6 @@ import {
   Portfolio,
 } from "../../styles/pages/profile";
 
-interface IUser {
-  name: string;
-  email: string;
-  location: string;
-  phone: string;
-  occupation: string;
-  about_me: string;
-  user_photo: string;
-}
-
 export default function Profile() {
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [name, setName] = useState("");
@@ -32,71 +22,50 @@ export default function Profile() {
   const [about_me, setAboutMe] = useState("");
   const [user_photo, setUserPhoto] = useState("");
 
-  const [user, setUser] = useState<IUser>({
-    name: "",
-    email: "",
-    location: "",
-    phone: "",
-    occupation: "",
-    about_me: "",
-    user_photo: "",
-  });
-
-  const userId1 = "65c22e8a-344a-4271-a80e-31a9097b8a79";
-  const userId2 = "7c6c9436-e6eb-s46d4-a6e6-eea3c9d361ff";
-  const userId3 = "c2eec2fe-473a-40ee-9efe-25089494bd13";
-  const userId4 = "5137ac13-e981-4f23-8131-b22de01f0c99";
-  // Token is needed in order to make a PUT request.
-  // Also this token expires in 1 hour. Sign in again to generate a new one.
+  /**
+   * JWT token is needed in order to make a POST, PUT or DELETE request.
+   * Also this token expires in 1 hour. So you will need to Sign in again to generate a new one.
+   * The token is associated with the user that Signed in.
+   * So if we decode this token we will be able to retrieve user ID and Email.
+   */
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUxMzdhYzEzLWU5ODEtNGYyMy04MTMxLWIyMmRlMDFmMGM5OSIsImVtYWlsIjoibGludXMudG9ydmFsZHNAZ21haWwuY29tIiwiaWF0IjoxNjI1MDI1MTkwLCJleHAiOjE2MjUwMjg3OTB9.cKlM4qkFOS2rE7rpQu6Z7Y_XTFnI7iXoQMrmtDlVW0I";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzIyZThhLTM0NGEtNDI3MS1hODBlLTMxYTkwOTdiOGE3OSIsImVtYWlsIjoiYnJ1bm8udWVtdXJhQGdtYWlsLmNvbSIsImlhdCI6MTYyNTAyNzI1MiwiZXhwIjoxNjI1MDMwODUyfQ.yI2IOKP1UTbFobWptp0v5QQq5OCC6riuiN7CVb0eduA";
+  const tokenDecoded: any = jwt_decode(token);
+  const { id } = tokenDecoded;
 
   const updateProfile = () => {
-    console.log({
-      name,
-      email,
-      location,
-      phone,
-      occupation,
-      about_me,
-      user_photo,
-    });
-
-    try {
-      axios
-        .put(
-          `http://localhost:4000/api/users/${userId3}`,
-          {
-            name,
-            email,
-            location,
-            phone,
-            occupation,
-            about_me,
-            user_photo,
+    axios
+      .put(
+        `http://localhost:4000/api/users/${id}`,
+        {
+          name,
+          email,
+          location,
+          phone,
+          occupation,
+          about_me,
+          user_photo,
+        },
+        {
+          headers: {
+            authorization: token,
           },
-          {
-            headers: {
-              authorization: token,
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res.data);
-          window.location.href = "/profile";
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        window.location.href = "/profile";
+      })
+      .catch((err) => {
+        console.error(err);
+        window.alert("Failed to Update user!");
+      });
   };
 
   useEffect(() => {
     setHasPhoto(false);
     axios
-      .get(`http://localhost:4000/api/users/${userId3}`)
+      .get(`http://localhost:4000/api/users/${id}`)
       .then(({ data }) => {
         setName(data.name);
         setEmail(data.email);
