@@ -1,15 +1,17 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { HeaderPage } from "../components/HeaderPage";
+import jwt_decode from "jwt-decode";
+import Link from "next/link";
 
-import { BodyStyled } from "../styles/components/middleSection";
+import { HeaderPage } from "../../components/HeaderPage";
+import { BodyStyled } from "../../styles/components/middleSection";
 import {
   MainContainer,
   MainSection,
   PersonalInfo,
   AboutMe,
   Portfolio,
-} from "../styles/pages/profile";
+} from "../../styles/pages/profile";
 
 interface IUser {
   name: string;
@@ -33,15 +35,20 @@ export default function Profile() {
     user_photo: "",
   });
 
-  //
-  const userId = "65c22e8a-344a-4271-a80e-31a9097b8a79";
-  const userId2 = "7c6c9436-e6eb-46d4-a6e6-eea3c9d361ff";
-  const userId3 = "2e0313fb-fe0f-4dfb-a3e1-df0692762973";
+  /**
+   * Token is needed in order to make a POST, PUT or DELETE request.
+   * Also this token expires in 1 hour. Sign in again to generate a new one.
+   * The token is associated with the user. So if we decode this token, we will be able to retrieve user ID and Email.
+   */
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzIyZThhLTM0NGEtNDI3MS1hODBlLTMxYTkwOTdiOGE3OSIsImVtYWlsIjoiYnJ1bm8udWVtdXJhQGdtYWlsLmNvbSIsImlhdCI6MTYyNTAyNzI1MiwiZXhwIjoxNjI1MDMwODUyfQ.yI2IOKP1UTbFobWptp0v5QQq5OCC6riuiN7CVb0eduA";
+  const tokenDecoded: any = jwt_decode(token);
+  const { id, email, exp } = tokenDecoded;
 
   useEffect(() => {
     setHasPhoto(false);
     axios
-      .get(`http://localhost:4000/api/users/${userId3}`)
+      .get(`http://localhost:4000/api/users/${id}`)
       .then(({ data }) => {
         setUser(data);
 
@@ -59,15 +66,28 @@ export default function Profile() {
       <HeaderPage />
       <MainContainer>
         <MainSection>
-          {hasPhoto ? (
-            <img src={user.user_photo} alt="photo" />
-          ) : (
-            <img src="icons/user-icon.png" alt="photo" />
-          )}
+          <div className="profile-photos">
+            {hasPhoto ? (
+              <img src={user.user_photo} alt="photo" className="user-photo" />
+            ) : (
+              <img
+                src="icons/user-icon.png"
+                alt="photo"
+                className="user-photo"
+              />
+            )}
+          </div>
+
           <div className="title">
             <h1>{user.name}</h1>
             <h3>{user.occupation}</h3>
+            <Link href="/profile/edit">
+              <a href="">
+                <img src="icons/edit-property-64.png"></img>Edit Profile
+              </a>
+            </Link>
           </div>
+
           <PersonalInfo>
             <div>
               <p>
@@ -92,15 +112,17 @@ export default function Profile() {
               </p>
             </div>
           </PersonalInfo>
+
           <AboutMe>
-            <h1>About me</h1>
+            <h2>About me</h2>
             <p>{user.about_me}</p>
           </AboutMe>
+
           <Portfolio>
-            <h1>Portfolio</h1>
+            <h2>Portfolio</h2>
             <div>
-              <img src="assets/linux.jpg" alt="linux" />
-              <img src="assets/unix.jpg" alt="unix" />
+              <div className="div-img-portifolio d01"></div>
+              <div className="div-img-portifolio d02"></div>
             </div>
           </Portfolio>
         </MainSection>

@@ -13,10 +13,15 @@ interface IPosts {
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
+  const [category, setCategory] = useState("");
+  const [location, setLocation] = useState("");
+  const [filter, setFilter] = useState(false);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/api/services`)
+      .get(
+        `http://localhost:4000/api/services?category=${category}&location=${location}`
+      )
       .then(({ data }) => {
         setPosts(data);
         console.log(data);
@@ -24,19 +29,34 @@ export default function Posts() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    setFilter(false);
+  }, [filter]);
 
   return (
     <BodyStyled>
       <HeaderPage />
       <MainContainer>
         <Filters>
-          <button>Filter</button>
-          <button>Apply Filter</button>
+          <input
+            type="text"
+            placeholder="Category"
+            onChange={(e) => {
+              setCategory(e.target.value);
+            }}
+          />
+          <input
+            type="text"
+            placeholder="Location"
+            onChange={(e) => {
+              setLocation(e.target.value);
+            }}
+          />
+          <button onClick={() => setFilter(true)}>Apply Filter</button>
         </Filters>
         {posts.map((post) => (
           <Feed key={post.id}>
             <h2>{post.title}</h2>
+            <h3>Category: {post.category}</h3>
             <h3>R$ {post.price}</h3>
             <p>{post.location}</p>
             <p>
