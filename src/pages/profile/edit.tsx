@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import jwt_decode from "jwt-decode";
 
 import { HeaderPage } from "../../components/HeaderPage";
@@ -13,6 +14,8 @@ import {
 } from "../../styles/pages/profile";
 
 export default function Profile() {
+  const router = useRouter();
+
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,8 +31,7 @@ export default function Profile() {
    * The token is associated with the user that Signed in.
    * So if we decode this token we will be able to retrieve user ID and Email.
    */
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzIyZThhLTM0NGEtNDI3MS1hODBlLTMxYTkwOTdiOGE3OSIsImVtYWlsIjoiYnJ1bm8udWVtdXJhQGdtYWlsLmNvbSIsImlhdCI6MTYyNTAyNzI1MiwiZXhwIjoxNjI1MDMwODUyfQ.yI2IOKP1UTbFobWptp0v5QQq5OCC6riuiN7CVb0eduA";
+  const token = localStorage.getItem("token");
   const tokenDecoded: any = jwt_decode(token);
   const { id, exp } = tokenDecoded;
 
@@ -38,8 +40,8 @@ export default function Profile() {
     const currentTimestamp = new Date().getTime() / 1000;
 
     if (exp < currentTimestamp) {
-      window.alert("Your session expired, Sign in again to continue!");
-      window.location.href = "/login";
+      alert("Your session expired, Sign in again to continue!");
+      router.push("/login");
     }
     return;
   };
@@ -67,11 +69,11 @@ export default function Profile() {
       )
       .then((res) => {
         console.log(res.data);
-        window.location.href = "/profile";
+        router.push("/profile");
       })
       .catch((err) => {
         console.error(err);
-        window.alert("Failed to Update user!");
+        alert("Failed to Update user!");
       });
   };
 

@@ -6,11 +6,11 @@ export const Container = styled.div`
   box-sizing: border-box;
   position: fixed;
   top: 0;
-  left:0;
+  left: 0;
   display: block;
-  z-index: 1000000; 
+  z-index: 1000000;
   width: 100vw;
-`
+`;
 
 export const Header = styled.div`
   margin: 20px;
@@ -25,7 +25,7 @@ export const Header = styled.div`
   padding: 10px 30px;
   margin: 0;
   width: 100%;
-  
+
   .divLogo {
     display: flex;
     justify-content: center;
@@ -79,12 +79,12 @@ export const Header = styled.div`
     transition: 0.2s;
     background: #ddd;
     font-weight: bold;
-    font-size: 14px;    
+    font-size: 14px;
     box-sizing: border-box;
   }
   .search button:hover {
-      background: #f7226a;
-      color: #fff;
+    background: #f7226a;
+    color: #fff;
   }
   .search input {
     height: 100%;
@@ -130,10 +130,10 @@ export const Header = styled.div`
     color: #4169e1 !important;
     font-weight: bold;
     transition: 0.2s;
-    box-sizing: border-box;    
+    box-sizing: border-box;
   }
   .login:hover {
-      background: #eee;
+    background: #eee;
   }
   .register {
     background: transparent;
@@ -200,11 +200,83 @@ export const Header = styled.div`
     transition: 0.2s;
     box-sizing: border-box;
     height: 100%;
-    
   }
   .pageLinks a:hover {
-      background: #5179f1;
+    background: #5179f1;
   }
+  .profileLinks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  .profileLinks a {
+    width: 70px;
+    height: 100%;
+    margin: 0 3px;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+    border: none;
+    box-sizing: border-box;
+  }
+  .notification {
+    background: transparent;
+    border: none;
+    transition: 0.2s;
+    box-sizing: border-box;
+
+    span {
+      color: #fff !important;
+      display: none;
+      font-weight: normal;
+    }
+
+    .warningSpan {
+      display: none;
+    }
+
+    div {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .notificationImage {
+      position: absolute;
+      width: 25px;
+    }
+
+    .warning {
+      position: absolute;
+      width: 13px;
+      transform: translate(80%, 60%);
+      background: #fff;
+      border-radius: 50%;
+    }
+  }
+  .notification:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .profile {
+    background: transparent;
+    border: 1px solid #fff !important;
+    color: white;
+    transition: 0.2s;
+    box-sizing: border-box;
+  }
+  .profile:hover {
+    background: #3159d1;
+    box-sizing: border-box;
+  }
+
   @media (max-width: 1000px) {
     .menu {
       display: flex;
@@ -238,10 +310,9 @@ export const Header = styled.div`
       width: 50%;
       height: 100%;
       border-radius: 10px;
-      
     }
     .pageLinks a:hover {
-        background: #4169e1;
+      background: #4169e1;
     }
   }
 
@@ -349,4 +420,4 @@ export const Header = styled.div`
       transform: translateX(20px);
     }
   }
-`
+`;

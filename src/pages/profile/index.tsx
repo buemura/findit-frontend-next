@@ -40,8 +40,7 @@ export default function Profile() {
    * Also this token expires in 1 hour. Sign in again to generate a new one.
    * The token is associated with the user. So if we decode this token, we will be able to retrieve user ID and Email.
    */
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzIyZThhLTM0NGEtNDI3MS1hODBlLTMxYTkwOTdiOGE3OSIsImVtYWlsIjoiYnJ1bm8udWVtdXJhQGdtYWlsLmNvbSIsImlhdCI6MTYyNTAyNzI1MiwiZXhwIjoxNjI1MDMwODUyfQ.yI2IOKP1UTbFobWptp0v5QQq5OCC6riuiN7CVb0eduA";
+  const token = localStorage.getItem("token");
   const tokenDecoded: any = jwt_decode(token);
   const { id, email, exp } = tokenDecoded;
 
