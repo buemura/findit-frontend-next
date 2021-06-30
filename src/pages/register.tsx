@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 import authentication from "../services/authentication";
@@ -16,7 +16,7 @@ import { BodyStyled } from "../styles/components/middleSection";
 import axios from "axios";
 
 export default function Register() {
-  const [count, setCount] = useState("");
+  const router = useRouter();
 
   const [usernameReg, setUsernameReg] = useState("");
   const [emailReg, setEmailReg] = useState("");
@@ -28,7 +28,7 @@ export default function Register() {
 
   const incompleteFields = () => {
     alert("Favor preencher todos os campos!");
-    //window.location.href = "/register";
+    router.push("/register");
     setUsernameReg("");
     setEmailReg("");
     setPasswordReg("");
@@ -42,14 +42,14 @@ export default function Register() {
 
     try {
       axios
-        .post(`http://localhost:4000/api/register`, {
+        .post(`http://localhost:4000/api/auth/register`, {
           name: usernameReg,
           email: emailReg,
           password: passwordReg,
         })
         .then((res) => {
           console.log(res.data);
-          window.location.href = "/login";
+          router.push("/login");
         })
         .catch((err) => {
           console.error(err);

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 import { HeaderPage } from "../../components/HeaderPage";
@@ -24,6 +25,7 @@ interface IUser {
 }
 
 export default function Profile() {
+  const router = useRouter();
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [user, setUser] = useState<IUser>({
     name: "",
@@ -40,12 +42,34 @@ export default function Profile() {
    * Also this token expires in 1 hour. Sign in again to generate a new one.
    * The token is associated with the user. So if we decode this token, we will be able to retrieve user ID and Email.
    */
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzIyZThhLTM0NGEtNDI3MS1hODBlLTMxYTkwOTdiOGE3OSIsImVtYWlsIjoiYnJ1bm8udWVtdXJhQGdtYWlsLmNvbSIsImlhdCI6MTYyNTAyNzI1MiwiZXhwIjoxNjI1MDMwODUyfQ.yI2IOKP1UTbFobWptp0v5QQq5OCC6riuiN7CVb0eduA";
-  const tokenDecoded: any = jwt_decode(token);
-  const { id, email, exp } = tokenDecoded;
+  let token;
+  let tokenDecoded: any;
+  let id, exp;
+
+  // Check if the user is logged and the jwt expiration with jwt.exp.
+  const checkUserSession = () => {
+    if (localStorage.getItem("token") === null) {
+      alert("Your need to sign in to proceed!");
+      router.push("/login");
+      return;
+    }
+    token = localStorage.getItem("token");
+    tokenDecoded = jwt_decode(token);
+    id = tokenDecoded.id;
+    exp = tokenDecoded.exp;
+
+    // Check the session expiration with jwt.exp.
+    const currentTimestamp = new Date().getTime() / 1000;
+    if (exp < currentTimestamp) {
+      alert("Your session expired, Sign in again to continue!");
+      localStorage.removeItem("token");
+      router.push("/login");
+      return;
+    }
+  };
 
   useEffect(() => {
+    checkUserSession();
     setHasPhoto(false);
     axios
       .get(`http://localhost:4000/api/users/${id}`)

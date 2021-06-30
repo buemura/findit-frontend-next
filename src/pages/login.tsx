@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 import authentication from "../services/authentication";
@@ -16,7 +16,7 @@ import { BodyStyled } from "../styles/components/middleSection";
 import axios from "axios";
 
 export default function LoginPage() {
-  const [count, setCount] = useState("");
+  const router = useRouter();
 
   const [usernameLogin, setUsernameLogin] = useState("");
   const [passwordLogin, setPasswordLogin] = useState("");
@@ -25,17 +25,23 @@ export default function LoginPage() {
     event.preventDefault();
   };
 
+  const authenticationSucceeded = (token) => {
+    localStorage.setItem("token", token);
+    router.push("/home");
+  };
+
   const authenticationFailed = () => {
     alert("Falha de autenticação! Verifique as informações preenchidas.");
     setUsernameLogin("");
     setPasswordLogin("");
+    router.push("/login");
   };
 
   const incompleteFields = () => {
     alert("Favor preencher todos os campos!");
-    //window.location.href = "/login";
     setUsernameLogin("");
     setPasswordLogin("");
+    router.push("/login");
   };
 
   const login = async () => {
@@ -46,13 +52,17 @@ export default function LoginPage() {
 
     try {
       axios
-        .post(`http://localhost:4000/api/login`, {
+        .post(`http://localhost:4000/api/auth/login`, {
           email: usernameLogin,
           password: passwordLogin,
         })
-        .then((res) => {
-          console.log(res.data);
-          window.location.href = "/home";
+        .then(({ data }) => {
+          if (data.auth) {
+            const token = data.token;
+            authenticationSucceeded(token);
+          } else {
+            authenticationFailed();
+          }
         })
         .catch((err) => {
           console.error(err);
