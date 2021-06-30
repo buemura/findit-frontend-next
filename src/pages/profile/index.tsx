@@ -1,15 +1,16 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { HeaderPage } from "../components/HeaderPage";
+import Link from "next/link";
 
-import { BodyStyled } from "../styles/components/middleSection";
+import { HeaderPage } from "../../components/HeaderPage";
+import { BodyStyled } from "../../styles/components/middleSection";
 import {
   MainContainer,
   MainSection,
   PersonalInfo,
   AboutMe,
   Portfolio,
-} from "../styles/pages/profile";
+} from "../../styles/pages/profile";
 
 interface IUser {
   name: string;
@@ -36,13 +37,13 @@ export default function Profile() {
   //
   const userId1 = "65c22e8a-344a-4271-a80e-31a9097b8a79";
   const userId2 = "7c6c9436-e6eb-s46d4-a6e6-eea3c9d361ff";
-  const userId3 = "2e0313fb-fe0f-4dfb-a3e1-df0692762973";
+  const userId3 = "c2eec2fe-473a-40ee-9efe-25089494bd13";
   const userId4 = "5137ac13-e981-4f23-8131-b22de01f0c99";
 
   useEffect(() => {
     setHasPhoto(false);
     axios
-      .get(`http://localhost:4000/api/users/${userId1}`)
+      .get(`http://localhost:4000/api/users/${userId3}`)
       .then(({ data }) => {
         setUser(data);
 
@@ -75,9 +76,11 @@ export default function Profile() {
           <div className="title">
             <h1>{user.name}</h1>
             <h3>{user.occupation}</h3>
-            <a href="">
-              <img src="icons/edit-property-64.png"></img>Edit Profile
-            </a>
+            <Link href="/profile/edit">
+              <a href="">
+                <img src="icons/edit-property-64.png"></img>Edit Profile
+              </a>
+            </Link>
           </div>
 
           <PersonalInfo>
