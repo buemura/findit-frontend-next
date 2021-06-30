@@ -34,15 +34,15 @@ export default function Profile() {
   });
 
   //
-  const userId = "65c22e8a-344a-4271-a80e-31a9097b8a79";
-  const userId2 = "7c6c9436-e6eb-46d4-a6e6-eea3c9d361ff";
+  const userId1 = "65c22e8a-344a-4271-a80e-31a9097b8a79";
+  const userId2 = "7c6c9436-e6eb-s46d4-a6e6-eea3c9d361ff";
   const userId3 = "2e0313fb-fe0f-4dfb-a3e1-df0692762973";
-  const userId4 = "2a4748d1-3614-4848-be8e-25ec14cb811a";
+  const userId4 = "5137ac13-e981-4f23-8131-b22de01f0c99";
 
   useEffect(() => {
     setHasPhoto(false);
     axios
-      .get(`http://localhost:4000/api/users/${userId4}`)
+      .get(`http://localhost:4000/api/users/${userId1}`)
       .then(({ data }) => {
         setUser(data);
 
@@ -62,28 +62,46 @@ export default function Profile() {
         <MainSection>
           <div className="profile-photos">
             {hasPhoto ? (
-              <img src={user.user_photo} alt="photo" className="user-photo"/>
+              <img src={user.user_photo} alt="photo" className="user-photo" />
             ) : (
-              <img src="icons/user-icon.png" alt="photo" className="user-photo"/>
+              <img
+                src="icons/user-icon.png"
+                alt="photo"
+                className="user-photo"
+              />
             )}
           </div>
 
           <div className="title">
             <h1>{user.name}</h1>
             <h3>{user.occupation}</h3>
-            <a href=""><img src="icons/edit-property-64.png"></img>Edit Profile</a>
+            <a href="">
+              <img src="icons/edit-property-64.png"></img>Edit Profile
+            </a>
           </div>
 
           <PersonalInfo>
             <div>
-              <p><strong>Works Done:</strong>{" "}</p>
-              <p><strong>Works Done in Time:</strong>{" "}</p>
-              <p><strong>Works Done Within Budget:</strong>{" "}</p>
+              <p>
+                <strong>Works Done:</strong>{" "}
+              </p>
+              <p>
+                <strong>Works Done in Time:</strong>{" "}
+              </p>
+              <p>
+                <strong>Works Done Within Budget:</strong>{" "}
+              </p>
             </div>
             <div>
-              <p><strong>Local:</strong> {user.location}</p>
-              <p><strong>Phone:</strong> {user.phone}</p>
-              <p><strong>Email:</strong> {user.email}</p>
+              <p>
+                <strong>Local:</strong> {user.location}
+              </p>
+              <p>
+                <strong>Phone:</strong> {user.phone}
+              </p>
+              <p>
+                <strong>Email:</strong> {user.email}
+              </p>
             </div>
           </PersonalInfo>
 
@@ -96,7 +114,7 @@ export default function Profile() {
             <h2>Portfolio</h2>
             <div>
               <div className="div-img-portifolio d01"></div>
-              <div className="div-img-portifolio d02"></div>              
+              <div className="div-img-portifolio d02"></div>
             </div>
           </Portfolio>
         </MainSection>
