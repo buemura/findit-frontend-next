@@ -9,8 +9,7 @@ export function HeaderDefault() {
   const [hasNotification, setHasNotification] = useState(0);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
+    if (localStorage.getItem("token") !== null) {
       setHasToken(true);
     }
   }, []);

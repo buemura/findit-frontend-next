@@ -31,24 +31,35 @@ export default function Profile() {
    * The token is associated with the user that Signed in.
    * So if we decode this token we will be able to retrieve user ID and Email.
    */
-  const token = localStorage.getItem("token");
-  const tokenDecoded: any = jwt_decode(token);
-  const { id, exp } = tokenDecoded;
+  let token;
+  let tokenDecoded: any;
+  let id, exp;
 
-  // Check the session expiration with jwt.exp.
-  const checkSessionExpiration = () => {
+  // Check if the user is logged and the jwt expiration with jwt.exp.
+  const checkUserSession = () => {
+    if (localStorage.getItem("token") === null) {
+      alert("Your need to sign in to proceed!");
+      router.push("/login");
+      return;
+    }
+    token = localStorage.getItem("token");
+    tokenDecoded = jwt_decode(token);
+    id = tokenDecoded.id;
+    exp = tokenDecoded.exp;
+
+    // Check the session expiration with jwt.exp.
     const currentTimestamp = new Date().getTime() / 1000;
-
     if (exp < currentTimestamp) {
       alert("Your session expired, Sign in again to continue!");
+      localStorage.removeItem("token");
       router.push("/login");
+      return;
     }
-    return;
   };
 
   // Update profile by sending a PUT request do backend API.
   const updateProfile = () => {
-    checkSessionExpiration();
+    checkUserSession();
     axios
       .put(
         `http://localhost:4000/api/users/${id}`,
@@ -78,7 +89,7 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    checkSessionExpiration();
+    checkUserSession();
     setHasPhoto(false);
     axios
       .get(`http://localhost:4000/api/users/${id}`)
