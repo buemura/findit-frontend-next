@@ -30,7 +30,7 @@ export const MainSection = styled.div`
     align-items: center;
     justify-content: center;
   }
-  
+
   .user-photo {
     width: 150px;
     height: 150px;
@@ -46,7 +46,6 @@ export const MainSection = styled.div`
     position: relative;
   }
 
-
   .title a {
     position: absolute;
     right: 0;
@@ -58,11 +57,11 @@ export const MainSection = styled.div`
     align-items: center;
     flex-direction: row;
     text-decoration: none;
-    color: #4169E1;
-    font-size: .8rem;
+    color: #4169e1;
+    font-size: 0.8rem;
 
     img {
-      width: .8rem;
+      width: 0.8rem;
       margin-right: 10px;
     }
   }
@@ -102,8 +101,13 @@ export const AboutMe = styled.div`
   align-items: center;
   width: 60%;
   border-bottom: 1px solid #aaa;
-  h2, p {
+  h2,
+  p {
     margin: 15px;
+  }
+  input {
+    width: 80%;
+    height: 100px;
   }
 `;
 

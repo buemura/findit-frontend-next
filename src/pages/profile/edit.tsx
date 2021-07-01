@@ -79,11 +79,9 @@ export default function Profile() {
         }
       )
       .then((res) => {
-        console.log(res.data);
         router.push("/profile");
       })
       .catch((err) => {
-        console.error(err);
         alert("Failed to Update user!");
       });
   };
@@ -133,6 +131,7 @@ export default function Profile() {
               <input
                 type="text"
                 placeholder={name}
+                defaultValue={name}
                 onChange={(e) => setName(e.target.value)}
               />
             </h3>
@@ -141,6 +140,7 @@ export default function Profile() {
               <input
                 type="text"
                 placeholder={occupation}
+                defaultValue={occupation}
                 onChange={(e) => setOccupation(e.target.value)}
               />
             </h3>
@@ -166,6 +166,7 @@ export default function Profile() {
                 <input
                   type="text"
                   placeholder={location}
+                  defaultValue={location}
                   onChange={(e) => setLocation(e.target.value)}
                 />
               </p>
@@ -174,6 +175,7 @@ export default function Profile() {
                 <input
                   type="text"
                   placeholder={phone}
+                  defaultValue={phone}
                   onChange={(e) => setPhone(e.target.value)}
                 />
               </p>
@@ -188,6 +190,7 @@ export default function Profile() {
             <input
               type="text"
               placeholder={about_me}
+              defaultValue={about_me}
               onChange={(e) => setAboutMe(e.target.value)}
             />
           </AboutMe>
