@@ -75,7 +75,6 @@ export default function Profile() {
       .get(`${process.env.BACKEND_API}/api/users/${id}`)
       .then(({ data }) => {
         setUser(data);
-
         if (data.user_photo) {
           setHasPhoto(true);
         }
