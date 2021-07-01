@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+
 import { useRouter } from "next/router";
 import Link from "next/link";
 
 import authentication from "../services/authentication";
-import registerAccount from "../services/registerAccount";
 
 import { Container } from "../styles/components/loginContainer";
 import { Div } from "../styles/pages/loginPage";
@@ -13,16 +13,19 @@ import { Envelope, Lock, Person } from "react-bootstrap-icons";
 import { HeaderPage } from "../components/HeaderPage";
 import { BodyStyled } from "../styles/components/middleSection";
 
-import axios from "axios";
-
 export default function LoginPage() {
   const router = useRouter();
 
-  const [usernameLogin, setUsernameLogin] = useState("");
-  const [passwordLogin, setPasswordLogin] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
+  };
+
+  const clearVariables = () => {
+    setEmail("");
+    setPassword("");
   };
 
   const authenticationSucceeded = (token) => {
@@ -32,41 +35,32 @@ export default function LoginPage() {
 
   const authenticationFailed = () => {
     alert("Falha de autenticação! Verifique as informações preenchidas.");
-    setUsernameLogin("");
-    setPasswordLogin("");
+    clearVariables();
     router.push("/login");
   };
 
   const incompleteFields = () => {
     alert("Favor preencher todos os campos!");
-    setUsernameLogin("");
-    setPasswordLogin("");
+    clearVariables();
     router.push("/login");
   };
 
   const login = async () => {
-    if (usernameLogin === "" || passwordLogin === "") {
+    if (email === "" || password === "") {
       incompleteFields();
       return;
     }
 
     try {
-      axios
-        .post(`http://localhost:4000/api/auth/login`, {
-          email: usernameLogin,
-          password: passwordLogin,
-        })
-        .then(({ data }) => {
-          if (data.auth) {
-            const token = data.token;
-            authenticationSucceeded(token);
-          } else {
-            authenticationFailed();
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      const token = await authentication.autheticate({
+        email,
+        password,
+      });
+      if (token) {
+        authenticationSucceeded(token);
+      } else {
+        authenticationFailed();
+      }
     } catch (err) {
       authenticationFailed();
     }
@@ -100,9 +94,9 @@ export default function LoginPage() {
                   type="email"
                   id="login-email"
                   placeholder="Email - ex: you@email.com"
-                  defaultValue={usernameLogin}
+                  defaultValue={email}
                   onChange={(e) => {
-                    setUsernameLogin(e.target.value);
+                    setEmail(e.target.value);
                   }}
                 ></input>
               </div>
@@ -112,9 +106,9 @@ export default function LoginPage() {
                   type="password"
                   id="login-password"
                   placeholder="Password"
-                  defaultValue={passwordLogin}
+                  defaultValue={password}
                   onChange={(e) => {
-                    setPasswordLogin(e.target.value);
+                    setPassword(e.target.value);
                   }}
                 ></input>
               </div>

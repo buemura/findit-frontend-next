@@ -20,7 +20,7 @@ export default function Posts() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:4000/api/services?category=${category}&location=${location}`
+        `${process.env.BACKEND_API}/api/services?category=${category}&location=${location}`
       )
       .then(({ data }) => {
         setPosts(data);

@@ -28,7 +28,7 @@ export default function HomePage() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/api/users`)
+      .get(`${process.env.BACKEND_API}/api/users`)
       .then((res) => {
         console.log(res.data);
         setUsers(res.data);
@@ -38,7 +38,7 @@ export default function HomePage() {
       });
 
     axios
-      .get(`http://localhost:4000/api/services`)
+      .get(`${process.env.BACKEND_API}/api/services`)
       .then((res) => {
         console.log(res.data);
         setServices(res.data);
