@@ -1,6 +1,6 @@
 module.exports = {
   env: {
-    BACKEND_API: "http://localhost:4000",
+    BACKEND_API: process.env.BACKEND_API,
   },
   webpack: (config, { isServer }) => {
     // Fixes npm packages that depend on `fs` module
