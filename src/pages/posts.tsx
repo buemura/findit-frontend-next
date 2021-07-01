@@ -39,7 +39,7 @@ export default function Posts() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/api/users/${userId}`)
+      .get(`${process.env.BACKEND_API}/api/users/${userId}`)
       .then(({ data }) => {
         setUser(data);
       })

@@ -62,7 +62,7 @@ export default function Profile() {
     checkUserSession();
     axios
       .put(
-        `http://localhost:4000/api/users/${id}`,
+        `${process.env.BACKEND_API}/api/users/${id}`,
         {
           name,
           email,
@@ -92,7 +92,7 @@ export default function Profile() {
     checkUserSession();
     setHasPhoto(false);
     axios
-      .get(`http://localhost:4000/api/users/${id}`)
+      .get(`${process.env.BACKEND_API}/api/users/${id}`)
       .then(({ data }) => {
         setName(data.name);
         setEmail(data.email);

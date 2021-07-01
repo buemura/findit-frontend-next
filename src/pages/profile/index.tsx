@@ -72,7 +72,7 @@ export default function Profile() {
     checkUserSession();
     setHasPhoto(false);
     axios
-      .get(`http://localhost:4000/api/users/${id}`)
+      .get(`${process.env.BACKEND_API}/api/users/${id}`)
       .then(({ data }) => {
         setUser(data);
 

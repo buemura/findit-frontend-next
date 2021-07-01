@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import authentication from "../services/authentication";
-import registerAccount from "../services/registerAccount";
+import registration from "../services/registration";
 
 import { Container } from "../styles/components/registerContainer";
 import { Div } from "../styles/pages/registerPage";
@@ -13,49 +12,54 @@ import { Envelope, Lock, Person } from "react-bootstrap-icons";
 import { HeaderPage } from "../components/HeaderPage";
 import { BodyStyled } from "../styles/components/middleSection";
 
-import axios from "axios";
-
 export default function Register() {
   const router = useRouter();
 
-  const [usernameReg, setUsernameReg] = useState("");
-  const [emailReg, setEmailReg] = useState("");
-  const [passwordReg, setPasswordReg] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
   };
 
+  const registrationSucceeded = (data) => {
+    alert(data.message);
+    router.push("/login");
+  };
+
+  const registrationFailed = (data) => {
+    alert(data);
+    router.push("/register");
+  };
+
   const incompleteFields = () => {
     alert("Favor preencher todos os campos!");
     router.push("/register");
-    setUsernameReg("");
-    setEmailReg("");
-    setPasswordReg("");
+    setName("");
+    setEmail("");
+    setPassword("");
   };
 
   const register = async () => {
-    if (usernameReg === "" || emailReg === "" || passwordReg === "") {
+    if (name === "" || email === "" || password === "") {
       incompleteFields();
       return;
     }
-
     try {
-      axios
-        .post(`http://localhost:4000/api/auth/register`, {
-          name: usernameReg,
-          email: emailReg,
-          password: passwordReg,
-        })
-        .then((res) => {
-          console.log(res.data);
-          router.push("/login");
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      const data = await registration.register({
+        name,
+        email,
+        password,
+      });
+
+      if (data) {
+        registrationSucceeded(data);
+      } else {
+        registrationFailed("Registration Failed!");
+      }
     } catch (err) {
-      alert(err.message);
+      registrationFailed("Registration Failed");
     }
   };
 
@@ -84,7 +88,7 @@ export default function Register() {
                   id="register-name"
                   placeholder="Full Name"
                   onChange={(e) => {
-                    setUsernameReg(e.target.value);
+                    setName(e.target.value);
                   }}
                 ></input>
               </div>
@@ -95,7 +99,7 @@ export default function Register() {
                   id="register-email"
                   placeholder="Email - ex: you@email.com"
                   onChange={(e) => {
-                    setEmailReg(e.target.value);
+                    setEmail(e.target.value);
                   }}
                 ></input>
               </div>
@@ -114,7 +118,7 @@ export default function Register() {
                   id="register-password-retry"
                   placeholder="Retry password"
                   onChange={(e) => {
-                    setPasswordReg(e.target.value);
+                    setPassword(e.target.value);
                   }}
                 ></input>
               </div>
