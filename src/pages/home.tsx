@@ -23,25 +23,23 @@ export default function HomePage() {
     "Saúde",
     "Serviços Domésticos",
   ];
-  const [users, setUsers] = useState([]);
-  const [services, setServices] = useState([]);
+  const [usersQuantity, setUsersQuantity] = useState([]);
+  const [servicesQuantity, setServicesQuantity] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`${process.env.BACKEND_API}/api/users`)
+      .get(`${process.env.BACKEND_API}/api/users/all/count`)
       .then((res) => {
-        console.log(res.data);
-        setUsers(res.data);
+        setUsersQuantity(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
 
     axios
-      .get(`${process.env.BACKEND_API}/api/services`)
+      .get(`${process.env.BACKEND_API}/api/services/all/count`)
       .then((res) => {
-        console.log(res.data);
-        setServices(res.data);
+        setServicesQuantity(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -75,8 +73,8 @@ export default function HomePage() {
               </Link>
             </div>
             <div className="system-information">
-              <p>Freelancers registered: {users.length}</p>
-              <p>Projects posted: {services.length}</p>
+              <p>Freelancers registered: {usersQuantity}</p>
+              <p>Projects posted: {servicesQuantity}</p>
             </div>
           </div>
         </MainSection>
