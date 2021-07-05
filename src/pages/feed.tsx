@@ -22,7 +22,7 @@ export default function Posts() {
   useEffect(() => {
     axios
       .get(
-        `${process.env.BACKEND_API}/api/services?category=${category}&location=${location}`
+        `${process.env.BACKEND_API}/api/services?category=${category}&city=${city}&state=${state}&country=${country}`
       )
       .then(({ data }) => {
         setPosts(data);
