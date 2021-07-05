@@ -68,7 +68,9 @@ export default function Profile() {
         {
           name,
           email,
-          location,
+          city,
+          state,
+          country,
           phone,
           occupation,
           about_me,
@@ -183,7 +185,7 @@ export default function Profile() {
                   type="text"
                   placeholder={country}
                   defaultValue={country}
-                  onChange={(e) => setState(e.target.value)}
+                  onChange={(e) => setCountry(e.target.value)}
                 />
               </p>
               <p>
