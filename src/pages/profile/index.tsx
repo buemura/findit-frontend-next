@@ -17,7 +17,9 @@ import {
 interface IUser {
   name: string;
   email: string;
-  location: string;
+  city: string;
+  state: string;
+  country: string;
   phone: string;
   occupation: string;
   about_me: string;
@@ -30,7 +32,9 @@ export default function Profile() {
   const [user, setUser] = useState<IUser>({
     name: "",
     email: "",
-    location: "",
+    city: "",
+    state: "",
+    country: "",
     phone: "",
     occupation: "",
     about_me: "",
@@ -125,7 +129,8 @@ export default function Profile() {
             </div>
             <div>
               <p>
-                <strong>Local:</strong> {user.location}
+                <strong>Local:</strong> {user.city}, {user.state} -{" "}
+                {user.country}
               </p>
               <p>
                 <strong>Phone:</strong> {user.phone}

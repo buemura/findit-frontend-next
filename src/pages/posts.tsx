@@ -32,7 +32,9 @@ export default function Posts() {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [location, setLocation] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [country, setCountry] = useState("");
 
   /**
    * Token is needed in order to make a POST, PUT or DELETE request.
@@ -76,7 +78,9 @@ export default function Posts() {
           category,
           description,
           price,
-          location,
+          city,
+          state,
+          country,
         },
         {
           headers: {
@@ -149,9 +153,22 @@ export default function Posts() {
             name="service-city"
             placeholder="Campinas"
             id="city"
-            onChange={(e) => setLocation(e.target.value)}
+            onChange={(e) => setCity(e.target.value)}
           />
-          <input type="text" name="service-state" placeholder="SP" id="state" />
+          <input
+            type="text"
+            name="service-state"
+            placeholder="SP"
+            id="state"
+            onChange={(e) => setState(e.target.value)}
+          />
+          <input
+            type="text"
+            name="service-country"
+            placeholder="Brazil"
+            id="country"
+            onChange={(e) => setCountry(e.target.value)}
+          />
         </ServiceLocation>
         <button onClick={postService}>Post Service</button>
       </MainContainer>

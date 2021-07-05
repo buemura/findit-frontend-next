@@ -14,7 +14,9 @@ interface IPosts {
 export default function Posts() {
   const [posts, setPosts] = useState([]);
   const [category, setCategory] = useState("");
-  const [location, setLocation] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [country, setCountry] = useState("");
   const [filter, setFilter] = useState(false);
 
   useEffect(() => {
@@ -46,9 +48,23 @@ export default function Posts() {
           />
           <input
             type="text"
-            placeholder="Location"
+            placeholder="City"
             onChange={(e) => {
-              setLocation(e.target.value);
+              setCity(e.target.value);
+            }}
+          />
+          <input
+            type="text"
+            placeholder="State"
+            onChange={(e) => {
+              setState(e.target.value);
+            }}
+          />
+          <input
+            type="text"
+            placeholder="Country"
+            onChange={(e) => {
+              setCountry(e.target.value);
             }}
           />
           <button onClick={() => setFilter(true)}>Apply Filter</button>
@@ -58,9 +74,11 @@ export default function Posts() {
             <h2>{post.title}</h2>
             <h3>Category: {post.category}</h3>
             <h3>R$ {post.price}</h3>
-            <p>{post.location}</p>
             <p>
-              <strong>Posted by:</strong> {post.user.name}
+              {post.city}, {post.state} - {post.country}
+            </p>
+            <p>
+              <strong>Posted by:</strong> {post.User.name}
             </p>
           </Feed>
         ))}

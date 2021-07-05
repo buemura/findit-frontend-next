@@ -19,7 +19,9 @@ export default function Profile() {
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [location, setLocation] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [country, setCountry] = useState("");
   const [phone, setPhone] = useState("");
   const [occupation, setOccupation] = useState("");
   const [about_me, setAboutMe] = useState("");
@@ -94,7 +96,9 @@ export default function Profile() {
       .then(({ data }) => {
         setName(data.name);
         setEmail(data.email);
-        setLocation(data.location);
+        setCity(data.city);
+        setState(data.state);
+        setCountry(data.country);
         setPhone(data.phone);
         setOccupation(data.occupation);
         setAboutMe(data.about_me);
@@ -165,9 +169,21 @@ export default function Profile() {
                 <strong>Local:</strong>
                 <input
                   type="text"
-                  placeholder={location}
-                  defaultValue={location}
-                  onChange={(e) => setLocation(e.target.value)}
+                  placeholder={city}
+                  defaultValue={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder={state}
+                  defaultValue={state}
+                  onChange={(e) => setState(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder={country}
+                  defaultValue={country}
+                  onChange={(e) => setState(e.target.value)}
                 />
               </p>
               <p>
