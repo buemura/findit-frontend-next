@@ -29,6 +29,7 @@ interface IUser {
 export default function Profile() {
   const router = useRouter();
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
+  const [profilePhoto, setProfilePhoto] = useState("");
   const [user, setUser] = useState<IUser>({
     name: "",
     email: "",
@@ -79,6 +80,10 @@ export default function Profile() {
       .get(`${process.env.BACKEND_API}/api/users/${id}`)
       .then(({ data }) => {
         setUser(data);
+        setProfilePhoto(
+          `${process.env.BACKEND_API}/api/users/${id}/profile-image`
+        );
+
         if (data.user_photo) {
           setHasPhoto(true);
         }
@@ -95,7 +100,7 @@ export default function Profile() {
         <MainSection>
           <div className="profile-photos">
             {hasPhoto ? (
-              <img src={user.user_photo} alt="photo" className="user-photo" />
+              <img src={profilePhoto} alt="photo" className="user-photo" />
             ) : (
               <img
                 src="icons/user-icon.png"

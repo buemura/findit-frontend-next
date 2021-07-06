@@ -104,7 +104,9 @@ export default function Profile() {
         setPhone(data.phone);
         setOccupation(data.occupation);
         setAboutMe(data.about_me);
-        setUserPhoto(data.user_photo);
+        setUserPhoto(
+          `${process.env.BACKEND_API}/api/users/${id}/profile-image`
+        );
 
         if (data.user_photo) {
           setHasPhoto(true);
