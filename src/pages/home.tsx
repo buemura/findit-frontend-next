@@ -65,10 +65,10 @@ export default function HomePage() {
           </div>
           <div className="button-information">
             <div className="buttons-container">
-              <Link href="/posts" passHref>
+              <Link href="/create-post" passHref>
                 <button className="post-services">Post Services</button>
               </Link>
-              <Link href="/feed" passHref>
+              <Link href="/posts" passHref>
                 <button className="find-services">Find Services</button>
               </Link>
             </div>
