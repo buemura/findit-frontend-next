@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import jwt_decode from "jwt-decode";
-import { HeaderPage } from "../components/HeaderPage";
-import { BodyStyled } from "../styles/components/middleSection";
+import { HeaderPage } from "../../components/HeaderPage";
+import { BodyStyled } from "../../styles/components/middleSection";
 import {
   MainContainer,
   ServiceTitle,
@@ -12,8 +12,8 @@ import {
   ServiceDescription,
   ServicePrice,
   ServiceLocation,
-} from "../styles/pages/posts";
-import authentication from "../services/authentication";
+} from "../../styles/pages/posts";
+import authentication from "../../services/authentication";
 
 interface IPosts {
   name: string;

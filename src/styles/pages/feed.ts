@@ -15,7 +15,7 @@ export const MainContainer = styled.div`
 export const Filters = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
   width: 50%;
   margin: 30px 0 0 0;
@@ -26,11 +26,21 @@ export const Filters = styled.div`
 
 export const Feed = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: left;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   width: 50%;
   margin: 30px 0 0 0;
-  background-color: #c9c9c9;
-  border-radius: 25px;
+  padding: 10px 20px 10px 20px;
+  background-color: #f0f0f0;
+  border-radius: 50px;
+
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
