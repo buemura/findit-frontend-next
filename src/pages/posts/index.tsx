@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../../services/api";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { HeaderPage } from "../../components/HeaderPage";
@@ -43,9 +43,9 @@ export default function Posts() {
   const [filter, setFilter] = useState(false);
 
   useEffect(() => {
-    axios
+    api
       .get(
-        `${process.env.BACKEND_API}/api/services?category=${category}&city=${city}&state=${state}&country=${country}`
+        `/api/services?category=${category}&city=${city}&state=${state}&country=${country}`
       )
       .then(({ data }) => {
         setPosts(data);

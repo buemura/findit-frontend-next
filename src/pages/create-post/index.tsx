@@ -1,7 +1,5 @@
-import axios from "axios";
+import api from "../../services/api";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import jwt_decode from "jwt-decode";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
 import {
@@ -15,8 +13,6 @@ import {
 import authentication from "../../services/authentication";
 
 export default function Posts() {
-  const router = useRouter();
-
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
@@ -25,42 +21,15 @@ export default function Posts() {
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
 
-  /**
-   * Token is needed in order to make a POST, PUT or DELETE request.
-   * Also this token expires in 1 hour. Sign in again to generate a new one.
-   * The token is associated with the user. So if we decode this token, we will be able to retrieve user ID and Email.
-   */
-  let token;
-  let tokenDecoded: any;
-  let id, exp;
-
-  // Check if the user is logged and the jwt expiration with jwt.exp.
-  const checkUserSession = () => {
-    if (localStorage.getItem("token") === null) {
-      alert("Your need to sign in to proceed!");
-      router.push("/login");
-      return;
-    }
-    token = localStorage.getItem("token");
-    tokenDecoded = jwt_decode(token);
-    id = tokenDecoded.id;
-    exp = tokenDecoded.exp;
-
-    // Check the session expiration with jwt.exp.
-    const currentTimestamp = new Date().getTime() / 1000;
-    if (exp < currentTimestamp) {
-      alert("Your session expired, Sign in again to continue!");
-      localStorage.removeItem("token");
-      router.push("/login");
-      return;
-    }
-  };
+  let id: string;
 
   const postService = () => {
-    checkUserSession();
-    axios
+    const token: string = localStorage.getItem("token");
+    id = authentication.checkUserSession("");
+
+    api
       .post(
-        `${process.env.BACKEND_API}/api/services`,
+        "/api/services",
         {
           user_id: id,
           title,
@@ -88,7 +57,7 @@ export default function Posts() {
   };
 
   useEffect(() => {
-    checkUserSession();
+    id = authentication.checkUserSession("");
   }, []);
 
   return (
@@ -125,7 +94,7 @@ export default function Posts() {
         <ServicePrice>
           <p>Price* </p>
           <input
-            type="text"
+            type="number"
             name="service-price"
             placeholder="R$ 500,00"
             onChange={(e) => setPrice(e.target.value)}
@@ -145,7 +114,8 @@ export default function Posts() {
             name="service-state"
             placeholder="SP"
             id="state"
-            onChange={(e) => setState(e.target.value)}
+            maxLength={2}
+            onChange={(e) => setState(e.target.value.toLocaleUpperCase())}
           />
           <input
             type="text"

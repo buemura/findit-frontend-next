@@ -133,9 +133,9 @@ export default function Profile() {
                 type="text"
                 placeholder={name}
                 defaultValue={name}
-                onChange={(e: {
-                  target: { value: React.SetStateAction<string> };
-                }) => setName(e.target.value)}
+                onChange={(e: { target: { value: string } }) =>
+                  setName(e.target.value)
+                }
               />
             </div>
 
@@ -145,9 +145,9 @@ export default function Profile() {
                 type="text"
                 placeholder={occupation}
                 defaultValue={occupation}
-                onChange={(e: {
-                  target: { value: React.SetStateAction<string> };
-                }) => setOccupation(e.target.value)}
+                onChange={(e: { target: { value: string } }) =>
+                  setOccupation(e.target.value)
+                }
               />
             </div>
 
@@ -157,9 +157,9 @@ export default function Profile() {
                 type="text"
                 placeholder={phone}
                 defaultValue={phone}
-                onChange={(e: {
-                  target: { value: React.SetStateAction<string> };
-                }) => setPhone(e.target.value)}
+                onChange={(e: { target: { value: string } }) =>
+                  setPhone(e.target.value)
+                }
               />
             </div>
 
@@ -175,9 +175,9 @@ export default function Profile() {
                   type="text"
                   placeholder={country}
                   defaultValue={country}
-                  onChange={(e: {
-                    target: { value: React.SetStateAction<string> };
-                  }) => setCountry(e.target.value)}
+                  onChange={(e: { target: { value: string } }) =>
+                    setCountry(e.target.value)
+                  }
                 />
               </div>
 
@@ -187,10 +187,10 @@ export default function Profile() {
                   type="text"
                   placeholder={state}
                   defaultValue={state}
-                  maxLength="2"
-                  onChange={(e: {
-                    target: { value: React.SetStateAction<string> };
-                  }) => setState(e.target.value)}
+                  maxLength={2}
+                  onChange={(e: { target: { value: string } }) =>
+                    setState(e.target.value.toLocaleUpperCase())
+                  }
                 />
               </div>
 
@@ -214,9 +214,9 @@ export default function Profile() {
                 className="text-area divisions"
                 placeholder={about_me}
                 defaultValue={about_me}
-                onChange={(e: {
-                  target: { value: React.SetStateAction<string> };
-                }) => setAboutMe(e.target.value)}
+                onChange={(e: { target: { value: string } }) =>
+                  setAboutMe(e.target.value)
+                }
               />
             </div>
             <div className="portifolio">

@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../services/api";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { HeaderPage } from "../components/HeaderPage";
@@ -28,8 +28,8 @@ export default function HomePage() {
   const [servicesQuantity, setServicesQuantity] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.BACKEND_API}/api/users/all/count`)
+    api
+      .get("/api/users/all/count")
       .then((res) => {
         setUsersQuantity(res.data);
       })
@@ -37,8 +37,8 @@ export default function HomePage() {
         console.log(err);
       });
 
-    axios
-      .get(`${process.env.BACKEND_API}/api/services/all/count`)
+    api
+      .get("/api/services/all/count")
       .then((res) => {
         setServicesQuantity(res.data);
       })
