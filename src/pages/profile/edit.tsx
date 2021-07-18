@@ -11,6 +11,7 @@ import {
   InputText,
   InputTextArea,
   ButtonsStyled,
+  SelectStyled
 } from "../../styles/pages/profile-edit";
 
 export default function Profile() {
@@ -73,8 +74,8 @@ export default function Profile() {
       .catch((err) => {
         alert("Failed to Update user!");
       });
-
-    router.push("/profile", null, { shallow: true });
+    
+    router.push("/profile", null, { shallow: false });
   };
 
   useEffect(() => {
@@ -124,13 +125,31 @@ export default function Profile() {
   ];
 
   const selectPhoto = () => {
-    let input = document.getElementById("photo-input").value;
+    var input = document.getElementById("photo-input").value;
     input = input.split("\\").reverse();
 
     const fileName = document.getElementById("photo-output");
 
     fileName.textContent = input[0];
   };
+
+  const siglasEstados = ["N/D","AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"];
+  const nomesEstados = ["N/D","Acre","Alagoas","Amapá","Amazonas","Bahia","Ceará","Distrito Federal","Espírito Santo","Goiás","Maranhão","Mato Grosso","Mato Grosso do Sul","Minas Gerais","Pará","Paraíba","Paraná","Pernambuco","Piauí","Rio de Janeiro","Rio Grande do Norte","Rio Grande do Sul","Rondônia","Roraima","Santa Catarina","São Paulo","Sergipe","Tocantins"];
+  const nomePaises = ["N/D",'África do Sul','Albânia','Alemanha','Andorra','Angola','Anguilla','Antigua','Arábia Saudita','Argentina','Armênia','Aruba','Austrália','Áustria','Azerbaijão','Bahamas','Bahrein','Bangladesh','Barbados','Bélgica','Benin','Bermudas','Botsuana','Brazil','Brunei','Bulgária','Burkina Fasso','Botão','Cabo Verde','Camarões','Camboja','Canadá','Cazaquistão','Chade','Chile','China','Cidade do Vaticano','Colômbia','Congo','Coréia do Sul','Costa do Marfim','Costa Rica','Croácia','Dinamarca','Djibuti','Dominica','EUA','Egito','El Salvador','Emirados Árabes','Equador','Eritréia','Escócia','Eslováquia','Eslovênia','Espanha','Estônia','Etiópia','Fiji','Filipinas','Finlândia', 'França','Gabão','Gâmbia','Gana','Geórgia','Gibraltar','Granada','Grécia','Guadalupe','Guam','Guatemala','Guiana','Guiana Francesa','Guiné-bissau','Haiti','Holanda','Honduras','Hong Kong','Hungria','Iêmen','Ilhas Cayman','Ilhas Cook','Ilhas Curaçao','Ilhas Marshall','Ilhas Turks & Caicos','Ilhas Virgens (brit.)','Ilhas Virgens(amer.)','Ilhas Wallis e Futuna','Índia','Indonésia','Inglaterra','Irlanda','Islândia','Israel','Itália','Jamaica','Japão','Jordânia', 'Kuwait','Latvia','Líbano','Liechtenstein','Lituânia','Luxemburgo','Macau','Macedônia','Madagascar','Malásia','Malaui','Mali', 'Malta','Marrocos','Martinica','Mauritânia','Mauritius','México','Moldova','Mônaco','Montserrat','Nepal','Nicarágua','Niger','Nigéria', 'Noruega','Nova Caledônia','Nova Zelândia','Omã','Palau','Panamá','Papua-nova Guiné','Paquistão','Peru','Polinésia Francesa','Polônia','Porto Rico','Portugal','Qatar','Quênia','Rep. Dominicana','Rep. Tcheca','Reunion','Romênia','Ruanda','Rússia','Saipan','Samoa Americana','Senegal','Serra Leone','Seychelles','Singapura','Síria','Sri Vincent','Sudão','Suécia','Suiça','Suriname','Tailândia','Taiwan','Tanzânia','Togo','Trinidad Tobago','Tunísia','Turquia','Ucrânia','Uganda','Uruguai','Venezuela','Vietnã','Zaire','Zâmbia','Zimbábue'];
+  
+  const onChangeSelectCountry = () => {
+    var select = document.getElementById('country-select');
+  	var value = select.options[select.selectedIndex].value;
+	  
+    setCountry(value);
+  }
+  
+  const onChangeSelectState = () => {
+    var select = document.getElementById('state-select');
+  	var value = select.options[select.selectedIndex].value;
+	  
+    setState(value);
+  }
 
   return (
     <BodyStyled>
@@ -223,27 +242,69 @@ export default function Profile() {
             <div className="local-container">
               <div className="country divisions">
                 <span>Country</span>
-                <InputText
-                  type="text"
-                  placeholder={country}
-                  defaultValue={country}
-                  onChange={(e: { target: { value: string } }) =>
-                    setCountry(e.target.value)
-                  }
-                />
+                <SelectStyled id="country-select" onChange={onChangeSelectCountry}>
+                  {nomePaises.map((mapCountry) => ( 
+                    mapCountry === country ? (
+                      <option
+                      key={mapCountry.toString()}
+                      value={mapCountry}
+                      selected
+                      >
+                      {mapCountry}
+                    </option>  
+                    ) : (
+                      <option
+                        key={mapCountry.toString()}
+                        value={mapCountry}
+                        >
+                        {mapCountry}
+                      </option>  
+                    ) 
+                  ))}
+                </SelectStyled>
               </div>
 
               <div className="state divisions">
                 <span>State</span>
-                <InputText
-                  type="text"
-                  placeholder={state}
-                  defaultValue={state}
-                  maxLength={2}
-                  onChange={(e: { target: { value: string } }) =>
-                    setState(e.target.value.toLocaleUpperCase())
-                  }
-                />
+                <SelectStyled id="state-select" onChange={onChangeSelectState}>
+                  {/* {nomesEstados.map((mapState) => (
+                    mapState === state ? (
+                      <option
+                      key={mapState.toString()}
+                      value={mapState}
+                      selected
+                      >
+                      {mapState}
+                    </option>  
+                    ) : (
+                      <option
+                        key={mapState.toString()}
+                        value={mapState}
+                        >
+                        {mapState}
+                      </option>  
+                    ) 
+                  ))} */}
+
+                  {siglasEstados.map((mapStateUF) => (
+                    mapStateUF === state ? (
+                      <option
+                      key={mapStateUF.toString()}
+                      value={mapStateUF}
+                      selected
+                      >
+                      {mapStateUF}
+                    </option>  
+                    ) : (
+                      <option
+                        key={mapStateUF.toString()}
+                        value={mapStateUF}
+                        >
+                        {mapStateUF}
+                      </option>  
+                    ) 
+                  ))}
+                </SelectStyled>
               </div>
 
               <div className="city divisions">

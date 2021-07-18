@@ -233,6 +233,16 @@ export const InputText = styled.input`
   padding-left: .5rem;
 `;
 
+export const SelectStyled = styled.select`
+  flex: 1;
+  height: 100%;
+  border-radius: 5px;
+  outline: none;
+  background: #eee;
+  border: none;
+  padding-left: .5rem;
+`;
+
 export const InputTextArea = styled.textarea`
   width: 100%;
   min-height: 5rem !important;
