@@ -8,10 +8,10 @@ import { BodyStyled } from "../../styles/components/middleSection";
 import {
   MainContainer,
   MainSection,
-  PersonalInfo,
-  AboutMe,
-  Portfolio,
-} from "../../styles/pages/profile";
+  InputText,
+  InputTextArea,
+  ButtonsStyled
+} from "../../styles/pages/profile-edit";
 
 export default function Profile() {
   const router = useRouter();
@@ -116,112 +116,139 @@ export default function Profile() {
         console.log(err);
       });
   }, []);
+  
+  const divStyleHasPhoto = {
+    backgroundImage: 'url(' + user_photo + ')'
+  };
+  const hasNotPhoto = "/icons/user-icon.png"
+  const divStyleHasNotPhoto = {
+    backgroundImage: 'url(' + hasNotPhoto + ')'
+  };
+
+  const discartChanges = () => {
+    javascript:history.back();
+  };
+
+  let portifolioImageList = [
+    "https://www.webnaveia.com.br/wp-content/uploads/2019/10/Como-Criar-um-Site-de-Empregos.png",
+    "https://lh3.googleusercontent.com/ho4N9JX2-O8IpBfs5lgVnzUagL1AXTpyG3QT-X3pSoOv0u35egobcOGbldO1LQWCrh6K0QN8BEUP8Y4TXTR1IafZBKlmCcervIDE=w960",
+    "https://img.ibxk.com.br/2015/06/29/29190710950506.jpg"
+  ];
 
   return (
     <BodyStyled>
       <HeaderPage />
       <MainContainer>
         <MainSection>
+          {/* image and photo */}
           <div className="profile-photos">
             {hasPhoto ? (
-              <img src={user_photo} alt="photo" className="user-photo" />
+              <div className="user-photo" style={divStyleHasPhoto}>
+                <a href="/" className="photo-black-transparence">Click here to <br/>select photo</a>
+              </div>
             ) : (
-              <img
-                src="../icons/user-icon.png"
-                alt="photo"
-                className="user-photo"
-              />
+              <div className="user-photo" style={divStyleHasNotPhoto}></div>
             )}
           </div>
 
-          <div className="title">
-            <h3>
-              <input
+          {/* all data to change */}
+          <div className="data-container">
+            <h2>Basic informations</h2>
+            <div className="name-container divisions">
+              <span>Name</span>
+              <InputText
                 type="text"
                 placeholder={name}
                 defaultValue={name}
                 onChange={(e) => setName(e.target.value)}
               />
-            </h3>
+            </div> 
 
-            <h3>
-              <input
+            <div className="phone-container divisions">
+              <span>Phone</span>
+              <InputText
+                type="text"
+                placeholder={phone}
+                defaultValue={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div> 
+              
+            <div className="email-container divisions">
+              <span>E-mail</span>
+              <InputText type="text" value={email} disabled/>
+            </div>
+
+            <div className="occupation-container divisions">
+              <span>Occupation</span>
+              <InputText
                 type="text"
                 placeholder={occupation}
                 defaultValue={occupation}
                 onChange={(e) => setOccupation(e.target.value)}
               />
-            </h3>
-
-            <button onClick={updateProfile}>Save Profile</button>
-          </div>
-
-          <PersonalInfo>
-            <div>
-              <p>
-                <strong>Works Done:</strong>{" "}
-              </p>
-              <p>
-                <strong>Works Done in Time:</strong>{" "}
-              </p>
-              <p>
-                <strong>Works Done Within Budget:</strong>{" "}
-              </p>
             </div>
-            <div>
-              <p>
-                <strong>Local:</strong>
-                <input
-                  type="text"
-                  placeholder={city}
-                  defaultValue={city}
-                  onChange={(e) => setCity(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder={state}
-                  defaultValue={state}
-                  onChange={(e) => setState(e.target.value)}
-                />
-                <input
+
+            <div className="local-container">
+              <div className="country divisions">
+                <span>Country</span>
+                <InputText
                   type="text"
                   placeholder={country}
                   defaultValue={country}
                   onChange={(e) => setCountry(e.target.value)}
                 />
-              </p>
-              <p>
-                <strong>Phone:</strong>
-                <input
+              </div>
+
+              <div className="state divisions">
+                <span>State</span>
+                <InputText
                   type="text"
-                  placeholder={phone}
-                  defaultValue={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder={state}
+                  defaultValue={state}
+                  onChange={(e) => setState(e.target.value)}
                 />
-              </p>
-              <p>
-                <strong>Email:</strong> {email}
-              </p>
+              </div>
+
+              <div className="city divisions">
+                <span>City</span>
+                <InputText
+                  type="text"
+                  placeholder={city}
+                  defaultValue={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  />
+              </div>            
             </div>
-          </PersonalInfo>
 
-          <AboutMe>
-            <h2>About me</h2>
-            <input
-              type="text"
-              placeholder={about_me}
-              defaultValue={about_me}
-              onChange={(e) => setAboutMe(e.target.value)}
-            />
-          </AboutMe>
-
-          <Portfolio>
-            <h2>Portfolio</h2>
             <div>
-              <div className="div-img-portifolio d01"></div>
-              <div className="div-img-portifolio d02"></div>
+              <h2>Resume</h2>
+              <InputTextArea
+                type="text"
+                className="text-area divisions"
+                placeholder={about_me}
+                defaultValue={about_me}
+                onChange={(e) => setAboutMe(e.target.value)}
+              />
             </div>
-          </Portfolio>
+            <div className="portifolio">
+              <h2>Portfolio</h2>
+              <a href="">Add +</a>
+              <div className="portifolio-container">
+                {portifolioImageList.map((img) => (
+                  <div key={img.toString()}
+                    className="portifolio-image" 
+                    style={{ backgroundImage: "url("+ img +")" }}>                  
+                  </div>
+                ))}
+              </div>
+            </div>
+          
+            <div className="buttons  divisions">
+              <ButtonsStyled className="discart" onClick={discartChanges}>Cancel</ButtonsStyled>
+              <ButtonsStyled className="save" onClick={updateProfile}>Save</ButtonsStyled>
+            </div>
+          </div>
         </MainSection>
       </MainContainer>
     </BodyStyled>

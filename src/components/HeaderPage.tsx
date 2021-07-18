@@ -1,9 +1,18 @@
 import { HeaderDefault } from "../components/HeaderDefault";
 import { HeaderUser } from "../components/HeaderUser";
 
+import { useEffect, useState } from "react";
+
 export function HeaderPage() {
   // variable to test alternance between default header and user logged header
   let i = 0;
+  const [hasToken, setHasToken] = useState(false);
 
-  return i === 0 ? <HeaderDefault /> : <HeaderUser />;
+  useEffect(() => {
+    if (localStorage.getItem("token") !== null) {
+      setHasToken(true);
+    }
+  }, []);
+
+  return hasToken ? <HeaderUser /> : <HeaderDefault />;
 }

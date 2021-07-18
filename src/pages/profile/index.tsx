@@ -93,6 +93,14 @@ export default function Profile() {
       });
   }, []);
 
+  const divStyleHasPhoto = {
+    backgroundImage: 'url(' + profilePhoto + ')'
+  };
+  const hasNotPhoto = "/icons/user-icon.png"
+  const divStyleHasNotPhoto = {
+    backgroundImage: 'url(' + hasNotPhoto + ')'
+  };
+
   return (
     <BodyStyled>
       <HeaderPage />
@@ -100,25 +108,22 @@ export default function Profile() {
         <MainSection>
           <div className="profile-photos">
             {hasPhoto ? (
-              <img src={profilePhoto} alt="photo" className="user-photo" />
+              <div className="user-photo" style={divStyleHasPhoto}></div>
             ) : (
-              <img
-                src="icons/user-icon.png"
-                alt="photo"
-                className="user-photo"
-              />
+              <div className="user-photo" style={divStyleHasNotPhoto}></div>
             )}
+            <div className="title">
+              <h1>{user.name}</h1>
+              <h3>{user.occupation}</h3>
+              <Link href="/profile/edit">
+                <a href="">
+                  <img src="icons/edit-property-64.png"></img>Edit Profile
+                </a>
+              </Link>
+          </div>
           </div>
 
-          <div className="title">
-            <h1>{user.name}</h1>
-            <h3>{user.occupation}</h3>
-            <Link href="/profile/edit">
-              <a href="">
-                <img src="icons/edit-property-64.png"></img>Edit Profile
-              </a>
-            </Link>
-          </div>
+          
 
           <PersonalInfo>
             <div>

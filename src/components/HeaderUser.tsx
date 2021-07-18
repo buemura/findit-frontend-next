@@ -2,9 +2,10 @@ import { Container, Header } from "../styles/components/HeaderUser";
 import Switch from "./Switch";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export function HeaderUser() {
-  let hasNotification = 1;
+  const [hasNotification, setHasNotification] = useState(0);
 
   return (
     <Container>
@@ -12,7 +13,7 @@ export function HeaderUser() {
         <div className="divLogo">
           <Link href="/home" passHref>
             <a>
-              <img src="icons/logo.png" alt="Logo" />
+              <img src="/icons/logo.png" alt="Logo" />
               Find It
             </a>
           </Link>
@@ -20,7 +21,7 @@ export function HeaderUser() {
 
         <div className="containerLinks">
           <div className="search">
-            <img src="icons/search.png" alt="Search" />
+            <img src="/icons/search.png" alt="Search" />
             <input type="text" placeholder="Type here..." />
             <button>Search</button>
           </div>
@@ -42,13 +43,24 @@ export function HeaderUser() {
                 <a className="notification">
                   <span>Notifications</span>
                   <div>                    
-                    <img className="notificationImage" src="icons/notification-bell.png" alt="Notification" />
-                    { hasNotification === 1 ? <img className="warning" src="icons/warning.png" alt="Warning" /> : <span className="warningSpan"></span> }
+                    <img className="notificationImage" src="/icons/notification-bell.png" alt="Notification" />
+                    {hasNotification === 1 ? (
+                              <img
+                                className="warning"
+                                src="/icons/warning.png"
+                                alt="Warning"
+                              />
+                            ) : (
+                              <span className="warningSpan"></span>
+                            )}
                   </div>
                 </a>
               </Link>
               <Link href="/profile" passHref>
                 <a className="profile">Profile</a>
+              </Link>              
+              <Link href="/home" passHref>
+                <a className="user-logout">Logout</a>
               </Link>
             </div>
           </div>
