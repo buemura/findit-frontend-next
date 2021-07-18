@@ -2,7 +2,8 @@ import { Container, Header } from "../styles/components/HeaderUser";
 import Switch from "./Switch";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import authentication from "../services/authentication";
 
 export function HeaderUser() {
   const [hasNotification, setHasNotification] = useState(0);
@@ -42,26 +43,33 @@ export function HeaderUser() {
               <Link href="/notification" passHref>
                 <a className="notification">
                   <span>Notifications</span>
-                  <div>                    
-                    <img className="notificationImage" src="/icons/notification-bell.png" alt="Notification" />
+                  <div>
+                    <img
+                      className="notificationImage"
+                      src="/icons/notification-bell.png"
+                      alt="Notification"
+                    />
                     {hasNotification === 1 ? (
-                              <img
-                                className="warning"
-                                src="/icons/warning.png"
-                                alt="Warning"
-                              />
-                            ) : (
-                              <span className="warningSpan"></span>
-                            )}
+                      <img
+                        className="warning"
+                        src="/icons/warning.png"
+                        alt="Warning"
+                      />
+                    ) : (
+                      <span className="warningSpan"></span>
+                    )}
                   </div>
                 </a>
               </Link>
-              <Link href="/profile" passHref>
-                <a className="profile">Profile</a>
-              </Link>              
-              <Link href="/home" passHref>
-                <a className="user-logout">Logout</a>
-              </Link>
+              <a
+                className="profile"
+                onClick={() => authentication.checkUserSession("profile")}
+              >
+                Profile
+              </a>
+              <a className="user-logout" onClick={authentication.logOut}>
+                Logout
+              </a>
             </div>
           </div>
 

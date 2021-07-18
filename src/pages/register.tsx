@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import registration from "../services/registration";
+import authentication from "../services/authentication";
 
 import { Container } from "../styles/components/registerContainer";
 import { Div } from "../styles/pages/registerPage";
@@ -47,7 +47,7 @@ export default function Register() {
       return;
     }
     try {
-      const data = await registration.register({
+      const data = await authentication.register({
         name,
         email,
         password,

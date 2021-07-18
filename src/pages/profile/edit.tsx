@@ -10,7 +10,7 @@ import {
   MainSection,
   InputText,
   InputTextArea,
-  ButtonsStyled
+  ButtonsStyled,
 } from "../../styles/pages/profile-edit";
 
 export default function Profile() {
@@ -33,9 +33,9 @@ export default function Profile() {
    * The token is associated with the user that Signed in.
    * So if we decode this token we will be able to retrieve user ID and Email.
    */
-  let token;
+  let token: string;
   let tokenDecoded: any;
-  let id, exp;
+  let id: any, exp: number;
 
   // Check if the user is logged and the jwt expiration with jwt.exp.
   const checkUserSession = () => {
@@ -74,7 +74,6 @@ export default function Profile() {
           phone,
           occupation,
           about_me,
-          user_photo,
         },
         {
           headers: {
@@ -116,23 +115,23 @@ export default function Profile() {
         console.log(err);
       });
   }, []);
-  
+
   const divStyleHasPhoto = {
-    backgroundImage: 'url(' + user_photo + ')'
+    backgroundImage: "url(" + user_photo + ")",
   };
-  const hasNotPhoto = "/icons/user-icon.png"
+  const hasNotPhoto = "/icons/user-icon.png";
   const divStyleHasNotPhoto = {
-    backgroundImage: 'url(' + hasNotPhoto + ')'
+    backgroundImage: "url(" + hasNotPhoto + ")",
   };
 
   const discartChanges = () => {
-    javascript:history.back();
+    javascript: history.back();
   };
 
   let portifolioImageList = [
     "https://www.webnaveia.com.br/wp-content/uploads/2019/10/Como-Criar-um-Site-de-Empregos.png",
     "https://lh3.googleusercontent.com/ho4N9JX2-O8IpBfs5lgVnzUagL1AXTpyG3QT-X3pSoOv0u35egobcOGbldO1LQWCrh6K0QN8BEUP8Y4TXTR1IafZBKlmCcervIDE=w960",
-    "https://img.ibxk.com.br/2015/06/29/29190710950506.jpg"
+    "https://img.ibxk.com.br/2015/06/29/29190710950506.jpg",
   ];
 
   return (
@@ -144,7 +143,10 @@ export default function Profile() {
           <div className="profile-photos">
             {hasPhoto ? (
               <div className="user-photo" style={divStyleHasPhoto}>
-                <a href="/" className="photo-black-transparence">Click here to <br/>select photo</a>
+                <a href="/" className="photo-black-transparence">
+                  Click here to <br />
+                  select photo
+                </a>
               </div>
             ) : (
               <div className="user-photo" style={divStyleHasNotPhoto}></div>
@@ -160,23 +162,10 @@ export default function Profile() {
                 type="text"
                 placeholder={name}
                 defaultValue={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setName(e.target.value)}
               />
-            </div> 
-
-            <div className="phone-container divisions">
-              <span>Phone</span>
-              <InputText
-                type="text"
-                placeholder={phone}
-                defaultValue={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-            </div> 
-              
-            <div className="email-container divisions">
-              <span>E-mail</span>
-              <InputText type="text" value={email} disabled/>
             </div>
 
             <div className="occupation-container divisions">
@@ -185,8 +174,27 @@ export default function Profile() {
                 type="text"
                 placeholder={occupation}
                 defaultValue={occupation}
-                onChange={(e) => setOccupation(e.target.value)}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setOccupation(e.target.value)}
               />
+            </div>
+
+            <div className="phone-container divisions">
+              <span>Phone</span>
+              <InputText
+                type="text"
+                placeholder={phone}
+                defaultValue={phone}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setPhone(e.target.value)}
+              />
+            </div>
+
+            <div className="email-container divisions">
+              <span>E-mail</span>
+              <InputText type="text" value={email} disabled />
             </div>
 
             <div className="local-container">
@@ -196,7 +204,9 @@ export default function Profile() {
                   type="text"
                   placeholder={country}
                   defaultValue={country}
-                  onChange={(e) => setCountry(e.target.value)}
+                  onChange={(e: {
+                    target: { value: React.SetStateAction<string> };
+                  }) => setCountry(e.target.value)}
                 />
               </div>
 
@@ -206,7 +216,10 @@ export default function Profile() {
                   type="text"
                   placeholder={state}
                   defaultValue={state}
-                  onChange={(e) => setState(e.target.value)}
+                  maxLength="2"
+                  onChange={(e: {
+                    target: { value: React.SetStateAction<string> };
+                  }) => setState(e.target.value)}
                 />
               </div>
 
@@ -216,19 +229,23 @@ export default function Profile() {
                   type="text"
                   placeholder={city}
                   defaultValue={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  />
-              </div>            
+                  onChange={(e: {
+                    target: { value: React.SetStateAction<string> };
+                  }) => setCity(e.target.value)}
+                />
+              </div>
             </div>
 
             <div>
-              <h2>Resume</h2>
+              <h2>About Me</h2>
               <InputTextArea
                 type="text"
                 className="text-area divisions"
                 placeholder={about_me}
                 defaultValue={about_me}
-                onChange={(e) => setAboutMe(e.target.value)}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setAboutMe(e.target.value)}
               />
             </div>
             <div className="portifolio">
@@ -236,17 +253,22 @@ export default function Profile() {
               <a href="">Add +</a>
               <div className="portifolio-container">
                 {portifolioImageList.map((img) => (
-                  <div key={img.toString()}
-                    className="portifolio-image" 
-                    style={{ backgroundImage: "url("+ img +")" }}>                  
-                  </div>
+                  <div
+                    key={img.toString()}
+                    className="portifolio-image"
+                    style={{ backgroundImage: "url(" + img + ")" }}
+                  ></div>
                 ))}
               </div>
             </div>
-          
+
             <div className="buttons  divisions">
-              <ButtonsStyled className="discart" onClick={discartChanges}>Cancel</ButtonsStyled>
-              <ButtonsStyled className="save" onClick={updateProfile}>Save</ButtonsStyled>
+              <ButtonsStyled className="discart" onClick={discartChanges}>
+                Cancel
+              </ButtonsStyled>
+              <ButtonsStyled className="save" onClick={updateProfile}>
+                Save
+              </ButtonsStyled>
             </div>
           </div>
         </MainSection>

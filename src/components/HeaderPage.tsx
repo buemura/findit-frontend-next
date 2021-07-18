@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 
 export function HeaderPage() {
   // variable to test alternance between default header and user logged header
-  let i = 0;
   const [hasToken, setHasToken] = useState(false);
 
   useEffect(() => {

@@ -52,7 +52,7 @@ export default function LoginPage() {
     }
 
     try {
-      const token = await authentication.autheticate({
+      const token = await authentication.logIn({
         email,
         password,
       });

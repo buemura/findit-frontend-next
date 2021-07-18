@@ -9,6 +9,7 @@ import {
   MainSection,
   ListItem,
 } from "../styles/pages/home";
+import authentication from "../services/authentication";
 
 export default function HomePage() {
   const items = [
@@ -65,9 +66,12 @@ export default function HomePage() {
           </div>
           <div className="button-information">
             <div className="buttons-container">
-              <Link href="/create-post" passHref>
-                <button className="post-services">Post Services</button>
-              </Link>
+              <button
+                className="post-services"
+                onClick={() => authentication.checkUserSession("create-post")}
+              >
+                Post Services
+              </button>
               <Link href="/posts" passHref>
                 <button className="find-services">Find Services</button>
               </Link>

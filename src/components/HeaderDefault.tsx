@@ -2,18 +2,8 @@ import { Container, Header } from "../styles/components/HeaderDefault";
 import Switch from "./Switch";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 export function HeaderDefault() {
-  const [hasToken, setHasToken] = useState(false);
-  const [hasNotification, setHasNotification] = useState(0);
-
-  useEffect(() => {
-    if (localStorage.getItem("token") !== null) {
-      setHasToken(true);
-    }
-  }, []);
-
   return (
     <Container>
       <Header>
@@ -47,12 +37,12 @@ export function HeaderDefault() {
             </div>
 
             <div className="loginLinks">
-                  <Link href="/login" passHref>
-                    <a className="login">Login</a>
-                  </Link>
-                  <Link href="/register" passHref>
-                    <a className="register">Register</a>
-                  </Link>
+              <Link href="/login" passHref>
+                <a className="login">Login</a>
+              </Link>
+              <Link href="/register" passHref>
+                <a className="register">Register</a>
+              </Link>
             </div>
           </div>
 

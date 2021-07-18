@@ -94,11 +94,11 @@ export default function Profile() {
   }, []);
 
   const divStyleHasPhoto = {
-    backgroundImage: 'url(' + profilePhoto + ')'
+    backgroundImage: "url(" + profilePhoto + ")",
   };
-  const hasNotPhoto = "/icons/user-icon.png"
+  const hasNotPhoto = "/icons/user-icon.png";
   const divStyleHasNotPhoto = {
-    backgroundImage: 'url(' + hasNotPhoto + ')'
+    backgroundImage: "url(" + hasNotPhoto + ")",
   };
 
   return (
@@ -120,11 +120,8 @@ export default function Profile() {
                   <img src="icons/edit-property-64.png"></img>Edit Profile
                 </a>
               </Link>
+            </div>
           </div>
-          </div>
-
-          
-
           <PersonalInfo>
             <div>
               <p>
