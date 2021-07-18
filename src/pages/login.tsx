@@ -35,13 +35,13 @@ export default function LoginPage() {
 
   const authenticationFailed = () => {
     alert("Falha de autenticação! Verifique as informações preenchidas.");
-    clearVariables();
+    //clearVariables();
     router.push("/login");
   };
 
   const incompleteFields = () => {
     alert("Favor preencher todos os campos!");
-    clearVariables();
+    //clearVariables();
     router.push("/login");
   };
 

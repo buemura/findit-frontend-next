@@ -91,7 +91,7 @@ export default function Profile() {
     backgroundImage: "url(" + user_photo + ")",
   };
   const hasNoPhoto = "/icons/user-icon.png";
-  const divStyleHasNoPhoto = {
+  const divStyleHasNotPhoto = {
     backgroundImage: "url(" + hasNoPhoto + ")",
   };
 
@@ -105,6 +105,14 @@ export default function Profile() {
     "https://img.ibxk.com.br/2015/06/29/29190710950506.jpg",
   ];
 
+  const selectPhoto = () => {
+    var input = document.getElementById('photo-input').value;
+    var fileName = document.getElementById('photo-output');
+
+    fileName.textContent = input;    
+  };
+
+
   return (
     <BodyStyled>
       <HeaderPage />
@@ -113,14 +121,23 @@ export default function Profile() {
           {/* image and photo */}
           <div className="profile-photos">
             {hasPhoto ? (
-              <div className="user-photo" style={divStyleHasPhoto}>
-                <a href="/" className="photo-black-transparence">
-                  Click here to <br />
-                  select photo
-                </a>
-              </div>
+              <>
+                <div className="user-photo" style={divStyleHasPhoto}></div>
+                <div className="input-photo-container">
+                  <label htmlFor="photo-input">Upload Photo</label>
+                  <input type="file" id="photo-input" className="photo-input" onChange={selectPhoto}/>
+                  <span id="photo-output"></span>
+                </div>
+              </>
             ) : (
-              <div className="user-photo" style={divStyleHasNoPhoto}></div>
+              <>
+                <div className="user-photo" style={divStyleHasNotPhoto}></div>
+                <div className="input-photo-container">
+                  <label htmlFor="photo-input">Upload Photo</label>
+                  <input type="file" id="photo-input" className="photo-input" onChange={selectPhoto}/>
+                  <span id="photo-output"></span>
+                </div>
+              </>
             )}
           </div>
 

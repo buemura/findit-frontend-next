@@ -43,7 +43,17 @@ export const MainSection = styled.div`
     background-position: center;
   }
 
-  .photo-black-transparence {
+  /* Aparência que terá o seletor de arquivo */
+  label {
+    background-color: #4169E1;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    padding: 6px 20px
+  }
+
+  input[type='file'] {
+    display: none;
     background: rgba(0,0,0,.6);
     width: 100%;
     height: 100%;
@@ -53,10 +63,16 @@ export const MainSection = styled.div`
     text-decoration: none;
     font-size: .8rem;
   }
-  .user-photo:hover .photo-black-transparence{
+
+  .input-photo-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    color: #fff;
+  }
+
+  #photo-output {
+    font-size: .8rem;
+    margin-top: .3rem;
   }
 
   .data-container {
