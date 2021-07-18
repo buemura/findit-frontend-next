@@ -54,7 +54,28 @@ export const Post = styled.div`
   margin: 30px 0 0 0;
   padding: 10px 20px 10px 20px;
   background-color: #f0f0f0;
-  border-radius: 50px;
+  border-radius: 20px;
+
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const Comments = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  margin: 5px 0 0 0;
+  padding: 10px 20px 10px 20px;
+  background-color: #f0f0f0;
+  border-radius: 20px;
 
   div {
     display: flex;

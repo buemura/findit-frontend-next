@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
-import { MainContainer, Post } from "../../styles/pages/posts";
+import { Comments, MainContainer, Post } from "../../styles/pages/posts";
 
 export const getStaticPaths = async () => {
   const res = await fetch(`${process.env.BACKEND_API}/api/services/`);
@@ -80,6 +80,29 @@ export default function PostDetails({ post }) {
             <p>{calculateDate(post.createdAt)}</p>
           </div>
         </Post>
+        <Comments>
+          <div>
+            <h3>Linus Torvalds</h3>
+            <p>
+              Hello, I have the required experience for the project. I can
+              finish the job in 5 days for 300 total price.
+            </p>
+          </div>
+          <div>
+            <h3>Bill Gates</h3>
+            <p>
+              Hello, I have the required experience for the project. I can
+              finish the job in 6 days for 200 total price.
+            </p>
+          </div>
+          <div>
+            <h3>Alan Turing</h3>
+            <p>
+              Hello, I have the required experience for the project. I can
+              finish the job in 2 days for 500 total price.
+            </p>
+          </div>
+        </Comments>
       </MainContainer>
     </BodyStyled>
   );
