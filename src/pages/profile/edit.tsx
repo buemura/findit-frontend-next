@@ -34,8 +34,20 @@ export default function Profile() {
     const id: string = authentication.checkUserSession("");
     const token: string = localStorage.getItem("token");
 
+    // Update User Photo
     const data = new FormData();
     data.append("file", selectedFile);
+
+    api
+      .post(`/api/users/${id}/profile-image/upload`, data, {
+        headers: {
+          authorization: token,
+        },
+      })
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
 
     // Update User Info
     api
@@ -57,26 +69,12 @@ export default function Profile() {
           },
         }
       )
-      .then((res) => {
-        router.push("/profile");
-      })
+      .then((res) => {})
       .catch((err) => {
         alert("Failed to Update user!");
       });
 
-    // Update User Photo
-    api
-      .post(`/api/users/${id}/profile-image/upload`, data, {
-        headers: {
-          authorization: token,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    router.push("/profile", null, { shallow: true });
   };
 
   useEffect(() => {
@@ -126,10 +124,12 @@ export default function Profile() {
   ];
 
   const selectPhoto = () => {
-    const input = document.getElementById("photo-input").value;
+    let input = document.getElementById("photo-input").value;
+    input = input.split("\\").reverse();
+
     const fileName = document.getElementById("photo-output");
 
-    fileName.textContent = input;
+    fileName.textContent = input[0];
   };
 
   return (
