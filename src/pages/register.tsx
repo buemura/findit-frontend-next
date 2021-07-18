@@ -24,7 +24,9 @@ export default function Register() {
   };
 
   const registrationSucceeded = (data) => {
-    alert(data.message);
+    alert(
+      `${data.message}\n\nA confirmation email was sent in your inbox.\nPlease confirm your Registration...`
+    );
     router.push("/login");
   };
 
