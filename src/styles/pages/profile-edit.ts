@@ -49,6 +49,7 @@ export const MainSection = styled.div`
     border-radius: 5px;
     color: #fff;
     cursor: pointer;
+    text-align: center;
     padding: 6px 20px
   }
 
@@ -73,6 +74,7 @@ export const MainSection = styled.div`
   #photo-output {
     font-size: .8rem;
     margin-top: .3rem;
+    max-width: 15rem;
   }
 
   .data-container {
