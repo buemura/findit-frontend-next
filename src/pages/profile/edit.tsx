@@ -27,11 +27,17 @@ export default function Profile() {
   const [about_me, setAboutMe] = useState("");
   const [user_photo, setUserPhoto] = useState("");
 
+  const [selectedFile, setSelectedFile] = useState(null);
+
   // Update profile by sending a PUT request do backend API.
   const updateProfile = () => {
     const id: string = authentication.checkUserSession("");
     const token: string = localStorage.getItem("token");
 
+    const data = new FormData();
+    data.append("file", selectedFile);
+
+    // Update User Info
     api
       .put(
         `/api/users/${id}`,
@@ -56,6 +62,20 @@ export default function Profile() {
       })
       .catch((err) => {
         alert("Failed to Update user!");
+      });
+
+    // Update User Photo
+    api
+      .post(`/api/users/${id}/profile-image/upload`, data, {
+        headers: {
+          authorization: token,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -106,12 +126,11 @@ export default function Profile() {
   ];
 
   const selectPhoto = () => {
-    var input = document.getElementById('photo-input').value;
-    var fileName = document.getElementById('photo-output');
+    const input = document.getElementById("photo-input").value;
+    const fileName = document.getElementById("photo-output");
 
-    fileName.textContent = input;    
+    fileName.textContent = input;
   };
-
 
   return (
     <BodyStyled>
@@ -125,7 +144,15 @@ export default function Profile() {
                 <div className="user-photo" style={divStyleHasPhoto}></div>
                 <div className="input-photo-container">
                   <label htmlFor="photo-input">Upload Photo</label>
-                  <input type="file" id="photo-input" className="photo-input" onChange={selectPhoto}/>
+                  <input
+                    type="file"
+                    id="photo-input"
+                    className="photo-input"
+                    onChange={(e) => {
+                      selectPhoto();
+                      setSelectedFile(e.target.files[0]);
+                    }}
+                  />
                   <span id="photo-output"></span>
                 </div>
               </>
@@ -134,7 +161,15 @@ export default function Profile() {
                 <div className="user-photo" style={divStyleHasNotPhoto}></div>
                 <div className="input-photo-container">
                   <label htmlFor="photo-input">Upload Photo</label>
-                  <input type="file" id="photo-input" className="photo-input" onChange={selectPhoto}/>
+                  <input
+                    type="file"
+                    id="photo-input"
+                    className="photo-input"
+                    onChange={(e) => {
+                      selectPhoto();
+                      setSelectedFile(e.target.files[0]);
+                    }}
+                  />
                   <span id="photo-output"></span>
                 </div>
               </>
