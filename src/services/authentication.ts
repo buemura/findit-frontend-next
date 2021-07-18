@@ -76,7 +76,9 @@ const authentication = {
 
     if (page) {
       router.push(`/${page}`);
+      return id;
     }
+    return id;
   },
 };
 

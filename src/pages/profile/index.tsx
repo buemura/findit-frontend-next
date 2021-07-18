@@ -1,8 +1,7 @@
-import axios from "axios";
+import api from "../../services/api";
 import React, { useState, useEffect } from "react";
-import jwt_decode from "jwt-decode";
-import { useRouter } from "next/router";
 import Link from "next/link";
+import authentication from "../../services/authentication";
 
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
@@ -27,7 +26,6 @@ interface IUser {
 }
 
 export default function Profile() {
-  const router = useRouter();
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [profilePhoto, setProfilePhoto] = useState("");
   const [user, setUser] = useState<IUser>({
@@ -42,42 +40,12 @@ export default function Profile() {
     user_photo: "",
   });
 
-  /**
-   * Token is needed in order to make a POST, PUT or DELETE request.
-   * Also this token expires in 1 hour. Sign in again to generate a new one.
-   * The token is associated with the user. So if we decode this token, we will be able to retrieve user ID and Email.
-   */
-  let token;
-  let tokenDecoded: any;
-  let id, exp;
-
-  // Check if the user is logged and the jwt expiration with jwt.exp.
-  const checkUserSession = () => {
-    if (localStorage.getItem("token") === null) {
-      alert("Your need to sign in to proceed!");
-      router.push("/login");
-      return;
-    }
-    token = localStorage.getItem("token");
-    tokenDecoded = jwt_decode(token);
-    id = tokenDecoded.id;
-    exp = tokenDecoded.exp;
-
-    // Check the session expiration with jwt.exp.
-    const currentTimestamp = new Date().getTime() / 1000;
-    if (exp < currentTimestamp) {
-      alert("Your session expired, Sign in again to continue!");
-      localStorage.removeItem("token");
-      router.push("/login");
-      return;
-    }
-  };
-
   useEffect(() => {
-    checkUserSession();
+    const id: string = authentication.checkUserSession("");
     setHasPhoto(false);
-    axios
-      .get(`${process.env.BACKEND_API}/api/users/${id}`)
+
+    api
+      .get(`/api/users/${id}`)
       .then(({ data }) => {
         setUser(data);
         setProfilePhoto(
@@ -96,9 +64,9 @@ export default function Profile() {
   const divStyleHasPhoto = {
     backgroundImage: "url(" + profilePhoto + ")",
   };
-  const hasNotPhoto = "/icons/user-icon.png";
-  const divStyleHasNotPhoto = {
-    backgroundImage: "url(" + hasNotPhoto + ")",
+  const hasNoPhoto = "/icons/user-icon.png";
+  const divStyleHasNoPhoto = {
+    backgroundImage: "url(" + hasNoPhoto + ")",
   };
 
   return (
@@ -110,7 +78,7 @@ export default function Profile() {
             {hasPhoto ? (
               <div className="user-photo" style={divStyleHasPhoto}></div>
             ) : (
-              <div className="user-photo" style={divStyleHasNotPhoto}></div>
+              <div className="user-photo" style={divStyleHasNoPhoto}></div>
             )}
             <div className="title">
               <h1>{user.name}</h1>

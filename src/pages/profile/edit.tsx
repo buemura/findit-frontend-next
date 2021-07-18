@@ -1,7 +1,7 @@
-import axios from "axios";
+import api from "../../services/api";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import jwt_decode from "jwt-decode";
+import authentication from "../../services/authentication";
 
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
@@ -27,44 +27,14 @@ export default function Profile() {
   const [about_me, setAboutMe] = useState("");
   const [user_photo, setUserPhoto] = useState("");
 
-  /**
-   * JWT token is needed in order to make a POST, PUT or DELETE request.
-   * Also this token expires in 1 hour. So you will need to Sign in again to generate a new one.
-   * The token is associated with the user that Signed in.
-   * So if we decode this token we will be able to retrieve user ID and Email.
-   */
-  let token: string;
-  let tokenDecoded: any;
-  let id: any, exp: number;
-
-  // Check if the user is logged and the jwt expiration with jwt.exp.
-  const checkUserSession = () => {
-    if (localStorage.getItem("token") === null) {
-      alert("Your need to sign in to proceed!");
-      router.push("/login");
-      return;
-    }
-    token = localStorage.getItem("token");
-    tokenDecoded = jwt_decode(token);
-    id = tokenDecoded.id;
-    exp = tokenDecoded.exp;
-
-    // Check the session expiration with jwt.exp.
-    const currentTimestamp = new Date().getTime() / 1000;
-    if (exp < currentTimestamp) {
-      alert("Your session expired, Sign in again to continue!");
-      localStorage.removeItem("token");
-      router.push("/login");
-      return;
-    }
-  };
-
   // Update profile by sending a PUT request do backend API.
   const updateProfile = () => {
-    checkUserSession();
-    axios
+    const id: string = authentication.checkUserSession("");
+    const token: string = localStorage.getItem("token");
+
+    api
       .put(
-        `${process.env.BACKEND_API}/api/users/${id}`,
+        `/api/users/${id}`,
         {
           name,
           email,
@@ -90,10 +60,11 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    checkUserSession();
+    const id: string = authentication.checkUserSession("");
     setHasPhoto(false);
-    axios
-      .get(`${process.env.BACKEND_API}/api/users/${id}`)
+
+    api
+      .get(`/api/users/${id}`)
       .then(({ data }) => {
         setName(data.name);
         setEmail(data.email);
@@ -119,13 +90,13 @@ export default function Profile() {
   const divStyleHasPhoto = {
     backgroundImage: "url(" + user_photo + ")",
   };
-  const hasNotPhoto = "/icons/user-icon.png";
-  const divStyleHasNotPhoto = {
-    backgroundImage: "url(" + hasNotPhoto + ")",
+  const hasNoPhoto = "/icons/user-icon.png";
+  const divStyleHasNoPhoto = {
+    backgroundImage: "url(" + hasNoPhoto + ")",
   };
 
   const discartChanges = () => {
-    javascript: history.back();
+    history.back();
   };
 
   let portifolioImageList = [
@@ -149,7 +120,7 @@ export default function Profile() {
                 </a>
               </div>
             ) : (
-              <div className="user-photo" style={divStyleHasNotPhoto}></div>
+              <div className="user-photo" style={divStyleHasNoPhoto}></div>
             )}
           </div>
 
