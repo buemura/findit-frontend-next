@@ -11,8 +11,9 @@ import {
   InputText,
   InputTextArea,
   ButtonsStyled,
-  SelectStyled
+  SelectStyled,
 } from "../../styles/pages/profile-edit";
+import countries from "../../utils/countries.json";
 
 export default function Profile() {
   const router = useRouter();
@@ -29,6 +30,8 @@ export default function Profile() {
   const [user_photo, setUserPhoto] = useState("");
 
   const [selectedFile, setSelectedFile] = useState(null);
+  const [hasSelectedCountry, setHasSelectedCountry] = useState(false);
+  const [mapIndex, setMapIndex] = useState(0);
 
   // Update profile by sending a PUT request do backend API.
   const updateProfile = () => {
@@ -74,7 +77,7 @@ export default function Profile() {
       .catch((err) => {
         alert("Failed to Update user!");
       });
-    
+
     router.push("/profile", null, { shallow: false });
   };
 
@@ -129,27 +132,25 @@ export default function Profile() {
     input = input.split("\\").reverse();
 
     const fileName = document.getElementById("photo-output");
-
     fileName.textContent = input[0];
   };
 
-  const siglasEstados = ["N/D","AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"];
-  const nomesEstados = ["N/D","Acre","Alagoas","Amapá","Amazonas","Bahia","Ceará","Distrito Federal","Espírito Santo","Goiás","Maranhão","Mato Grosso","Mato Grosso do Sul","Minas Gerais","Pará","Paraíba","Paraná","Pernambuco","Piauí","Rio de Janeiro","Rio Grande do Norte","Rio Grande do Sul","Rondônia","Roraima","Santa Catarina","São Paulo","Sergipe","Tocantins"];
-  const nomePaises = ["N/D",'África do Sul','Albânia','Alemanha','Andorra','Angola','Anguilla','Antigua','Arábia Saudita','Argentina','Armênia','Aruba','Austrália','Áustria','Azerbaijão','Bahamas','Bahrein','Bangladesh','Barbados','Bélgica','Benin','Bermudas','Botsuana','Brazil','Brunei','Bulgária','Burkina Fasso','Botão','Cabo Verde','Camarões','Camboja','Canadá','Cazaquistão','Chade','Chile','China','Cidade do Vaticano','Colômbia','Congo','Coréia do Sul','Costa do Marfim','Costa Rica','Croácia','Dinamarca','Djibuti','Dominica','EUA','Egito','El Salvador','Emirados Árabes','Equador','Eritréia','Escócia','Eslováquia','Eslovênia','Espanha','Estônia','Etiópia','Fiji','Filipinas','Finlândia', 'França','Gabão','Gâmbia','Gana','Geórgia','Gibraltar','Granada','Grécia','Guadalupe','Guam','Guatemala','Guiana','Guiana Francesa','Guiné-bissau','Haiti','Holanda','Honduras','Hong Kong','Hungria','Iêmen','Ilhas Cayman','Ilhas Cook','Ilhas Curaçao','Ilhas Marshall','Ilhas Turks & Caicos','Ilhas Virgens (brit.)','Ilhas Virgens(amer.)','Ilhas Wallis e Futuna','Índia','Indonésia','Inglaterra','Irlanda','Islândia','Israel','Itália','Jamaica','Japão','Jordânia', 'Kuwait','Latvia','Líbano','Liechtenstein','Lituânia','Luxemburgo','Macau','Macedônia','Madagascar','Malásia','Malaui','Mali', 'Malta','Marrocos','Martinica','Mauritânia','Mauritius','México','Moldova','Mônaco','Montserrat','Nepal','Nicarágua','Niger','Nigéria', 'Noruega','Nova Caledônia','Nova Zelândia','Omã','Palau','Panamá','Papua-nova Guiné','Paquistão','Peru','Polinésia Francesa','Polônia','Porto Rico','Portugal','Qatar','Quênia','Rep. Dominicana','Rep. Tcheca','Reunion','Romênia','Ruanda','Rússia','Saipan','Samoa Americana','Senegal','Serra Leone','Seychelles','Singapura','Síria','Sri Vincent','Sudão','Suécia','Suiça','Suriname','Tailândia','Taiwan','Tanzânia','Togo','Trinidad Tobago','Tunísia','Turquia','Ucrânia','Uganda','Uruguai','Venezuela','Vietnã','Zaire','Zâmbia','Zimbábue'];
-  
   const onChangeSelectCountry = () => {
-    var select = document.getElementById('country-select');
-  	var value = select.options[select.selectedIndex].value;
-	  
+    const select = document.getElementById("country-select");
+    const value = select.options[select.selectedIndex].value;
+    const index = select.options[select.selectedIndex].index;
+
     setCountry(value);
-  }
-  
+    setHasSelectedCountry(true);
+    setMapIndex(index);
+  };
+
   const onChangeSelectState = () => {
-    var select = document.getElementById('state-select');
-  	var value = select.options[select.selectedIndex].value;
-	  
+    const select = document.getElementById("state-select");
+    const value = select.options[select.selectedIndex].value;
+
     setState(value);
-  }
+  };
 
   return (
     <BodyStyled>
@@ -242,68 +243,46 @@ export default function Profile() {
             <div className="local-container">
               <div className="country divisions">
                 <span>Country</span>
-                <SelectStyled id="country-select" onChange={onChangeSelectCountry}>
-                  {nomePaises.map((mapCountry) => ( 
-                    mapCountry === country ? (
-                      <option
-                      key={mapCountry.toString()}
-                      value={mapCountry}
-                      selected
-                      >
-                      {mapCountry}
-                    </option>  
+                <SelectStyled
+                  id="country-select"
+                  onChange={onChangeSelectCountry}
+                >
+                  {countries.map(({ name }) =>
+                    name === country ? (
+                      <option key={name.toString()} value={name} selected>
+                        {name}
+                      </option>
                     ) : (
-                      <option
-                        key={mapCountry.toString()}
-                        value={mapCountry}
-                        >
-                        {mapCountry}
-                      </option>  
-                    ) 
-                  ))}
+                      <option key={name.toString()} value={name}>
+                        {name}
+                      </option>
+                    )
+                  )}
                 </SelectStyled>
               </div>
 
               <div className="state divisions">
                 <span>State</span>
-                <SelectStyled id="state-select" onChange={onChangeSelectState}>
-                  {/* {nomesEstados.map((mapState) => (
-                    mapState === state ? (
-                      <option
-                      key={mapState.toString()}
-                      value={mapState}
-                      selected
-                      >
-                      {mapState}
-                    </option>  
-                    ) : (
-                      <option
-                        key={mapState.toString()}
-                        value={mapState}
-                        >
-                        {mapState}
-                      </option>  
-                    ) 
-                  ))} */}
-
-                  {siglasEstados.map((mapStateUF) => (
-                    mapStateUF === state ? (
-                      <option
-                      key={mapStateUF.toString()}
-                      value={mapStateUF}
-                      selected
-                      >
-                      {mapStateUF}
-                    </option>  
-                    ) : (
-                      <option
-                        key={mapStateUF.toString()}
-                        value={mapStateUF}
-                        >
-                        {mapStateUF}
-                      </option>  
-                    ) 
-                  ))}
+                <SelectStyled
+                  id="state-select"
+                  default={state}
+                  onChange={onChangeSelectState}
+                >
+                  {hasSelectedCountry ? (
+                    countries[mapIndex].states.map(({ name }) =>
+                      name === state ? (
+                        <option key={name.toString()} value={name} selected>
+                          {name}
+                        </option>
+                      ) : (
+                        <option key={name.toString()} value={name}>
+                          {name}
+                        </option>
+                      )
+                    )
+                  ) : (
+                    <option value={state}>{state}</option>
+                  )}
                 </SelectStyled>
               </div>
 
