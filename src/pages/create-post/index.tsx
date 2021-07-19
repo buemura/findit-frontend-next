@@ -2,10 +2,9 @@ import api from "../../services/api";
 import React, { useState, useEffect } from "react";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
-import {
-  MainContainer,
-} from "../../styles/pages/create-post";
+import { MainContainer } from "../../styles/pages/create-post";
 import authentication from "../../services/authentication";
+import countries from "../../utils/countries.json";
 
 export default function Posts() {
   const [title, setTitle] = useState("");
@@ -15,6 +14,9 @@ export default function Posts() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
+
+  const [hasSelectedCountry, setHasSelectedCountry] = useState(false);
+  const [mapIndex, setMapIndex] = useState(0);
 
   let id: string;
 
@@ -54,6 +56,23 @@ export default function Posts() {
   useEffect(() => {
     id = authentication.checkUserSession("");
   }, []);
+
+  const onChangeSelectCountry = () => {
+    const select = document.getElementById("country-select");
+    const value = select.options[select.selectedIndex].value;
+    const index = select.options[select.selectedIndex].index;
+
+    setCountry(value);
+    setHasSelectedCountry(true);
+    setMapIndex(index);
+  };
+
+  const onChangeSelectState = () => {
+    const select = document.getElementById("state-select");
+    const value = select.options[select.selectedIndex].value;
+
+    setState(value);
+  };
 
   return (
     <BodyStyled>

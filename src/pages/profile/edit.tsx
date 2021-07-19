@@ -117,7 +117,7 @@ export default function Profile() {
     backgroundImage: "url(" + hasNoPhoto + ")",
   };
 
-  const discartChanges = () => {
+  const discardChanges = () => {
     history.back();
   };
 
@@ -326,7 +326,7 @@ export default function Profile() {
             </div>
 
             <div className="buttons  divisions">
-              <ButtonsStyled className="discart" onClick={discartChanges}>
+              <ButtonsStyled className="discart" onClick={discardChanges}>
                 Cancel
               </ButtonsStyled>
               <ButtonsStyled className="save" onClick={updateProfile}>
