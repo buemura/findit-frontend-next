@@ -6,87 +6,134 @@ export const MainContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin: 60px 0 0 0;
-  padding: 0;
+  padding: 40px 0 10px 0;
   width: 100%;
   overflow-x: hidden;
-  background-color: #fff;
+  background-color: #fff;  
+
+  .container {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    padding: 0 0 .3rem 0;
+    height: 2.3rem;
+
+    span {      
+      width: 8rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      margin: 0;
+    }
+
+    input {
+      flex: 1;
+      height: 100%;
+      border-radius: 5px;
+      outline: none;
+      background: #eee;
+      border: none;
+      padding-left: .5rem;      
+    }
+
+    textarea {
+      flex: 1;
+      min-height: 5rem !important;
+      padding: .5rem !important;
+      line-break: auto;
+      border-radius: 5px;
+      outline: none;
+      background: #eee;
+      border: none;
+      resize: vertical;
+    }
+  }
+
+  .description {
+    height: auto;
+  }
+
+  .location {
+
+    div {
+      flex: 1;
+      height: 100%;
+      display: flex;
+
+      input {
+        margin-right: .5rem;
+      }
+
+      input:last-child {
+        margin-right: 0;
+      }
+
+    }
+  }
+
+  @media (max-width: 850px) {
+    .location {
+      height: 6.9rem;
+
+      div {
+        flex-direction: column;
+        padding: 0 0 .3rem 0;
+
+        input {
+          margin: 0 0 .3rem 0;
+        }
+
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  .buttons {
+    margin: 2rem 0 5rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0;
+      height: 2.3rem;
+      width: 10rem;
+      text-transform: uppercase;
+      letter-spacing: .1rem;
+      font-weight: bold;
+      font-size: .9rem;
+      border-radius: 5px;
+      outline: none;
+      border: none;
+      margin: 0 .5rem;
+    }
+
+    .save {
+      border: 1px #23CF5C solid;
+      background: #23CF5C;
+      color: #fff;
+      &:hover {
+        background: #1fb852;
+      }
+    }
+    .discart {
+      border: 1px #D43844 solid;
+      background: transparent;
+      color: #D43844;
+      &:hover {
+        background: #f0f0f0;
+        border: 1px #bf323d solid;
+        color: #bf323d;
+      }
+    }  
+  }
 `;
 
-export const ServiceTitle = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-items: center;
-  width: 50%;
-  margin: 50px 0 0 0;
-  p {
-    margin: 0 15px 0 15px;
-  }
-  input {
-    width: 50%;
-  }
-`;
-
-export const ServiceCategory = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-items: center;
-  width: 50%;
-  margin: 50px 0 0 0;
-  p {
-    margin: 0 15px 0 15px;
-  }
-  input {
-    width: 50%;
-  }
-`;
-
-export const ServiceDescription = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  width: 50%;
-  margin: 50px 0 0 0;
-  p {
-    margin: 0 15px 0 15px;
-  }
-  input {
-    width: 50%;
-    height: 100px;
-  }
-`;
-
-export const ServicePrice = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  width: 50%;
-  margin: 50px 0 0 0;
-  p {
-    margin: 0 15px 0 15px;
-  }
-  input {
-    width: 20%;
-  }
-`;
-
-export const ServiceLocation = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  width: 50%;
-  margin: 50px 0 0 0;
-  p {
-    margin: 0 15px 0 15px;
-  }
-  input {
-    margin: 0 2px 0 2px;
-  }
-  #city {
-    width: 20%;
-  }
-  #state {
-    width: 4%;
-  }
-`;

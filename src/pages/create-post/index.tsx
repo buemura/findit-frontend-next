@@ -4,11 +4,6 @@ import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
 import {
   MainContainer,
-  ServiceTitle,
-  ServiceCategory,
-  ServiceDescription,
-  ServicePrice,
-  ServiceLocation,
 } from "../../styles/pages/create-post";
 import authentication from "../../services/authentication";
 
@@ -64,68 +59,76 @@ export default function Posts() {
     <BodyStyled>
       <HeaderPage />
       <MainContainer>
-        <ServiceTitle>
-          <p>Service title*</p>
+        <div className="title container">
+          <span>Service title*</span>
           <input
             type="text"
             name="title"
             placeholder="Web Site Development"
             onChange={(e) => setTitle(e.target.value)}
           />
-        </ServiceTitle>
-        <ServiceCategory>
-          <p>Category* </p>
+        </div>
+        <div className="category container">
+          <span>Category* </span>
           <input
             type="text"
             name="service-category"
             placeholder="Software Development"
             onChange={(e) => setCategory(e.target.value)}
           />
-        </ServiceCategory>
-        <ServiceDescription>
-          <p>Description* </p>
-          <input
-            type="text"
+        </div>
+        <div className="description container">
+          <span>Description* </span>
+          <textarea
             name="service-description"
             placeholder="I need a web site development for my company"
             onChange={(e) => setDescription(e.target.value)}
           />
-        </ServiceDescription>
-        <ServicePrice>
-          <p>Price* </p>
+        </div>
+        <div className="price container">
+          <span>Price* </span>
           <input
             type="number"
             name="service-price"
             placeholder="R$ 500,00"
             onChange={(e) => setPrice(e.target.value)}
           />
-        </ServicePrice>
-        <ServiceLocation>
-          <p>Location* </p>
-          <input
-            type="text"
-            name="service-city"
-            placeholder="Campinas"
-            id="city"
-            onChange={(e) => setCity(e.target.value)}
-          />
-          <input
-            type="text"
-            name="service-state"
-            placeholder="SP"
-            id="state"
-            maxLength={2}
-            onChange={(e) => setState(e.target.value.toLocaleUpperCase())}
-          />
-          <input
-            type="text"
-            name="service-country"
-            placeholder="Brazil"
-            id="country"
-            onChange={(e) => setCountry(e.target.value)}
-          />
-        </ServiceLocation>
-        <button onClick={postService}>Post Service</button>
+        </div>
+        <div className="location container">
+          <span>Location* </span>
+          <div>
+            <input
+              type="text"
+              name="service-city"
+              placeholder="Campinas"
+              id="city"
+              onChange={(e) => setCity(e.target.value)}
+            />
+            <input
+              type="text"
+              name="service-state"
+              placeholder="SP"
+              id="state"
+              maxLength={2}
+              onChange={(e) => setState(e.target.value.toLocaleUpperCase())}
+            />
+            <input
+              type="text"
+              name="service-country"
+              placeholder="Brazil"
+              id="country"
+              onChange={(e) => setCountry(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="buttons  divisions">
+          <button className="discart" onClick={postService}>
+            Cancel
+          </button>
+          <button className="save" onClick={postService}>
+            Post Service
+          </button>
+        </div>
       </MainContainer>
     </BodyStyled>
   );
