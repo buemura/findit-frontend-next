@@ -19,6 +19,19 @@ export default function Posts() {
   const [mapIndex, setMapIndex] = useState(0);
 
   let id: string;
+  
+  const items = [
+    "Assistência Técnica",
+    "Aulas",
+    "Autos",
+    "Consultoria",
+    "Design e Tenologia",
+    "Eventos",
+    "Moda e Beleza",
+    "Reformas",
+    "Saúde",
+    "Serviços Domésticos",
+  ];
 
   const postService = () => {
     const token: string = localStorage.getItem("token");
@@ -89,12 +102,11 @@ export default function Posts() {
         </div>
         <div className="category container">
           <span>Category* </span>
-          <input
-            type="text"
-            name="service-category"
-            placeholder="Software Development"
-            onChange={(e) => setCategory(e.target.value)}
-          />
+          <select name="category" id="select--category">
+            {items.map((i) => (
+              <option value={i} key={i}>{i}</option>
+            ))}
+          </select>
         </div>
         <div className="description container">
           <span>Description* </span>

@@ -28,7 +28,8 @@ export const MainContainer = styled.div`
       margin: 0;
     }
 
-    input {
+    input,
+    select {
       flex: 1;
       height: 100%;
       border-radius: 5px;
@@ -62,7 +63,8 @@ export const MainContainer = styled.div`
       height: 100%;
       display: flex;
 
-      input {
+      input,
+      select {
         margin-right: .5rem;
       }
 
@@ -81,7 +83,8 @@ export const MainContainer = styled.div`
         flex-direction: column;
         padding: 0 0 .3rem 0;
 
-        input {
+        input,
+        select {
           margin: 0 0 .3rem 0;
         }
 
