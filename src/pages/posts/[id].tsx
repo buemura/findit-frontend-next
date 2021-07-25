@@ -7,7 +7,7 @@ export const getStaticPaths = async () => {
   const res = await fetch(`${process.env.BACKEND_API}/api/services/`);
   const data = await res.json();
 
-  const paths = data.map((post) => {
+  const paths = data.map((post: { id: { toString: () => any; }; }) => {
     return {
       params: { id: post.id.toString() },
     };
@@ -19,7 +19,7 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async (context) => {
+export const getStaticProps = async (context: { params: { id: any; }; }) => {
   const id = context.params.id;
   const res = await fetch(`${process.env.BACKEND_API}/api/services/${id}`);
   const data = await res.json();
@@ -29,7 +29,7 @@ export const getStaticProps = async (context) => {
   };
 };
 
-export function calculateDate(date) {
+export function calculateDate(date: string) {
   const dateTimestamp = Date.parse(date);
   const currentDate = new Date().getDate();
   const currentMonth = new Date().getMonth();
