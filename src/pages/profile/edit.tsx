@@ -128,15 +128,14 @@ export default function Profile() {
   ];
 
   const selectPhoto = () => {
-    var input = document.getElementById("photo-input").value;
-    input = input.split("\\").reverse();
+    var input = (document.getElementById("photo-input")) as HTMLInputElement;
 
     const fileName = document.getElementById("photo-output");
-    fileName.textContent = input[0];
+    fileName.textContent = input.value.split("\\").reverse()[0];
   };
 
   const onChangeSelectCountry = () => {
-    const select = document.getElementById("country-select");
+    const select = (document.getElementById("country-select")) as HTMLSelectElement;
     const value = select.options[select.selectedIndex].value;
     const index = select.options[select.selectedIndex].index;
 
@@ -146,7 +145,7 @@ export default function Profile() {
   };
 
   const onChangeSelectState = () => {
-    const select = document.getElementById("state-select");
+    const select = (document.getElementById("state-select")) as HTMLSelectElement;
     const value = select.options[select.selectedIndex].value;
 
     setState(value);

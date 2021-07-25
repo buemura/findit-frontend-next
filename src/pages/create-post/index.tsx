@@ -71,9 +71,9 @@ export default function Posts() {
   }, []);
 
   const onChangeSelectCountry = () => {
-    const select = document.getElementById("country-select");
-    const value = select.options[select.selectedIndex].value;
-    const index = select.options[select.selectedIndex].index;
+    var select = (document.getElementById("country-select")) as HTMLSelectElement;
+    var value = select.options[select.selectedIndex].value;
+    var index = select.options[select.selectedIndex].index;
 
     setCountry(value);
     setHasSelectedCountry(true);
@@ -81,7 +81,7 @@ export default function Posts() {
   };
 
   const onChangeSelectState = () => {
-    const select = document.getElementById("state-select");
+    const select = (document.getElementById("state-select")) as HTMLSelectElement;
     const value = select.options[select.selectedIndex].value;
 
     setState(value);
