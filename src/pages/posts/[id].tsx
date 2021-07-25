@@ -2,30 +2,20 @@ import React, { useState, useEffect } from "react";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
 import { Comments, MainContainer, Post } from "../../styles/pages/posts";
+import fetch from "node-fetch";
+import { GetServerSideProps } from "next";
 
-export const getStaticPaths = async () => {
-  const res = await fetch(`${process.env.BACKEND_API}/api/services/`);
-  const data = await res.json();
-
-  const paths = data.map((post: { id: { toString: () => any; }; }) => {
-    return {
-      params: { id: post.id.toString() },
-    };
-  });
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async (context: { params: { id: any; }; }) => {
-  const id = context.params.id;
-  const res = await fetch(`${process.env.BACKEND_API}/api/services/${id}`);
-  const data = await res.json();
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  res,
+}) => {
+  const { id } = params;
+  const url = `${process.env.BACKEND_API}/api/services/${id}`;
+  const result = await fetch(url);
+  const data = await result.json();
 
   return {
-    props: { post: data },
+    props: { data },
   };
 };
 
@@ -56,28 +46,28 @@ export function calculateDate(date: string) {
   return "";
 }
 
-export default function PostDetails({ post }) {
+export default function PostDetails({ data }) {
   return (
     <BodyStyled>
       <HeaderPage />
       <MainContainer>
         <Post>
           <div>
-            <h2>{post.title}</h2>
-            <h3>Category: {post.category}</h3>
+            <h2>{data.title}</h2>
+            <h3>Category: {data.category}</h3>
             <p>
-              {post.city}, {post.state} - {post.country}
+              {data.city}, {data.state} - {data.country}
             </p>
           </div>
           <div>
-            <h3>R$ {post.price}</h3>
+            <h3>R$ {data.price}</h3>
             <p>
               <strong>Posted by: </strong>
-              {post.User.name}
+              {data.User.name}
             </p>
           </div>
           <div>
-            <p>{calculateDate(post.createdAt)}</p>
+            <p>{calculateDate(data.createdAt)}</p>
           </div>
         </Post>
         <Comments>
