@@ -12,106 +12,77 @@ export const MainContainer = styled.div`
   background-color: #fff;
 `;
 
-export const ServiceTitle = styled.div`
+export const Filters = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
   width: 50%;
-  margin: 50px 0 0 0;
-  p {
-    margin: 0 15px 0 15px;
-  }
-  input {
-    width: 50%;
-  }
-`;
-
-export const ServiceImage = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-items: center;
-  width: 50%;
-  margin: 50px 0 0 0;
-  p {
-    margin: 0 15px 0 15px;
-  }
+  margin: 30px 0 0 0;
   button {
-    width: 10%;
-    height: 30px;
-    background-color: #fff;
-    border: 1px solid #4169e1;
-    border-radius: 5px;
-
-    &:hover {
-      cursor: pointer;
-      background-color: #4169e1;
-      color: #fff;
-    }
+    margin: 0 5px 0 5px;
   }
 `;
 
-export const ServiceCategory = styled.div`
+export const Feed = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
   width: 50%;
-  margin: 50px 0 0 0;
-  p {
-    margin: 0 15px 0 15px;
+  margin: 30px 0 0 0;
+  padding: 10px 20px 10px 20px;
+  background-color: #f0f0f0;
+  border-radius: 50px;
+
+  div {
+    display: flex;
+    flex-direction: column;
   }
-  input {
-    width: 50%;
+
+  &:hover {
+    cursor: pointer;
   }
 `;
 
-export const ServiceDescription = styled.div`
+export const Post = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: space-between;
+  align-items: center;
   width: 50%;
-  margin: 50px 0 0 0;
-  p {
-    margin: 0 15px 0 15px;
+  margin: 30px 0 0 0;
+  padding: 10px 20px 10px 20px;
+  background-color: #f0f0f0;
+  border-radius: 20px;
+
+  div {
+    display: flex;
+    flex-direction: column;
   }
-  input {
-    width: 50%;
-    height: 100px;
+
+  &:hover {
+    cursor: pointer;
   }
 `;
 
-export const ServicePrice = styled.div`
+export const Comments = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: left;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   width: 50%;
-  margin: 50px 0 0 0;
-  p {
-    margin: 0 15px 0 15px;
-  }
-  input {
-    width: 20%;
-  }
-`;
+  margin: 5px 0 0 0;
+  padding: 10px 20px 10px 20px;
+  background-color: #f0f0f0;
+  border-radius: 20px;
 
-export const ServiceLocation = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  width: 50%;
-  margin: 50px 0 0 0;
-  p {
-    margin: 0 15px 0 15px;
+  div {
+    display: flex;
+    flex-direction: column;
   }
-  input {
-    margin: 0 2px 0 2px;
-  }
-  #city {
-    width: 20%;
-  }
-  #state {
-    width: 4%;
+
+  &:hover {
+    cursor: pointer;
   }
 `;

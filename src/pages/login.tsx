@@ -15,44 +15,43 @@ import { BodyStyled } from "../styles/components/middleSection";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = (event) => {
+  function handleSubmit(event): void {
     event.preventDefault();
-  };
+  }
 
-  const clearVariables = () => {
+  function clearVariables(): void {
     setEmail("");
     setPassword("");
-  };
+  }
 
-  const authenticationSucceeded = (token) => {
+  function authenticationSucceeded(token: string): void {
     localStorage.setItem("token", token);
     router.push("/home");
-  };
+  }
 
-  const authenticationFailed = () => {
+  function authenticationFailed(): void {
     alert("Falha de autenticação! Verifique as informações preenchidas.");
-    clearVariables();
+    // clearVariables();
     router.push("/login");
-  };
+  }
 
-  const incompleteFields = () => {
+  function incompleteFields(): void {
     alert("Favor preencher todos os campos!");
-    clearVariables();
+    // clearVariables();
     router.push("/login");
-  };
+  }
 
-  const login = async () => {
+  async function login(): Promise<void> {
     if (email === "" || password === "") {
       incompleteFields();
       return;
     }
 
     try {
-      const token = await authentication.autheticate({
+      const token: string = await authentication.logIn({
         email,
         password,
       });
@@ -64,7 +63,7 @@ export default function LoginPage() {
     } catch (err) {
       authenticationFailed();
     }
-  };
+  }
 
   return (
     <BodyStyled>

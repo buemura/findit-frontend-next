@@ -22,42 +22,59 @@ export const MainSection = styled.div`
 
   .profile-photos {
     width: 100%;
-    background-image: url("https://101trading.co.uk/wp-content/uploads/2015/04/horizon_00364590-1030x412.jpg");
+    background-image: url("https://img.freepik.com/vetores-gratis/fundo-abstrato-premium-azul-escuro-minimalista-com-elementos-geometricos-escuros-de-luxo_272375-7.jpg?size=626&ext=jpg&ga=GA1.2.1746131912.1617494400");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
   }
 
   .user-photo {
-    width: 150px;
-    height: 150px;
+    width: 16rem;
+    height: 16rem;
     border-radius: 50%;
     margin: 25px;
-    transform: translateY(40%);
+    transform: translateY(0%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .photo-black-transparence {
+    background: rgba(0,0,0,.6);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: none;
+
+    a {
+      color: #eee;
+      text-decoration: none;
+      font-size: .8rem;
+    }
+  }
+  .user-photo:hover .photo-black-transparence{
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .title {
     padding: 40px 0 10px 0;
-    width: 60%;
-    border-bottom: 1px solid #aaa;
-    position: relative;
+    color: #eee;
   }
 
   .title a {
     position: absolute;
     right: 0;
-    top: 0;
+    bottom: 0;
     transform: translateY(10px);
-    width: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
+    padding: 1rem;
     text-decoration: none;
-    color: #4169e1;
+    color: #eee;
     font-size: 0.8rem;
 
     img {
@@ -68,7 +85,7 @@ export const MainSection = styled.div`
 
   .title h1,
   .title h3 {
-    text-align: center;
+    text-align: left;
     margin: 7px 0;
   }
 

@@ -1,104 +1,72 @@
-import axios from "axios";
+import api from "../../services/api";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import jwt_decode from "jwt-decode";
+import authentication from "../../services/authentication";
 
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
 import {
   MainContainer,
   MainSection,
-  PersonalInfo,
-  AboutMe,
-  Portfolio,
-} from "../../styles/pages/profile";
+  InputText,
+  InputTextArea,
+  ButtonsStyled,
+  SelectStyled,
+} from "../../styles/pages/profile-edit";
+import countries from "../../utils/countries.json";
 
 export default function Profile() {
   const router = useRouter();
 
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [location, setLocation] = useState("");
-  const [phone, setPhone] = useState("");
-  const [occupation, setOccupation] = useState("");
-  const [about_me, setAboutMe] = useState("");
-  const [user_photo, setUserPhoto] = useState("");
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [state, setState] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
+  const [occupation, setOccupation] = useState<string>("");
+  const [about_me, setAboutMe] = useState<string>("");
+  const [user_photo, setUserPhoto] = useState<string>("");
 
-  /**
-   * JWT token is needed in order to make a POST, PUT or DELETE request.
-   * Also this token expires in 1 hour. So you will need to Sign in again to generate a new one.
-   * The token is associated with the user that Signed in.
-   * So if we decode this token we will be able to retrieve user ID and Email.
-   */
-  let token;
-  let tokenDecoded: any;
-  let id, exp;
+  const [selectedFile, setSelectedFile] = useState<File>(null);
+  const [hasSelectedCountry, setHasSelectedCountry] = useState<boolean>(false);
+  const [mapIndex, setMapIndex] = useState<number>(0);
 
-  // Check if the user is logged and the jwt expiration with jwt.exp.
-  const checkUserSession = () => {
-    if (localStorage.getItem("token") === null) {
-      alert("Your need to sign in to proceed!");
-      router.push("/login");
-      return;
-    }
-    token = localStorage.getItem("token");
-    tokenDecoded = jwt_decode(token);
-    id = tokenDecoded.id;
-    exp = tokenDecoded.exp;
+  const hasNoPhoto = "/icons/user-icon.png";
 
-    // Check the session expiration with jwt.exp.
-    const currentTimestamp = new Date().getTime() / 1000;
-    if (exp < currentTimestamp) {
-      alert("Your session expired, Sign in again to continue!");
-      localStorage.removeItem("token");
-      router.push("/login");
-      return;
-    }
+  const divStyleHasPhoto = {
+    backgroundImage: "url(" + user_photo + ")",
   };
 
-  // Update profile by sending a PUT request do backend API.
-  const updateProfile = () => {
-    checkUserSession();
-    axios
-      .put(
-        `${process.env.BACKEND_API}/api/users/${id}`,
-        {
-          name,
-          email,
-          location,
-          phone,
-          occupation,
-          about_me,
-          user_photo,
-        },
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      )
-      .then((res) => {
-        router.push("/profile");
-      })
-      .catch((err) => {
-        alert("Failed to Update user!");
-      });
+  const divStyleHasNoPhoto = {
+    backgroundImage: "url(" + hasNoPhoto + ")",
   };
+
+  let portifolioImageList = [
+    "https://www.webnaveia.com.br/wp-content/uploads/2019/10/Como-Criar-um-Site-de-Empregos.png",
+    "https://lh3.googleusercontent.com/ho4N9JX2-O8IpBfs5lgVnzUagL1AXTpyG3QT-X3pSoOv0u35egobcOGbldO1LQWCrh6K0QN8BEUP8Y4TXTR1IafZBKlmCcervIDE=w960",
+    "https://img.ibxk.com.br/2015/06/29/29190710950506.jpg",
+  ];
 
   useEffect(() => {
-    checkUserSession();
+    const id: string = authentication.checkUserSession("");
     setHasPhoto(false);
-    axios
-      .get(`${process.env.BACKEND_API}/api/users/${id}`)
+
+    api
+      .get(`/api/users/${id}`)
       .then(({ data }) => {
         setName(data.name);
         setEmail(data.email);
-        setLocation(data.location);
+        setCity(data.city);
+        setState(data.state);
+        setCountry(data.country);
         setPhone(data.phone);
         setOccupation(data.occupation);
         setAboutMe(data.about_me);
-        setUserPhoto(data.user_photo);
+        setUserPhoto(
+          `${process.env.BACKEND_API}/api/users/${id}/profile-image`
+        );
 
         if (data.user_photo) {
           setHasPhoto(true);
@@ -109,99 +77,266 @@ export default function Profile() {
       });
   }, []);
 
+  // Update profile by sending a PUT request do backend API.
+  function updateProfile(): void {
+    const id: string = authentication.checkUserSession("");
+    const token: string = localStorage.getItem("token");
+
+    // Update User Photo
+    const data = new FormData();
+    data.append("file", selectedFile);
+
+    api
+      .post(`/api/users/${id}/profile-image/upload`, data, {
+        headers: {
+          authorization: token,
+        },
+      })
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // Update User Info
+    api
+      .put(
+        `/api/users/${id}`,
+        {
+          name,
+          email,
+          city,
+          state,
+          country,
+          phone,
+          occupation,
+          about_me,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      )
+      .then((res) => {})
+      .catch((err) => {
+        alert("Failed to Update user!");
+      });
+
+    router.push("/profile", null, { shallow: false });
+  }
+
+  function discardChanges(): void {
+    history.back();
+  }
+
+  function selectPhoto(): void {
+    var input = document.getElementById("photo-input") as HTMLInputElement;
+
+    const fileName = document.getElementById("photo-output");
+    fileName.textContent = input.value.split("\\").reverse()[0];
+  }
+
+  function onChangeSelectCountry(): void {
+    const select = document.getElementById(
+      "country-select"
+    ) as HTMLSelectElement;
+    const value = select.options[select.selectedIndex].value;
+    const index = select.options[select.selectedIndex].index;
+
+    setCountry(value);
+    setHasSelectedCountry(true);
+    setMapIndex(index);
+  }
+
+  function onChangeSelectState(): void {
+    const select = document.getElementById("state-select") as HTMLSelectElement;
+    const value = select.options[select.selectedIndex].value;
+
+    setState(value);
+  }
+
   return (
     <BodyStyled>
       <HeaderPage />
       <MainContainer>
         <MainSection>
+          {/* image and photo */}
           <div className="profile-photos">
             {hasPhoto ? (
-              <img src={user_photo} alt="photo" className="user-photo" />
+              <>
+                <div className="user-photo" style={divStyleHasPhoto}></div>
+                <div className="input-photo-container">
+                  <label htmlFor="photo-input">Upload Photo</label>
+                  <input
+                    type="file"
+                    id="photo-input"
+                    className="photo-input"
+                    onChange={(e) => {
+                      selectPhoto();
+                      setSelectedFile(e.target.files[0]);
+                    }}
+                  />
+                  <span id="photo-output"></span>
+                </div>
+              </>
             ) : (
-              <img
-                src="../icons/user-icon.png"
-                alt="photo"
-                className="user-photo"
-              />
+              <>
+                <div className="user-photo" style={divStyleHasNoPhoto}></div>
+                <div className="input-photo-container">
+                  <label htmlFor="photo-input">Upload Photo</label>
+                  <input
+                    type="file"
+                    id="photo-input"
+                    className="photo-input"
+                    onChange={(e) => {
+                      selectPhoto();
+                      setSelectedFile(e.target.files[0]);
+                    }}
+                  />
+                  <span id="photo-output"></span>
+                </div>
+              </>
             )}
           </div>
 
-          <div className="title">
-            <h3>
-              <input
+          {/* all data to change */}
+          <div className="data-container">
+            <h2>Basic informations</h2>
+            <div className="name-container divisions">
+              <span>Name</span>
+              <InputText
                 type="text"
                 placeholder={name}
                 defaultValue={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e: { target: { value: string } }) =>
+                  setName(e.target.value)
+                }
               />
-            </h3>
+            </div>
 
-            <h3>
-              <input
+            <div className="occupation-container divisions">
+              <span>Occupation</span>
+              <InputText
                 type="text"
                 placeholder={occupation}
                 defaultValue={occupation}
-                onChange={(e) => setOccupation(e.target.value)}
+                onChange={(e: { target: { value: string } }) =>
+                  setOccupation(e.target.value)
+                }
               />
-            </h3>
+            </div>
 
-            <button onClick={updateProfile}>Save Profile</button>
+            <div className="phone-container divisions">
+              <span>Phone</span>
+              <InputText
+                type="text"
+                placeholder={phone}
+                defaultValue={phone}
+                onChange={(e: { target: { value: string } }) =>
+                  setPhone(e.target.value)
+                }
+              />
+            </div>
+
+            <div className="email-container divisions">
+              <span>E-mail</span>
+              <InputText type="text" value={email} disabled />
+            </div>
+
+            <div className="local-container">
+              <div className="country divisions">
+                <span>Country</span>
+                <SelectStyled
+                  id="country-select"
+                  onChange={onChangeSelectCountry}
+                >
+                  {countries.map(({ name }) =>
+                    name === country ? (
+                      <option key={name.toString()} value={name} selected>
+                        {name}
+                      </option>
+                    ) : (
+                      <option key={name.toString()} value={name}>
+                        {name}
+                      </option>
+                    )
+                  )}
+                </SelectStyled>
+              </div>
+
+              <div className="state divisions">
+                <span>State</span>
+                <SelectStyled
+                  id="state-select"
+                  default={state}
+                  onChange={onChangeSelectState}
+                >
+                  {hasSelectedCountry ? (
+                    countries[mapIndex].states.map(({ name }) =>
+                      name === state ? (
+                        <option key={name.toString()} value={name} selected>
+                          {name}
+                        </option>
+                      ) : (
+                        <option key={name.toString()} value={name}>
+                          {name}
+                        </option>
+                      )
+                    )
+                  ) : (
+                    <option value={state}>{state}</option>
+                  )}
+                </SelectStyled>
+              </div>
+
+              <div className="city divisions">
+                <span>City</span>
+                <InputText
+                  type="text"
+                  placeholder={city}
+                  defaultValue={city}
+                  onChange={(e: {
+                    target: { value: React.SetStateAction<string> };
+                  }) => setCity(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="about-me">
+              <h2>About Me</h2>
+              <InputTextArea
+                type="text"
+                className="text-area divisions"
+                placeholder={about_me}
+                defaultValue={about_me}
+                onChange={(e: { target: { value: string } }) =>
+                  setAboutMe(e.target.value)
+                }
+              />
+            </div>
+            <div className="portifolio">
+              <h2>Portfolio</h2>
+              <a href="">Add +</a>
+              <div className="portifolio-container">
+                {portifolioImageList.map((img) => (
+                  <div
+                    key={img.toString()}
+                    className="portifolio-image"
+                    style={{ backgroundImage: "url(" + img + ")" }}
+                  ></div>
+                ))}
+              </div>
+            </div>
+
+            <div className="buttons  divisions">
+              <ButtonsStyled className="discart" onClick={discardChanges}>
+                Cancel
+              </ButtonsStyled>
+              <ButtonsStyled className="save" onClick={updateProfile}>
+                Save
+              </ButtonsStyled>
+            </div>
           </div>
-
-          <PersonalInfo>
-            <div>
-              <p>
-                <strong>Works Done:</strong>{" "}
-              </p>
-              <p>
-                <strong>Works Done in Time:</strong>{" "}
-              </p>
-              <p>
-                <strong>Works Done Within Budget:</strong>{" "}
-              </p>
-            </div>
-            <div>
-              <p>
-                <strong>Local:</strong>
-                <input
-                  type="text"
-                  placeholder={location}
-                  defaultValue={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                />
-              </p>
-              <p>
-                <strong>Phone:</strong>
-                <input
-                  type="text"
-                  placeholder={phone}
-                  defaultValue={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-              </p>
-              <p>
-                <strong>Email:</strong> {email}
-              </p>
-            </div>
-          </PersonalInfo>
-
-          <AboutMe>
-            <h2>About me</h2>
-            <input
-              type="text"
-              placeholder={about_me}
-              defaultValue={about_me}
-              onChange={(e) => setAboutMe(e.target.value)}
-            />
-          </AboutMe>
-
-          <Portfolio>
-            <h2>Portfolio</h2>
-            <div>
-              <div className="div-img-portifolio d01"></div>
-              <div className="div-img-portifolio d02"></div>
-            </div>
-          </Portfolio>
         </MainSection>
       </MainContainer>
     </BodyStyled>

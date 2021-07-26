@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 
 dotenv.config();
 
-const api = axios.create({
+const api: AxiosInstance = axios.create({
   baseURL: `${process.env.BACKEND_API}`,
 });
 

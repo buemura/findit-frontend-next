@@ -2,25 +2,15 @@ import { Container, Header } from "../styles/components/HeaderDefault";
 import Switch from "./Switch";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 export function HeaderDefault() {
-  const [hasToken, setHasToken] = useState(false);
-  const [hasNotification, setHasNotification] = useState(0);
-
-  useEffect(() => {
-    if (localStorage.getItem("token") !== null) {
-      setHasToken(true);
-    }
-  }, []);
-
   return (
     <Container>
       <Header>
         <div className="divLogo">
           <Link href="/home" passHref>
             <a>
-              <img src="icons/logo.png" alt="Logo" />
+              <img src="/icons/logo.png" alt="Logo" />
               Find It
             </a>
           </Link>
@@ -28,7 +18,7 @@ export function HeaderDefault() {
 
         <div className="containerLinks">
           <div className="search">
-            <img src="icons/search.png" alt="Search" />
+            <img src="/icons/search.png" alt="Search" />
             <input type="text" placeholder="Type here..." />
             <button>Search</button>
           </div>
@@ -47,47 +37,12 @@ export function HeaderDefault() {
             </div>
 
             <div className="loginLinks">
-              {hasToken ? (
-                <>
-                  <div className="menuItems">
-                    <div className="profileLinks">
-                      <Link href="/notification" passHref>
-                        <a className="notification">
-                          <span>Notifications</span>
-                          <div>
-                            <img
-                              className="notificationImage"
-                              src="icons/notification-bell.png"
-                              alt="Notification"
-                            />
-                            {hasNotification === 1 ? (
-                              <img
-                                className="warning"
-                                src="icons/warning.png"
-                                alt="Warning"
-                              />
-                            ) : (
-                              <span className="warningSpan"></span>
-                            )}
-                          </div>
-                        </a>
-                      </Link>
-                      <Link href="/profile" passHref>
-                        <a className="profile">Profile</a>
-                      </Link>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <Link href="/login" passHref>
-                    <a className="login">Login</a>
-                  </Link>
-                  <Link href="/register" passHref>
-                    <a className="register">Register</a>
-                  </Link>
-                </>
-              )}
+              <Link href="/login" passHref>
+                <a className="login">Login</a>
+              </Link>
+              <Link href="/register" passHref>
+                <a className="register">Register</a>
+              </Link>
             </div>
           </div>
 

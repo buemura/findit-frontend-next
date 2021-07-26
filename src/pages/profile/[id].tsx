@@ -1,8 +1,4 @@
-import api from "../../services/api";
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import authentication from "../../services/authentication";
-
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
 import {
@@ -12,33 +8,27 @@ import {
   AboutMe,
   Portfolio,
 } from "../../styles/pages/profile";
+import fetch from "node-fetch";
+import { GetServerSideProps } from "next";
+import Link from "next/link";
+import authentication from "../../services/authentication";
+import { useRouter } from "next/router";
 
-interface UserType {
-  name: string;
-  email: string;
-  city: string;
-  state: string;
-  country: string;
-  phone: string;
-  occupation: string;
-  about_me: string;
-  user_photo: string;
-}
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { id } = params;
+  const url = `${process.env.BACKEND_API}/api/users/${id}`;
+  const result = await fetch(url);
+  const data = await result.json();
 
-export default function Profile() {
+  return {
+    props: { data },
+  };
+};
+
+export default function UsersProfile({ data }) {
+  const router = useRouter();
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [profilePhoto, setProfilePhoto] = useState<string>("");
-  const [user, setUser] = useState<UserType>({
-    name: "",
-    email: "",
-    city: "",
-    state: "",
-    country: "",
-    phone: "",
-    occupation: "",
-    about_me: "",
-    user_photo: "",
-  });
 
   const hasNoPhoto = "/icons/user-icon.png";
 
@@ -51,23 +41,18 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    const id: string = authentication.checkUserSession("");
-    setHasPhoto(false);
+    const myId: string = authentication.checkUserSession("");
 
-    api
-      .get(`/api/users/${id}`)
-      .then(({ data }) => {
-        setUser(data);
-        if (data.user_photo) {
-          setHasPhoto(true);
-          setProfilePhoto(
-            `${process.env.BACKEND_API}/api/users/${id}/profile-image`
-          );
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (myId === data.id) {
+      router.push("/profile");
+    }
+
+    if (data.user_photo) {
+      setHasPhoto(true);
+      setProfilePhoto(
+        `${process.env.BACKEND_API}/api/users/${data.id}/profile-image`
+      );
+    }
   }, []);
 
   return (
@@ -82,11 +67,11 @@ export default function Profile() {
               <div className="user-photo" style={divStyleHasNoPhoto}></div>
             )}
             <div className="title">
-              <h1>{user.name}</h1>
-              <h3>{user.occupation}</h3>
-              <Link href="/profile/edit">
+              <h1>{data.name}</h1>
+              <h3>{data.occupation}</h3>
+              <Link href="/messages">
                 <a href="">
-                  <img src="icons/edit-property-64.png"></img>Edit Profile
+                  <img src="icons/edit-property-64.png"></img>Send message
                 </a>
               </Link>
             </div>
@@ -105,21 +90,21 @@ export default function Profile() {
             </div>
             <div>
               <p>
-                <strong>Local:</strong> {user.city}, {user.state} -{" "}
-                {user.country}
+                <strong>Local:</strong> {data.city}, {data.state} -{" "}
+                {data.country}
               </p>
               <p>
-                <strong>Phone:</strong> {user.phone}
+                <strong>Phone:</strong> {data.phone}
               </p>
               <p>
-                <strong>Email:</strong> {user.email}
+                <strong>Email:</strong> {data.email}
               </p>
             </div>
           </PersonalInfo>
 
           <AboutMe>
             <h2>About me</h2>
-            <p>{user.about_me}</p>
+            <p>{data.about_me}</p>
           </AboutMe>
 
           <Portfolio>

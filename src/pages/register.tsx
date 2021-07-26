@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import registration from "../services/registration";
+import authentication from "../services/authentication";
 
 import { Container } from "../styles/components/registerContainer";
 import { Div } from "../styles/pages/registerPage";
@@ -14,54 +14,55 @@ import { BodyStyled } from "../styles/components/middleSection";
 
 export default function Register() {
   const router = useRouter();
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = (event) => {
+  function handleSubmit(event): void {
     event.preventDefault();
-  };
+  }
 
-  const registrationSucceeded = (data) => {
-    alert(data.message);
+  function registrationSucceeded(message: string): void {
+    alert(
+      `${message}\n\nA confirmation email was sent in your inbox.\nPlease confirm your Registration...`
+    );
     router.push("/login");
-  };
+  }
 
-  const registrationFailed = (data) => {
-    alert(data);
+  function registrationFailed(message: string): void {
+    alert(message);
     router.push("/register");
-  };
+  }
 
-  const incompleteFields = () => {
+  function incompleteFields(): void {
     alert("Favor preencher todos os campos!");
     router.push("/register");
     setName("");
     setEmail("");
     setPassword("");
-  };
+  }
 
-  const register = async () => {
+  async function register(): Promise<void> {
     if (name === "" || email === "" || password === "") {
       incompleteFields();
       return;
     }
     try {
-      const data = await registration.register({
+      const { message } = await authentication.register({
         name,
         email,
         password,
       });
 
-      if (data) {
-        registrationSucceeded(data);
+      if (message) {
+        registrationSucceeded(message);
       } else {
         registrationFailed("Registration Failed!");
       }
     } catch (err) {
       registrationFailed("Registration Failed");
     }
-  };
+  }
 
   return (
     <BodyStyled>

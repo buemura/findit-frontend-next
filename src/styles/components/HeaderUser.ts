@@ -174,6 +174,10 @@ export const Header = styled.div`
     background: #3159d1;
     box-sizing: border-box;
   }
+  .user-logout {
+    font-size: .7rem !important;
+    text-decoration: underline !important;
+  }
   .menuItems {
     display: flex;
     transition: 0.2s;
