@@ -3,8 +3,12 @@ import React, { useState, useEffect } from "react";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
 import { MainContainer } from "../../styles/pages/create-post";
+import { Modal } from "../../components/modal/modal";
+
 import authentication from "../../services/authentication";
 import countries from "../../utils/countries.json";
+import { route } from "next/dist/next-server/server/router";
+import { useRouter } from 'next/router';
 
 export default function Posts() {
   const [title, setTitle] = useState("");
@@ -15,11 +19,16 @@ export default function Posts() {
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalPositive, setIsModalPositive] = useState(true);
+
   const [hasSelectedCountry, setHasSelectedCountry] = useState(false);
   const [mapIndex, setMapIndex] = useState(0);
 
+  const router = useRouter();
+
   let id: string;
-  
+
   const items = [
     "Assistência Técnica",
     "Aulas",
@@ -57,12 +66,14 @@ export default function Posts() {
         }
       )
       .then(({ data }) => {
-        alert("Your service was posted successfully!");
+        //alert("Your service was posted successfully!"); 
+        setIsModalPositive(true);
+        setIsModalVisible(true);
       })
       .catch((err) => {
-        alert(
-          "Unable to post service. Check the information and try again later!"
-        );
+        //alert("Unable to post service. Check the information and try again later!");  
+        setIsModalPositive(false);
+        setIsModalVisible(true);
       });
   };
 
@@ -89,6 +100,21 @@ export default function Posts() {
 
   return (
     <BodyStyled>
+      {isModalVisible ?
+        <Modal 
+          onClose={() => setIsModalVisible(false)} 
+          message={
+            (
+              isModalPositive ? 
+              'Your service was posted successfully!'
+              :
+              'Unable to post service. Check the information and try again later!'
+              )
+          }
+        ></Modal>
+        :
+        null
+      }
       <HeaderPage />
       <MainContainer>
         <div className="title container">
@@ -153,7 +179,7 @@ export default function Posts() {
           </div>
         </div>
         <div className="buttons  divisions">
-          <button className="discart" onClick={postService}>
+          <button className="discart" onClick={() => router.push('/home')}>
             Cancel
           </button>
           <button className="save" onClick={postService}>
