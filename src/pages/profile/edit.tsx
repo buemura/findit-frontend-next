@@ -19,22 +19,66 @@ export default function Profile() {
   const router = useRouter();
 
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
-  const [phone, setPhone] = useState("");
-  const [occupation, setOccupation] = useState("");
-  const [about_me, setAboutMe] = useState("");
-  const [user_photo, setUserPhoto] = useState("");
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [state, setState] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
+  const [occupation, setOccupation] = useState<string>("");
+  const [about_me, setAboutMe] = useState<string>("");
+  const [user_photo, setUserPhoto] = useState<string>("");
 
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [hasSelectedCountry, setHasSelectedCountry] = useState(false);
-  const [mapIndex, setMapIndex] = useState(0);
+  const [selectedFile, setSelectedFile] = useState<File>(null);
+  const [hasSelectedCountry, setHasSelectedCountry] = useState<boolean>(false);
+  const [mapIndex, setMapIndex] = useState<number>(0);
+
+  const hasNoPhoto = "/icons/user-icon.png";
+
+  const divStyleHasPhoto = {
+    backgroundImage: "url(" + user_photo + ")",
+  };
+
+  const divStyleHasNoPhoto = {
+    backgroundImage: "url(" + hasNoPhoto + ")",
+  };
+
+  let portifolioImageList = [
+    "https://www.webnaveia.com.br/wp-content/uploads/2019/10/Como-Criar-um-Site-de-Empregos.png",
+    "https://lh3.googleusercontent.com/ho4N9JX2-O8IpBfs5lgVnzUagL1AXTpyG3QT-X3pSoOv0u35egobcOGbldO1LQWCrh6K0QN8BEUP8Y4TXTR1IafZBKlmCcervIDE=w960",
+    "https://img.ibxk.com.br/2015/06/29/29190710950506.jpg",
+  ];
+
+  useEffect(() => {
+    const id: string = authentication.checkUserSession("");
+    setHasPhoto(false);
+
+    api
+      .get(`/api/users/${id}`)
+      .then(({ data }) => {
+        setName(data.name);
+        setEmail(data.email);
+        setCity(data.city);
+        setState(data.state);
+        setCountry(data.country);
+        setPhone(data.phone);
+        setOccupation(data.occupation);
+        setAboutMe(data.about_me);
+        setUserPhoto(
+          `${process.env.BACKEND_API}/api/users/${id}/profile-image`
+        );
+
+        if (data.user_photo) {
+          setHasPhoto(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   // Update profile by sending a PUT request do backend API.
-  const updateProfile = () => {
+  function updateProfile(): void {
     const id: string = authentication.checkUserSession("");
     const token: string = localStorage.getItem("token");
 
@@ -79,77 +123,37 @@ export default function Profile() {
       });
 
     router.push("/profile", null, { shallow: false });
-  };
+  }
 
-  useEffect(() => {
-    const id: string = authentication.checkUserSession("");
-    setHasPhoto(false);
-
-    api
-      .get(`/api/users/${id}`)
-      .then(({ data }) => {
-        setName(data.name);
-        setEmail(data.email);
-        setCity(data.city);
-        setState(data.state);
-        setCountry(data.country);
-        setPhone(data.phone);
-        setOccupation(data.occupation);
-        setAboutMe(data.about_me);
-        setUserPhoto(
-          `${process.env.BACKEND_API}/api/users/${id}/profile-image`
-        );
-
-        if (data.user_photo) {
-          setHasPhoto(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  const divStyleHasPhoto = {
-    backgroundImage: "url(" + user_photo + ")",
-  };
-  const hasNoPhoto = "/icons/user-icon.png";
-  const divStyleHasNotPhoto = {
-    backgroundImage: "url(" + hasNoPhoto + ")",
-  };
-
-  const discardChanges = () => {
+  function discardChanges(): void {
     history.back();
-  };
+  }
 
-  let portifolioImageList = [
-    "https://www.webnaveia.com.br/wp-content/uploads/2019/10/Como-Criar-um-Site-de-Empregos.png",
-    "https://lh3.googleusercontent.com/ho4N9JX2-O8IpBfs5lgVnzUagL1AXTpyG3QT-X3pSoOv0u35egobcOGbldO1LQWCrh6K0QN8BEUP8Y4TXTR1IafZBKlmCcervIDE=w960",
-    "https://img.ibxk.com.br/2015/06/29/29190710950506.jpg",
-  ];
-
-  const selectPhoto = () => {
-    var input = (document.getElementById("photo-input")) as HTMLInputElement;
+  function selectPhoto(): void {
+    var input = document.getElementById("photo-input") as HTMLInputElement;
 
     const fileName = document.getElementById("photo-output");
     fileName.textContent = input.value.split("\\").reverse()[0];
-  };
+  }
 
-  const onChangeSelectCountry = () => {
-    const select = (document.getElementById("country-select")) as HTMLSelectElement;
+  function onChangeSelectCountry(): void {
+    const select = document.getElementById(
+      "country-select"
+    ) as HTMLSelectElement;
     const value = select.options[select.selectedIndex].value;
     const index = select.options[select.selectedIndex].index;
 
     setCountry(value);
     setHasSelectedCountry(true);
     setMapIndex(index);
-  };
+  }
 
-  const onChangeSelectState = () => {
-    const select = (document.getElementById("state-select")) as HTMLSelectElement;
+  function onChangeSelectState(): void {
+    const select = document.getElementById("state-select") as HTMLSelectElement;
     const value = select.options[select.selectedIndex].value;
 
     setState(value);
-  };
+  }
 
   return (
     <BodyStyled>
@@ -177,7 +181,7 @@ export default function Profile() {
               </>
             ) : (
               <>
-                <div className="user-photo" style={divStyleHasNotPhoto}></div>
+                <div className="user-photo" style={divStyleHasNoPhoto}></div>
                 <div className="input-photo-container">
                   <label htmlFor="photo-input">Upload Photo</label>
                   <input
@@ -298,7 +302,7 @@ export default function Profile() {
               </div>
             </div>
 
-            <div>
+            <div className="about-me">
               <h2>About Me</h2>
               <InputTextArea
                 type="text"

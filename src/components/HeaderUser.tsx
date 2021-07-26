@@ -6,7 +6,7 @@ import { useState } from "react";
 import authentication from "../services/authentication";
 
 export function HeaderUser() {
-  const [hasNotification, setHasNotification] = useState(0);
+  const [hasNotification, setHasNotification] = useState<number>(0);
 
   return (
     <Container>

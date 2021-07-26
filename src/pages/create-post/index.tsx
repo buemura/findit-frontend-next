@@ -3,33 +3,34 @@ import React, { useState, useEffect } from "react";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
 import { MainContainer } from "../../styles/pages/create-post";
-import { Modal } from "../../components/modal/modal";
+import { Modal } from "../../components/modal";
 
 import authentication from "../../services/authentication";
 import countries from "../../utils/countries.json";
 import { route } from "next/dist/next-server/server/router";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
+import { InputText, SelectStyled } from "../../styles/pages/profile-edit";
 
 export default function Posts() {
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [state, setState] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isModalPositive, setIsModalPositive] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isModalPositive, setIsModalPositive] = useState<boolean>(true);
 
-  const [hasSelectedCountry, setHasSelectedCountry] = useState(false);
-  const [mapIndex, setMapIndex] = useState(0);
+  const [hasSelectedCountry, setHasSelectedCountry] = useState<boolean>(false);
+  const [mapIndex, setMapIndex] = useState<number>(0);
 
   const router = useRouter();
 
   let id: string;
 
-  const items = [
+  const items: Array<string> = [
     "Assistência Técnica",
     "Aulas",
     "Autos",
@@ -42,7 +43,11 @@ export default function Posts() {
     "Serviços Domésticos",
   ];
 
-  const postService = () => {
+  useEffect(() => {
+    id = authentication.checkUserSession("");
+  }, []);
+
+  function postService(): void {
     const token: string = localStorage.getItem("token");
     id = authentication.checkUserSession("");
 
@@ -66,55 +71,46 @@ export default function Posts() {
         }
       )
       .then(({ data }) => {
-        //alert("Your service was posted successfully!"); 
         setIsModalPositive(true);
         setIsModalVisible(true);
       })
       .catch((err) => {
-        //alert("Unable to post service. Check the information and try again later!");  
         setIsModalPositive(false);
         setIsModalVisible(true);
       });
-  };
+  }
 
-  useEffect(() => {
-    id = authentication.checkUserSession("");
-  }, []);
-
-  const onChangeSelectCountry = () => {
-    var select = (document.getElementById("country-select")) as HTMLSelectElement;
-    var value = select.options[select.selectedIndex].value;
-    var index = select.options[select.selectedIndex].index;
+  function onChangeSelectCountry(): void {
+    const select = document.getElementById(
+      "country-select"
+    ) as HTMLSelectElement;
+    const value: string = select.options[select.selectedIndex].value;
+    const index: number = select.options[select.selectedIndex].index;
 
     setCountry(value);
     setHasSelectedCountry(true);
     setMapIndex(index);
-  };
+  }
 
-  const onChangeSelectState = () => {
-    const select = (document.getElementById("state-select")) as HTMLSelectElement;
-    const value = select.options[select.selectedIndex].value;
+  function onChangeSelectState(): void {
+    const select = document.getElementById("state-select") as HTMLSelectElement;
+    const value: string = select.options[select.selectedIndex].value;
 
     setState(value);
-  };
+  }
 
   return (
     <BodyStyled>
-      {isModalVisible ?
-        <Modal 
-          onClose={() => setIsModalVisible(false)} 
+      {isModalVisible ? (
+        <Modal
+          onClose={() => setIsModalVisible(false)}
           message={
-            (
-              isModalPositive ? 
-              'Your service was posted successfully!'
-              :
-              'Unable to post service. Check the information and try again later!'
-              )
+            isModalPositive
+              ? "Your service was posted successfully!"
+              : "Unable to post service. Check the information and try again later!"
           }
         ></Modal>
-        :
-        null
-      }
+      ) : null}
       <HeaderPage />
       <MainContainer>
         <div className="title container">
@@ -130,7 +126,9 @@ export default function Posts() {
           <span>Category* </span>
           <select name="category" id="select--category">
             {items.map((i) => (
-              <option value={i} key={i}>{i}</option>
+              <option value={i} key={i}>
+                {i}
+              </option>
             ))}
           </select>
         </div>
@@ -152,34 +150,67 @@ export default function Posts() {
           />
         </div>
         <div className="location container">
-          <span>Location* </span>
           <div>
-            <input
-              type="text"
-              name="service-city"
-              placeholder="Campinas"
-              id="city"
-              onChange={(e) => setCity(e.target.value)}
-            />
-            <input
-              type="text"
-              name="service-state"
-              placeholder="SP"
-              id="state"
-              maxLength={2}
-              onChange={(e) => setState(e.target.value.toLocaleUpperCase())}
-            />
-            <input
-              type="text"
-              name="service-country"
-              placeholder="Brazil"
-              id="country"
-              onChange={(e) => setCountry(e.target.value)}
-            />
+            <div className="country divisions">
+              <span>Country *</span>
+              <SelectStyled
+                id="country-select"
+                onChange={onChangeSelectCountry}
+              >
+                {countries.map(({ name }) =>
+                  name === country ? (
+                    <option key={name.toString()} value={name} selected>
+                      {name}
+                    </option>
+                  ) : (
+                    <option key={name.toString()} value={name}>
+                      {name}
+                    </option>
+                  )
+                )}
+              </SelectStyled>
+            </div>
+
+            <div className="state divisions">
+              <span>State *</span>
+              <SelectStyled
+                id="state-select"
+                default={state}
+                onChange={onChangeSelectState}
+              >
+                {hasSelectedCountry ? (
+                  countries[mapIndex].states.map(({ name }) =>
+                    name === state ? (
+                      <option key={name.toString()} value={name} selected>
+                        {name}
+                      </option>
+                    ) : (
+                      <option key={name.toString()} value={name}>
+                        {name}
+                      </option>
+                    )
+                  )
+                ) : (
+                  <option value={state}>{state}</option>
+                )}
+              </SelectStyled>
+            </div>
+
+            <div className="city divisions">
+              <span>City *</span>
+              <InputText
+                type="text"
+                placeholder={city}
+                defaultValue={city}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setCity(e.target.value)}
+              />
+            </div>
           </div>
         </div>
         <div className="buttons  divisions">
-          <button className="discart" onClick={() => router.push('/home')}>
+          <button className="discart" onClick={() => router.push("/home")}>
             Cancel
           </button>
           <button className="save" onClick={postService}>

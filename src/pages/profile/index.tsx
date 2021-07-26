@@ -13,7 +13,7 @@ import {
   Portfolio,
 } from "../../styles/pages/profile";
 
-interface IUser {
+interface UserType {
   name: string;
   email: string;
   city: string;
@@ -27,8 +27,8 @@ interface IUser {
 
 export default function Profile() {
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
-  const [profilePhoto, setProfilePhoto] = useState("");
-  const [user, setUser] = useState<IUser>({
+  const [profilePhoto, setProfilePhoto] = useState<string>("");
+  const [user, setUser] = useState<UserType>({
     name: "",
     email: "",
     city: "",
@@ -39,6 +39,14 @@ export default function Profile() {
     about_me: "",
     user_photo: "",
   });
+
+  const divStyleHasPhoto = {
+    backgroundImage: "url(" + profilePhoto + ")",
+  };
+  const hasNoPhoto = "/icons/user-icon.png";
+  const divStyleHasNoPhoto = {
+    backgroundImage: "url(" + hasNoPhoto + ")",
+  };
 
   useEffect(() => {
     const id: string = authentication.checkUserSession("");
@@ -60,14 +68,6 @@ export default function Profile() {
         console.log(err);
       });
   }, []);
-
-  const divStyleHasPhoto = {
-    backgroundImage: "url(" + profilePhoto + ")",
-  };
-  const hasNoPhoto = "/icons/user-icon.png";
-  const divStyleHasNoPhoto = {
-    backgroundImage: "url(" + hasNoPhoto + ")",
-  };
 
   return (
     <BodyStyled>

@@ -14,56 +14,55 @@ import { BodyStyled } from "../styles/components/middleSection";
 
 export default function Register() {
   const router = useRouter();
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = (event) => {
+  function handleSubmit(event): void {
     event.preventDefault();
-  };
+  }
 
-  const registrationSucceeded = (data) => {
+  function registrationSucceeded(message: string): void {
     alert(
-      `${data.message}\n\nA confirmation email was sent in your inbox.\nPlease confirm your Registration...`
+      `${message}\n\nA confirmation email was sent in your inbox.\nPlease confirm your Registration...`
     );
     router.push("/login");
-  };
+  }
 
-  const registrationFailed = (data) => {
-    alert(data);
+  function registrationFailed(message: string): void {
+    alert(message);
     router.push("/register");
-  };
+  }
 
-  const incompleteFields = () => {
+  function incompleteFields(): void {
     alert("Favor preencher todos os campos!");
     router.push("/register");
     setName("");
     setEmail("");
     setPassword("");
-  };
+  }
 
-  const register = async () => {
+  async function register(): Promise<void> {
     if (name === "" || email === "" || password === "") {
       incompleteFields();
       return;
     }
     try {
-      const data = await authentication.register({
+      const { message } = await authentication.register({
         name,
         email,
         password,
       });
 
-      if (data) {
-        registrationSucceeded(data);
+      if (message) {
+        registrationSucceeded(message);
       } else {
         registrationFailed("Registration Failed!");
       }
     } catch (err) {
       registrationFailed("Registration Failed");
     }
-  };
+  }
 
   return (
     <BodyStyled>

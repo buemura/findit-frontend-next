@@ -24,14 +24,14 @@ export default function HomePage() {
     "Saúde",
     "Serviços Domésticos",
   ];
-  const [usersQuantity, setUsersQuantity] = useState([]);
-  const [servicesQuantity, setServicesQuantity] = useState([]);
+  const [usersQuantity, setUsersQuantity] = useState<number>(0);
+  const [servicesQuantity, setServicesQuantity] = useState<number>(0);
 
   useEffect(() => {
     api
       .get("/api/users/all/count")
-      .then((res) => {
-        setUsersQuantity(res.data);
+      .then(({ data }) => {
+        setUsersQuantity(data);
       })
       .catch((err) => {
         console.log(err);
@@ -39,8 +39,8 @@ export default function HomePage() {
 
     api
       .get("/api/services/all/count")
-      .then((res) => {
-        setServicesQuantity(res.data);
+      .then(({ data }) => {
+        setServicesQuantity(data);
       })
       .catch((err) => {
         console.log(err);

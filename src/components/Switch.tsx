@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 export default function Switch({ className, id }) {
-  const [count, setCount] = useState("");
+  const [count, setCount] = useState<string>("");
 
   return (
     <div
