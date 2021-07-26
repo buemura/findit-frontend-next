@@ -5,6 +5,8 @@ import { Comments, MainContainer, Post } from "../../styles/pages/posts";
 import fetch from "node-fetch";
 import { GetServerSideProps } from "next";
 import { calculateDate } from "../../utils/calculateDate";
+import { useRouter } from "next/router";
+import authentication from "../../services/authentication";
 
 export const getServerSideProps: GetServerSideProps = async ({
   params,
@@ -21,6 +23,20 @@ export const getServerSideProps: GetServerSideProps = async ({
 };
 
 export default function PostDetails({ data }) {
+  const router = useRouter();
+
+  function redirectToUserProfile(): void {
+    const myId: string = authentication.checkUserSession("");
+    const serviceUserId = data.User.id;
+
+    if (myId === serviceUserId) {
+      router.push("/profile");
+      return;
+    }
+    router.push(`/profile/${serviceUserId}`);
+    return;
+  }
+
   return (
     <BodyStyled>
       <HeaderPage />
@@ -36,7 +52,7 @@ export default function PostDetails({ data }) {
           <div>
             <h3>R$ {data.price}</h3>
             <p>
-              <strong>Posted by: </strong>
+              <strong onClick={redirectToUserProfile}>Posted by: </strong>
               {data.User.name}
             </p>
           </div>

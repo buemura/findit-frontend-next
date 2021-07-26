@@ -27,14 +27,14 @@ export default function LoginPage() {
     setPassword("");
   }
 
-  function authenticationSucceeded(token): void {
+  function authenticationSucceeded(token: string): void {
     localStorage.setItem("token", token);
     router.push("/home");
   }
 
   function authenticationFailed(): void {
     alert("Falha de autenticação! Verifique as informações preenchidas.");
-    //clearVariables();
+    // clearVariables();
     router.push("/login");
   }
 

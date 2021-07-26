@@ -51,19 +51,15 @@ const authentication = {
      * So if we decode this token we will be able to retrieve user ID and Email.
      */
 
-    let token;
-    let tokenDecoded: any;
-    let id, exp;
-
     if (localStorage.getItem("token") === null) {
       alert("Your need to sign in to proceed!");
       router.push("/login");
       return;
     }
-    token = localStorage.getItem("token");
-    tokenDecoded = jwt_decode(token);
-    id = tokenDecoded.id;
-    exp = tokenDecoded.exp;
+
+    const token = localStorage.getItem("token");
+    const tokenDecoded: any = jwt_decode(token);
+    const { id, exp } = tokenDecoded;
 
     // Check the session expiration with jwt.exp.
     const currentTimestamp = new Date().getTime() / 1000;
