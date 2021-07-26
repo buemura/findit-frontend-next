@@ -31,6 +31,7 @@ export default function Posts() {
   let id: string;
 
   const items: Array<string> = [
+    "",
     "Assistência Técnica",
     "Aulas",
     "Autos",
@@ -126,7 +127,7 @@ export default function Posts() {
           <span>Category* </span>
           <select name="category" id="select--category">
             {items.map((i) => (
-              <option value={i} key={i}>
+              <option value={i} key={i} onClick={() => setCategory(i)}>
                 {i}
               </option>
             ))}
