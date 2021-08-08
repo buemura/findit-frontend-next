@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
-import { Comments, MainContainer, Post } from "../../styles/pages/posts";
+import {
+  Comments,
+  MainContainer,
+  Post,
+  PostComments,
+} from "../../styles/pages/posts";
 import fetch from "node-fetch";
 import { GetServerSideProps } from "next";
 import { calculateDate } from "../../utils/calculateDate";
@@ -46,6 +51,11 @@ export default function PostDetails({ data }) {
   function postComment(): void {
     const token: string = localStorage.getItem("token");
 
+    if (comment === "") {
+      alert("Comment is empty, please check");
+      return;
+    }
+
     api.post(
       `/api/comments/post-comment/${serviceId}`,
       {
@@ -58,6 +68,8 @@ export default function PostDetails({ data }) {
         },
       }
     );
+
+    window.location.reload();
   }
 
   function redirectToUserProfile(userId: string): void {
@@ -77,6 +89,7 @@ export default function PostDetails({ data }) {
           <div>
             <h2>{data.title}</h2>
             <h3>Category: {data.category}</h3>
+            <p>{data.description}</p>
             <p>
               {data.city}, {data.state} - {data.country}
             </p>
@@ -98,31 +111,32 @@ export default function PostDetails({ data }) {
             <p>{calculateDate(data.createdAt)}</p>
           </div>
         </Post>
-        <Comments>
-          <input
-            type="text"
-            name="text"
-            onChange={(e) => setComment(e.target.value)}
-          />
-          <button onClick={postComment}>Comment</button>
-        </Comments>
-        <Comments>
-          {postedComments.map((com) => (
-            <div
-              key={com.id}
-              onClick={() => redirectToUserProfile(com.User.id)}
-            >
-              <div>
-                <img
-                  src={`${process.env.BACKEND_API}/api/users/${com.User.id}/profile-image`}
-                  alt=""
-                />
-                <h2>{com.User.name}</h2>
-                <p>{com.comment}</p>
-              </div>
+        <PostComments>
+          <label>Post a comment</label>
+          <div>
+            <input
+              type="text"
+              name="text"
+              onChange={(e) => setComment(e.target.value)}
+            />
+            <button onClick={postComment}>Comment</button>
+          </div>
+        </PostComments>
+        {postedComments.map((com) => (
+          <Comments
+            key={com.id}
+            onClick={() => redirectToUserProfile(com.User.id)}
+          >
+            <img
+              src={`${process.env.BACKEND_API}/api/users/${com.User.id}/profile-image`}
+              alt=""
+            />
+            <div>
+              <h3>{com.User.name}</h3>
+              <p>{com.comment}</p>
             </div>
-          ))}
-        </Comments>
+          </Comments>
+        ))}
       </MainContainer>
     </BodyStyled>
   );
