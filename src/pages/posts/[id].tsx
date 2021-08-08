@@ -51,6 +51,11 @@ export default function PostDetails({ data }) {
   function postComment(): void {
     const token: string = localStorage.getItem("token");
 
+    if (myId === data.user_id) {
+      alert("You cannot post a comment on your own service!");
+      return;
+    }
+
     if (comment === "") {
       alert("Comment is empty, please check");
       return;
