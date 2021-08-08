@@ -22,7 +22,7 @@ export const MainSection = styled.div`
 
   .profile-photos {
     width: 100%;
-    background-image: url("https://img.freepik.com/vetores-gratis/fundo-abstrato-premium-azul-escuro-minimalista-com-elementos-geometricos-escuros-de-luxo_272375-7.jpg?size=626&ext=jpg&ga=GA1.2.1746131912.1617494400");
+    background-image: url("https://www.icolorpalette.com/download/solidcolorimage/28282d_solid_color_background_icolorpalette.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -44,7 +44,7 @@ export const MainSection = styled.div`
   }
 
   .photo-black-transparence {
-    background: rgba(0,0,0,.6);
+    background: rgba(0, 0, 0, 0.6);
     width: 100%;
     height: 100%;
     border-radius: 50%;
@@ -53,10 +53,10 @@ export const MainSection = styled.div`
     a {
       color: #eee;
       text-decoration: none;
-      font-size: .8rem;
+      font-size: 0.8rem;
     }
   }
-  .user-photo:hover .photo-black-transparence{
+  .user-photo:hover .photo-black-transparence {
     display: flex;
     justify-content: center;
     align-items: center;
