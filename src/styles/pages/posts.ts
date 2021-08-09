@@ -3,11 +3,12 @@ import styled from "styled-components";
 export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   margin: 60px 0 0 0;
   padding: 0;
   width: 100%;
+  min-height: calc(100vh - 60px);
   overflow-x: hidden;
   background-color: #f0f0f0;
 `;
@@ -17,12 +18,13 @@ export const Filters = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 50%;
-  margin: 30px 0 20px 0;
+  width: 80%;
+  margin: 20px 0;
 
   input {
-    margin: 0 5px 0 5px;
-    padding: 0 0 0 5px;
+    margin: .1rem 0;
+    padding: 0 0 0 .8rem;
+    width: 100%;
 
     border: 0.2px solid #b8b8b8;
     border-radius: 5px;
@@ -34,8 +36,9 @@ export const Filters = styled.div`
     }
   }
 
+
   button {
-    margin: 0 5px 0 5px;
+    margin: .8rem 0;
     background-color: #4169e1;
     color: #ffffff;
 
@@ -43,7 +46,7 @@ export const Filters = styled.div`
     border-radius: 5px;
 
     height: 30px;
-    width: 90px;
+    min-width: 100px;
 
     &:hover {
       cursor: pointer;
@@ -51,26 +54,70 @@ export const Filters = styled.div`
       color: #000000;
     }
   }
+
+  @media (max-width: 1020px) {
+    width: 95%;
+    
+    input {
+      width: 95%;
+    }
+  }
+
+  @media (max-width: 650px) {
+    margin-top: calc(60px + 20px);
+    flex-direction: column;
+    width: 95%;
+  }
 `;
 
 export const Feed = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-  width: 50%;
-  margin: 15px 0 0 0;
-  padding: 10px 20px 10px 20px;
+  align-items: flex-start;
+  width: 70%;
+  margin: .3rem 0 0 0;
+  padding: .6rem 2rem;
   background-color: #ffffff;
   border-radius: 3px;
 
+  h2 {
+    font-size: 1.8rem;
+    margin: .8rem 0;
+  }
+
   div {
     display: flex;
-    flex-direction: column;
+    justify-content: flex-end;
+    flex-direction: row;
+    width: 100%;
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    p, h3 {
+      margin: .3rem 0;
+    }
+  }
+
+  div:last-child {
+    align-items: flex-end;
   }
 
   &:hover {
     cursor: pointer;
+    background: #f8f8f8;
+  }
+
+  @media (max-width: 900px) {
+    width: 95%;
   }
 `;
 
@@ -78,19 +125,34 @@ export const Post = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  width: 50%;
+  align-items: flex-end;
+  width: 70%;
   margin: 30px 0 0 0;
   padding: 10px 20px 10px 20px;
   background-color: #ffffff;
 
   div {
-    display: flex;
-    flex-direction: column;
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin: 1rem 0;
+    }
+
+    p, h3 {
+      margin: .3rem 0;
+    }
   }
 
   &:hover {
-    cursor: pointer;
+    cursor: default;
+  }
+
+  @media (max-width: 900px) {
+    width: 95%;
   }
 `;
 
@@ -105,8 +167,8 @@ export const PostComments = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width: 50%;
+  align-items: flex-start;
+  width: 70%;
   margin: 15px 0 15px 0;
   padding: 10px 20px 10px 20px;
   background-color: #ffffff;
@@ -126,7 +188,7 @@ export const PostComments = styled.div`
       border-radius: 5px;
 
       height: 30px;
-      width: 90%;
+      width: 80%;
 
       &:focus {
         border: 1px solid #4169e1;
@@ -146,7 +208,7 @@ export const PostComments = styled.div`
       border-radius: 5px;
 
       height: 30px;
-      width: 10%;
+      flex: 1;
 
       &:hover {
         cursor: pointer;
@@ -155,6 +217,10 @@ export const PostComments = styled.div`
       }
     }
   }
+
+  @media (max-width: 900px) {
+    width: 95%;
+  }
 `;
 
 export const Comments = styled.div`
@@ -162,7 +228,7 @@ export const Comments = styled.div`
   flex-direction: row;
   justify-content: left;
   align-items: center;
-  width: 50%;
+  width: 70%;
   margin: 1px 0 0 0;
   padding: 10px 20px 10px 20px;
   background-color: #ffffff;
@@ -180,5 +246,9 @@ export const Comments = styled.div`
 
   &:hover {
     cursor: pointer;
+  }
+
+  @media (max-width: 900px) {
+    width: 95%;
   }
 `;

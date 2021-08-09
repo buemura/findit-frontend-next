@@ -71,22 +71,24 @@ export default function Posts() {
               key={post.id}
               onClick={() => router.push(`/posts/${post.id}`)}
             >
+              <h2>{post.title}</h2>
               <div>
-                <h2>{post.title}</h2>
-                <h3>Category: {post.category}</h3>
-                <p>
-                  {post.city}, {post.state} - {post.country}
-                </p>
-              </div>
-              <div>
-                <h3>R$ {post.price}</h3>
-                <p>
-                  <strong>Posted by: </strong>
-                  {post.User.name}
-                </p>
-              </div>
-              <div>
-                <p>{calculateDate(post.createdAt)}</p>
+                <div>
+                  <h3>Category: {post.category}</h3>
+                  <p>
+                    {post.city}, {post.state} - {post.country}
+                  </p>
+                </div>
+                <div>
+                  <h3>R$ {post.price}</h3>
+                  <p>
+                    <strong>Posted by: </strong>
+                    {post.User.name}
+                  </p>
+                </div>
+                <div>
+                  <p>{calculateDate(post.createdAt)}</p>
+                </div>
               </div>
             </Feed>
           ))
