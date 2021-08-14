@@ -78,10 +78,7 @@ export default function UsersProfile({ data }) {
       )
       .then(({ data }) => {
         token = btoa(token);
-        router.push({
-          pathname: `/messages/${data.chat_id}`,
-          query: { token },
-        });
+        router.push(`/messages/${data.chat_id}`);
       })
       .catch((err) => {
         console.log(err);
