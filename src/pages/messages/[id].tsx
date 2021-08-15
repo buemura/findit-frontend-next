@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
-import fetch from "node-fetch";
 import { GetServerSideProps } from "next";
-import { useRouter } from "next/router";
+import router from "next/router";
 import authentication from "../../services/authentication";
 import api from "../../services/api";
 import {
   MainContainer,
+  UserName,
   MessagesContainer,
   NewMessagesContainer,
 } from "../../styles/pages/messages";
+import { FormatDate } from "../../utils/formatDate";
+
+interface IMessage {
+  id: string;
+  chat_id: string;
+  sender_id: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export const getServerSideProps: GetServerSideProps = async ({
   params,
@@ -29,18 +39,22 @@ export default function MessagesDetails({ id }) {
     error: false,
     loading: true,
   });
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState<any>("");
+  const [userID, setUserID] = useState<string>("");
+  const [userName, setUserName] = useState<string>("");
+  const [messages, setMessages] = useState<Array<IMessage>>([]);
+  const [newMessage, setNewMessage] = useState<string>("");
 
   useEffect(() => {
     const token: string = localStorage.getItem("token");
     const authenticatedID: string = authentication.checkUserSession("");
     setMyId(authenticatedID);
 
+    getUserName();
+
     const intervalId = setInterval(() => {
       setState((state) => ({ data: state.data, error: false, loading: true }));
       api
-        .get(`${process.env.BACKEND_API}/api/chat/messages/${id}`, {
+        .get(`/api/chat/messages/${id}`, {
           headers: {
             authorization: token,
           },
@@ -58,7 +72,37 @@ export default function MessagesDetails({ id }) {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [useState]);
+  }, [state]);
+
+  function getUserName(): void {
+    const token: string = localStorage.getItem("token");
+
+    api
+      .get(`/api/chatsById/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      })
+      .then(({ data }) => {
+        if (data[0].sender_id === myId) {
+          setUserID(data[0].receiver_id);
+        } else {
+          setUserID(data[0].sender_id);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    api
+      .get(`/api/users/${userID}`)
+      .then(({ data }) => {
+        setUserName(data.name);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   function sendMessage(): void {
     const token: string = localStorage.getItem("token");
@@ -76,7 +120,7 @@ export default function MessagesDetails({ id }) {
           },
         }
       )
-      .then(({ data }) => {
+      .then(() => {
         setNewMessage("");
       })
       .catch((err) => {
@@ -85,19 +129,41 @@ export default function MessagesDetails({ id }) {
       });
   }
 
+  function redirectToUserProfile(userId: string): void {
+    if (myId === userId) {
+      router.push("/profile");
+      return;
+    }
+    router.push(`/profile/${userId}`);
+    return;
+  }
+
   return (
     <BodyStyled>
       <HeaderPage />
       <MainContainer>
+        <UserName onClick={() => redirectToUserProfile(userID)}>
+          <img
+            src={`${process.env.BACKEND_API}/api/users/${userID}/profile-image`}
+            alt={userID}
+          />
+          <p>{userName}</p>
+        </UserName>
         <MessagesContainer>
           {messages.map((message) =>
             myId === message.sender_id ? (
               <div key={message.id} className="iam-sender">
                 <p className="message">{message.content}</p>
+                <p className="message-date">
+                  {FormatDate.calculateDate(message.createdAt)}
+                </p>
               </div>
             ) : (
               <div key={message.id} className="iamnot-sender">
                 <p className="message">{message.content}</p>
+                <p className="message-date">
+                  {FormatDate.calculateDate(message.createdAt)}
+                </p>
               </div>
             )
           )}

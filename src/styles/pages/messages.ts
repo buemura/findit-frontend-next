@@ -13,32 +13,75 @@ export const MainContainer = styled.div`
   background-color: #f0f0f0;
 `;
 
-export const MessagesContainer = styled.div`
-  width: 100%;
+export const UserName = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  margin: 1px 0 10px 0;
+  padding: 0px 5px 0px 5px;
+  background-color: #ffffff;
+
+  font-size: x-large;
+
+  img {
+    margin: 0 10px 0 0;
+    border-radius: 50%;
+
+    width: 50px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media (max-width: 900px) {
+    width: 95%;
+  }
+`;
+
+export const MessagesContainer = styled.div`
+  width: 60%;
+  float: right;
 
   background-color: #ffffff;
 
-  .iam-sender {
+  div {
     margin: 5px;
     padding-right: 20px;
+    padding-left: 20px;
+    border-radius: 20px;
+    width: 50%;
+  }
+
+  .iam-sender {
     text-align: right;
-    border-radius: 50px;
-    background-color: #2aa9e0;
+    float: right;
+    background-color: #2e384d;
+    color: #ffffff;
   }
 
   .iamnot-sender {
-    margin: 5px;
-    padding-left: 20px;
     text-align: left;
-    border-radius: 50px;
+    float: left;
     background-color: #dcdde0;
+  }
+
+  .message {
+  }
+
+  .message-date {
+    font-size: x-small;
   }
 `;
 
 export const NewMessagesContainer = styled.div`
-  width: 100%;
+  width: 60%;
   margin: 15px;
   display: flex;
   flex-direction: row;

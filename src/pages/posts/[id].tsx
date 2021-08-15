@@ -9,7 +9,7 @@ import {
 } from "../../styles/pages/posts";
 import fetch from "node-fetch";
 import { GetServerSideProps } from "next";
-import { calculateDate } from "../../utils/calculateDate";
+import { FormatDate } from "../../utils/formatDate";
 import { useRouter } from "next/router";
 import authentication from "../../services/authentication";
 import api from "../../services/api";
@@ -113,7 +113,7 @@ export default function PostDetails({ data }) {
             </p>
           </div>
           <div>
-            <p>{calculateDate(data.createdAt)}</p>
+            <p>{FormatDate.calculateDate(data.createdAt)}</p>
           </div>
         </Post>
         <PostComments>
@@ -139,6 +139,9 @@ export default function PostDetails({ data }) {
             <div>
               <h3>{com.User.name}</h3>
               <p>{com.comment}</p>
+            </div>
+            <div>
+              <p>{FormatDate.calculateDate(com.createdAt)}</p>
             </div>
           </Comments>
         ))}

@@ -9,14 +9,12 @@ export default function Messages() {
   const [chatRoom, setChatRoom] = useState([]);
   const [userInfo, setUserInfo] = useState();
 
-  let id: string;
-  let token: string;
-
   useEffect(() => {
-    id = authentication.checkUserSession("");
-    token = localStorage.getItem("token");
+    const id: string = authentication.checkUserSession("");
+    const token: string = localStorage.getItem("token");
+
     api
-      .get(`/api/chats/${id}`, {
+      .get(`/api/chatsByUser/${id}`, {
         headers: {
           authorization: token,
         },

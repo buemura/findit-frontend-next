@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
 import { MainContainer, Filters, Feed, Title } from "../../styles/pages/posts";
-import { calculateDate } from "../../utils/calculateDate";
+import { FormatDate } from "../../utils/formatDate";
 
 export default function Posts() {
   const router = useRouter();
@@ -87,7 +87,7 @@ export default function Posts() {
                   </p>
                 </div>
                 <div>
-                  <p>{calculateDate(post.createdAt)}</p>
+                  <p>{FormatDate.calculateDate(post.createdAt)}</p>
                 </div>
               </div>
             </Feed>
