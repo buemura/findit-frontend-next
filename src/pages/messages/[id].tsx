@@ -135,7 +135,6 @@ export default function MessagesDetails({ id }) {
       return;
     }
     router.push(`/profile/${userId}`);
-    return;
   }
 
   return (

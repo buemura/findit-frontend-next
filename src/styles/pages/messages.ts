@@ -13,6 +13,40 @@ export const MainContainer = styled.div`
   background-color: #f0f0f0;
 `;
 
+export const ChatContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  width: 70%;
+  margin: 1px 0 0 0;
+  padding: 5px 20px 5px 20px;
+  background-color: #ffffff;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  img {
+    margin: 0 40px 0 0;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 900px) {
+    width: 95%;
+  }
+`;
+
 export const UserName = styled.div`
   display: flex;
   flex-direction: row;
