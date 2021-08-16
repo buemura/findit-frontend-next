@@ -40,14 +40,14 @@ export function HeaderUser() {
               </Link>
             </div>
             <div className="profileLinks">
-              <Link href="/notification" passHref>
+              <Link href="/messages" passHref>
                 <a className="notification">
-                  <span>Notifications</span>
+                  <span>Messages</span>
                   <div>
                     <img
-                      className="notificationImage"
-                      src="/icons/notification-bell.png"
-                      alt="Notification"
+                      className="chatImage"
+                      src="/icons/chat.png"
+                      alt="Chat"
                     />
                     {hasNotification === 1 ? (
                       <img

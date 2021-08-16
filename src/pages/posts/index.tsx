@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
-import { MainContainer, Filters, Feed } from "../../styles/pages/posts";
-import { calculateDate } from "../../utils/calculateDate";
+import { MainContainer, Filters, Feed, Title } from "../../styles/pages/posts";
+import { FormatDate } from "../../utils/formatDate";
 
 export default function Posts() {
   const router = useRouter();
@@ -65,27 +65,38 @@ export default function Posts() {
           />
           <button onClick={() => setFilter(true)}>Apply Filter</button>
         </Filters>
-        {posts.map((post) => (
-          <Feed key={post.id} onClick={() => router.push(`/posts/${post.id}`)}>
-            <div>
+        {posts.length != 0 ? (
+          posts.map((post) => (
+            <Feed
+              key={post.id}
+              onClick={() => router.push(`/posts/${post.id}`)}
+            >
               <h2>{post.title}</h2>
-              <h3>Category: {post.category}</h3>
-              <p>
-                {post.city}, {post.state} - {post.country}
-              </p>
-            </div>
-            <div>
-              <h3>R$ {post.price}</h3>
-              <p>
-                <strong>Posted by: </strong>
-                {post.User.name}
-              </p>
-            </div>
-            <div>
-              <p>{calculateDate(post.createdAt)}</p>
-            </div>
-          </Feed>
-        ))}
+              <div>
+                <div>
+                  <h3>Category: {post.category}</h3>
+                  <p>
+                    {post.city}, {post.state} - {post.country}
+                  </p>
+                </div>
+                <div>
+                  <h3>R$ {post.price}</h3>
+                  <p>
+                    <strong>Posted by: </strong>
+                    {post.User.name}
+                  </p>
+                </div>
+                <div>
+                  <p>{FormatDate.calculateDate(post.createdAt)}</p>
+                </div>
+              </div>
+            </Feed>
+          ))
+        ) : (
+          <Title>
+            <h1>No service posted yet</h1>
+          </Title>
+        )}
       </MainContainer>
     </BodyStyled>
   );

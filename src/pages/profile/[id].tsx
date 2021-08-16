@@ -13,6 +13,7 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import authentication from "../../services/authentication";
 import { useRouter } from "next/router";
+import api from "../../services/api";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { id } = params;
@@ -41,7 +42,7 @@ export default function UsersProfile({ data }) {
   };
 
   useEffect(() => {
-    const myId: string = authentication.checkUserSession("");
+    const myId = authentication.checkUserSession("");
 
     if (myId === data.id) {
       router.push("/profile");
@@ -54,6 +55,35 @@ export default function UsersProfile({ data }) {
       );
     }
   }, []);
+
+  function sendMessage(): void {
+    const myId = authentication.checkUserSession("");
+    let token = localStorage.getItem("token");
+
+    console.log(`myID: ${myId}`);
+    console.log(`token: ${token}`);
+
+    api
+      .post(
+        `/api/chat/create-chat`,
+        {
+          sender_id: myId,
+          receiver_id: data.id,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      )
+      .then(({ data }) => {
+        token = btoa(token);
+        router.push(`/messages/${data.chat_id}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <BodyStyled>
@@ -69,11 +99,7 @@ export default function UsersProfile({ data }) {
             <div className="title">
               <h1>{data.name}</h1>
               <h3>{data.occupation}</h3>
-              <Link href="/messages">
-                <a href="">
-                  <img src="icons/edit-property-64.png"></img>Send message
-                </a>
-              </Link>
+              <button onClick={sendMessage}>Send message</button>
             </div>
           </div>
           <PersonalInfo>

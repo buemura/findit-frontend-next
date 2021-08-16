@@ -6,11 +6,11 @@ export const Container = styled.div`
   box-sizing: border-box;
   position: fixed;
   top: 0;
-  left:0;
+  left: 0;
   display: block;
-  z-index: 1000000; 
+  z-index: 1000000;
   width: 100vw;
-`
+`;
 
 export const Header = styled.div`
   margin: 20px;
@@ -25,7 +25,7 @@ export const Header = styled.div`
   padding: 10px 30px;
   margin: 0;
   width: 100%;
-  
+
   .divLogo {
     display: flex;
     justify-content: center;
@@ -79,12 +79,12 @@ export const Header = styled.div`
     transition: 0.2s;
     background: #ddd;
     font-weight: bold;
-    font-size: 14px;    
+    font-size: 14px;
     box-sizing: border-box;
   }
   .search button:hover {
-      background: #f7226a;
-      color: #fff;
+    background: #f7226a;
+    color: #fff;
   }
   .search input {
     height: 100%;
@@ -128,9 +128,9 @@ export const Header = styled.div`
     background: transparent;
     border: none;
     transition: 0.2s;
-    box-sizing: border-box;  
+    box-sizing: border-box;
 
-    span {      
+    span {
       color: #fff !important;
       display: none;
       font-weight: normal;
@@ -140,17 +140,17 @@ export const Header = styled.div`
       display: none;
     }
 
-    div {      
+    div {
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    .notificationImage {
+    .chatImage {
       position: absolute;
       width: 25px;
-    }  
+    }
 
     .warning {
       position: absolute;
@@ -161,7 +161,7 @@ export const Header = styled.div`
     }
   }
   .notification:hover {
-      background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1);
   }
   .profile {
     background: transparent;
@@ -175,7 +175,7 @@ export const Header = styled.div`
     box-sizing: border-box;
   }
   .user-logout {
-    font-size: .7rem !important;
+    font-size: 0.7rem !important;
     text-decoration: underline !important;
   }
   .menuItems {
@@ -232,10 +232,9 @@ export const Header = styled.div`
     transition: 0.2s;
     box-sizing: border-box;
     height: 100%;
-    
   }
   .pageLinks a:hover {
-      background: #5179f1;
+    background: #5179f1;
   }
   @media (max-width: 1000px) {
     .menu {
@@ -270,10 +269,9 @@ export const Header = styled.div`
       width: 50%;
       height: 100%;
       border-radius: 10px;
-      
     }
     .pageLinks a:hover {
-        background: #4169e1;
+      background: #4169e1;
     }
   }
 
@@ -282,16 +280,16 @@ export const Header = styled.div`
       background: transparent !important;
       border: none;
       transition: 0.2s;
-      box-sizing: border-box;  
+      box-sizing: border-box;
 
-      span {      
+      span {
         color: #fff !important;
         display: flex;
         font-weight: bold;
         margin-right: 30px;
       }
 
-      div {      
+      div {
         position: relative;
         display: flex;
         justify-content: center;
@@ -302,9 +300,9 @@ export const Header = styled.div`
         align-items: center;
       }
 
-      .notificationImage {
+      .chatImage {
         position: absolute;
-      }  
+      }
 
       .warning {
         position: absolute;
@@ -314,7 +312,7 @@ export const Header = styled.div`
         border-radius: 50%;
       }
 
-      &:hover {        
+      &:hover {
         background: #4169e1 !important;
       }
     }
@@ -401,9 +399,9 @@ export const Header = styled.div`
       background: transparent !important;
       border: none;
       transition: 0.2s;
-      box-sizing: border-box;  
+      box-sizing: border-box;
 
-      span {      
+      span {
         color: #fff !important;
         display: flex;
         font-weight: bold;
@@ -415,17 +413,17 @@ export const Header = styled.div`
         align-items: center;
       }
 
-      div {      
+      div {
         position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
       }
 
-      .notificationImage {
+      .chatImage {
         position: absolute;
         width: 25px;
-      }  
+      }
 
       .warning {
         position: absolute;
@@ -459,4 +457,4 @@ export const Header = styled.div`
       transform: translateX(20px);
     }
   }
-`
+`;

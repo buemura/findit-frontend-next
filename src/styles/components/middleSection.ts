@@ -5,8 +5,10 @@ export const BodyStyled = styled.div`
   padding: 0;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   background-color: #e3e3e3;
   width: 100%;
+  min-height: 100vh;
 
   * {
     font-family: "Roboto", sans-serif;
