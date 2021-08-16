@@ -249,7 +249,7 @@ export const Header = styled.div`
       align-items: center;
     }
 
-    .notificationImage {
+    .chatImage {
       position: absolute;
       width: 25px;
     }
