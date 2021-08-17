@@ -13,6 +13,13 @@ export const MainContainer = styled.div`
   background-color: #f0f0f0;
 `;
 
+export const Title = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 200px 0 0 0;
+`;
+
 export const ChatContainer = styled.div`
   display: flex;
   flex-direction: row;

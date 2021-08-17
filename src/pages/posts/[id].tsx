@@ -33,11 +33,9 @@ export default function PostDetails({ data }) {
   const serviceId = data.id;
 
   const [comment, setComment] = useState<string>("");
-  const [myId, setMyId] = useState<string>("");
   const [postedComments, setPostedComments] = useState([]);
 
   useEffect(() => {
-    setMyId(authentication.checkUserSession(""));
     api
       .get(`/api/comments/${serviceId}`)
       .then(({ data }) => {
@@ -49,6 +47,7 @@ export default function PostDetails({ data }) {
   }, []);
 
   function postComment(): void {
+    const myId = authentication.checkUserSession("");
     const token: string = localStorage.getItem("token");
 
     if (myId === data.user_id) {
@@ -78,6 +77,8 @@ export default function PostDetails({ data }) {
   }
 
   function redirectToUserProfile(userId: string): void {
+    const myId = authentication.checkUserSession("");
+
     if (myId === userId) {
       router.push("/profile");
       return;
