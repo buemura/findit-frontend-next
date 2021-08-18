@@ -1,15 +1,14 @@
-import api from "../../services/api";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
 import { MainContainer } from "../../styles/pages/create-post";
 import { Modal } from "../../components/modal";
 
-import authentication from "../../services/authentication";
+import { Authentication } from "../../api/authentication";
 import countries from "../../utils/countries.json";
-import { route } from "next/dist/next-server/server/router";
 import { useRouter } from "next/router";
 import { InputText, SelectStyled } from "../../styles/pages/profile-edit";
+import { Services } from "../../api/services";
 
 export default function Posts() {
   const [title, setTitle] = useState<string>("");
@@ -28,8 +27,6 @@ export default function Posts() {
 
   const router = useRouter();
 
-  let id: string;
-
   const items: Array<string> = [
     "",
     "Assistência Técnica",
@@ -44,41 +41,31 @@ export default function Posts() {
     "Serviços Domésticos",
   ];
 
-  useEffect(() => {
-    id = authentication.checkUserSession("");
-  }, []);
-
-  function postService(): void {
+  async function postService() {
     const token: string = localStorage.getItem("token");
-    id = authentication.checkUserSession("");
+    const id = Authentication.checkUserSession("");
 
-    api
-      .post(
-        "/api/services",
-        {
-          user_id: id,
-          title,
-          category,
-          description,
-          price,
-          city,
-          state,
-          country,
-        },
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      )
-      .then(({ data }) => {
-        setIsModalPositive(true);
-        setIsModalVisible(true);
-      })
-      .catch((err) => {
-        setIsModalPositive(false);
-        setIsModalVisible(true);
-      });
+    const result = await Services.createService(
+      id,
+      title,
+      category,
+      description,
+      price,
+      city,
+      state,
+      country,
+      token
+    );
+
+    if (result === true) {
+      setIsModalPositive(true);
+      setIsModalVisible(true);
+      return;
+    }
+
+    setIsModalPositive(false);
+    setIsModalVisible(true);
+    return;
   }
 
   function onChangeSelectCountry(): void {

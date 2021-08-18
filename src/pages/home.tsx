@@ -1,4 +1,4 @@
-import api from "../services/api";
+import api from "../api/baseURL";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { HeaderPage } from "../components/HeaderPage";
@@ -9,7 +9,9 @@ import {
   MainSection,
   ListItem,
 } from "../styles/pages/home";
-import authentication from "../services/authentication";
+import { Authentication } from "../api/authentication";
+import { Users } from "../api/users";
+import { Services } from "../api/services";
 
 export default function HomePage() {
   const items = [
@@ -28,23 +30,13 @@ export default function HomePage() {
   const [servicesQuantity, setServicesQuantity] = useState<number>(0);
 
   useEffect(() => {
-    api
-      .get("/api/users/all/count")
-      .then(({ data }) => {
-        setUsersQuantity(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    (async () => {
+      const usersCount = await Users.getUsersCount();
+      const servicesCount = await Services.getServicesCount();
 
-    api
-      .get("/api/services/all/count")
-      .then(({ data }) => {
-        setServicesQuantity(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      setUsersQuantity(usersCount);
+      setServicesQuantity(servicesCount);
+    })();
   }, []);
 
   return (
@@ -68,7 +60,7 @@ export default function HomePage() {
             <div className="buttons-container">
               <button
                 className="post-services"
-                onClick={() => authentication.checkUserSession("create-post")}
+                onClick={() => Authentication.checkUserSession("create-post")}
               >
                 Post Services
               </button>

@@ -1,7 +1,8 @@
-import api from "../../services/api";
+import api from "../../api/baseURL";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import authentication from "../../services/authentication";
+import { Authentication } from "../../api/authentication";
+import { Users } from "../../api/users";
 
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
@@ -51,23 +52,20 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    const id: string = authentication.checkUserSession("");
-    setHasPhoto(false);
+    (async () => {
+      const id: string = Authentication.checkUserSession("");
+      setHasPhoto(false);
 
-    api
-      .get(`/api/users/${id}`)
-      .then(({ data }) => {
-        setUser(data);
-        if (data.user_photo) {
-          setHasPhoto(true);
-          setProfilePhoto(
-            `${process.env.BACKEND_API}/api/users/${id}/profile-image`
-          );
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      const data = await Users.getUserByID(id);
+      setUser(data);
+
+      if (data.user_photo) {
+        setHasPhoto(true);
+        setProfilePhoto(
+          `${process.env.BACKEND_API}/api/users/${id}/profile-image`
+        );
+      }
+    })();
   }, []);
 
   return (

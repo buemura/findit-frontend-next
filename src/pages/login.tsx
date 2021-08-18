@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import authentication from "../services/authentication";
+import { Authentication } from "../api/authentication";
 
 import { Container } from "../styles/components/loginContainer";
 import { Div } from "../styles/pages/loginPage";
@@ -51,7 +51,7 @@ export default function LoginPage() {
     }
 
     try {
-      const token: string = await authentication.logIn({
+      const token: string = await Authentication.logIn({
         email,
         password,
       });

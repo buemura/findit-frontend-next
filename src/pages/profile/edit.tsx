@@ -1,7 +1,7 @@
-import api from "../../services/api";
+import api from "../../api/baseURL";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import authentication from "../../services/authentication";
+import { Authentication } from "../../api/authentication";
 
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
@@ -14,6 +14,7 @@ import {
   SelectStyled,
 } from "../../styles/pages/profile-edit";
 import countries from "../../utils/countries.json";
+import { Users } from "../../api/users";
 
 export default function Profile() {
   const router = useRouter();
@@ -50,77 +51,51 @@ export default function Profile() {
   ];
 
   useEffect(() => {
-    const id: string = authentication.checkUserSession("");
-    setHasPhoto(false);
+    (async () => {
+      const id: string = Authentication.checkUserSession("");
+      setHasPhoto(false);
 
-    api
-      .get(`/api/users/${id}`)
-      .then(({ data }) => {
-        setName(data.name);
-        setEmail(data.email);
-        setCity(data.city);
-        setState(data.state);
-        setCountry(data.country);
-        setPhone(data.phone);
-        setOccupation(data.occupation);
-        setAboutMe(data.about_me);
+      const data = await Users.getUserByID(id);
+      setName(data.name);
+      setEmail(data.email);
+      setCity(data.city);
+      setState(data.state);
+      setCountry(data.country);
+      setPhone(data.phone);
+      setOccupation(data.occupation);
+      setAboutMe(data.about_me);
+
+      if (data.user_photo) {
+        setHasPhoto(true);
         setUserPhoto(
           `${process.env.BACKEND_API}/api/users/${id}/profile-image`
         );
-
-        if (data.user_photo) {
-          setHasPhoto(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+    })();
   }, []);
 
   // Update profile by sending a PUT request do backend API.
   function updateProfile(): void {
-    const id: string = authentication.checkUserSession("");
+    const id: string = Authentication.checkUserSession("");
     const token: string = localStorage.getItem("token");
 
     // Update User Photo
     const data = new FormData();
     data.append("file", selectedFile);
 
-    api
-      .post(`/api/users/${id}/profile-image/upload`, data, {
-        headers: {
-          authorization: token,
-        },
-      })
-      .then((res) => {})
-      .catch((err) => {
-        console.log(err);
-      });
-
-    // Update User Info
-    api
-      .put(
-        `/api/users/${id}`,
-        {
-          name,
-          email,
-          city,
-          state,
-          country,
-          phone,
-          occupation,
-          about_me,
-        },
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      )
-      .then((res) => {})
-      .catch((err) => {
-        alert("Failed to Update user!");
-      });
+    Users.updateProfilePhoto(id, data, token);
+    Users.updateUser(
+      id,
+      name,
+      email,
+      city,
+      state,
+      country,
+      phone,
+      occupation,
+      about_me,
+      token
+    );
 
     router.push("/profile", null, { shallow: false });
   }

@@ -3,8 +3,8 @@ import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
 import { GetServerSideProps } from "next";
 import router from "next/router";
-import authentication from "../../services/authentication";
-import api from "../../services/api";
+import { Authentication } from "../../api/authentication";
+import api from "../../api/baseURL";
 import {
   MainContainer,
   UserName,
@@ -46,7 +46,7 @@ export default function MessagesDetails({ id }) {
 
   useEffect(() => {
     const token: string = localStorage.getItem("token");
-    const authenticatedID: string = authentication.checkUserSession("");
+    const authenticatedID: string = Authentication.checkUserSession("");
     setMyId(authenticatedID);
 
     getUserName();

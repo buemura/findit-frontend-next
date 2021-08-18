@@ -1,10 +1,11 @@
-import api from "../../services/api";
+import api from "../../api/baseURL";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
 import { MainContainer, Filters, Feed, Title } from "../../styles/pages/posts";
 import { FormatDate } from "../../utils/formatDate";
+import { Services } from "../../api/services";
 
 export default function Posts() {
   const router = useRouter();
@@ -17,17 +18,11 @@ export default function Posts() {
   const [filter, setFilter] = useState(false);
 
   useEffect(() => {
-    api
-      .get(
-        `/api/services?category=${category}&city=${city}&state=${state}&country=${country}`
-      )
-      .then(({ data }) => {
-        setPosts(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setFilter(false);
+    (async () => {
+      const data = await Services.getServices(category, city, state, country);
+      setPosts(data);
+      setFilter(false);
+    })();
   }, [filter]);
 
   return (

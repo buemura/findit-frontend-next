@@ -22,8 +22,8 @@ export const Filters = styled.div`
   margin: 20px 0;
 
   input {
-    margin: .1rem 0;
-    padding: 0 0 0 .8rem;
+    margin: 0.1rem 0;
+    padding: 0 0 0 0.8rem;
     width: 100%;
 
     border: 0.2px solid #b8b8b8;
@@ -36,9 +36,8 @@ export const Filters = styled.div`
     }
   }
 
-
   button {
-    margin: .8rem 0;
+    margin: 0.8rem 0;
     background-color: #4169e1;
     color: #ffffff;
 
@@ -57,7 +56,7 @@ export const Filters = styled.div`
 
   @media (max-width: 1020px) {
     width: 95%;
-    
+
     input {
       width: 95%;
     }
@@ -76,14 +75,14 @@ export const Feed = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   width: 70%;
-  margin: .3rem 0 0 0;
-  padding: .6rem 2rem;
+  margin: 0.3rem 0 0 0;
+  padding: 0.6rem 2rem;
   background-color: #ffffff;
   border-radius: 3px;
 
   h2 {
     font-size: 1.8rem;
-    margin: .8rem 0;
+    margin: 0.8rem 0;
   }
 
   div {
@@ -102,8 +101,9 @@ export const Feed = styled.div`
       flex-direction: column;
     }
 
-    p, h3 {
-      margin: .3rem 0;
+    p,
+    h3 {
+      margin: 0.3rem 0;
     }
   }
 
@@ -142,8 +142,9 @@ export const Post = styled.div`
       margin: 1rem 0;
     }
 
-    p, h3 {
-      margin: .3rem 0;
+    p,
+    h3 {
+      margin: 0.3rem 0;
     }
   }
 
@@ -223,7 +224,7 @@ export const PostComments = styled.div`
   }
 `;
 
-export const Comments = styled.div`
+export const CommentsContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: left;

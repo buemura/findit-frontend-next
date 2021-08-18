@@ -3,7 +3,7 @@ import Switch from "./Switch";
 
 import Link from "next/link";
 import { useState } from "react";
-import authentication from "../services/authentication";
+import { Authentication } from "../api/authentication";
 
 export function HeaderUser() {
   const [hasNotification, setHasNotification] = useState<number>(0);
@@ -63,11 +63,11 @@ export function HeaderUser() {
               </Link>
               <a
                 className="profile"
-                onClick={() => authentication.checkUserSession("profile")}
+                onClick={() => Authentication.checkUserSession("profile")}
               >
                 Profile
               </a>
-              <a className="user-logout" onClick={authentication.logOut}>
+              <a className="user-logout" onClick={Authentication.logOut}>
                 Logout
               </a>
             </div>
