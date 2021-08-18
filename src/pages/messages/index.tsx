@@ -1,7 +1,7 @@
 import router from "next/router";
 import React, { useEffect, useState } from "react";
 import { HeaderPage } from "../../components/HeaderPage";
-import { Chats } from "../../api/chats";
+import api from "../../api/baseURL";
 import { Authentication } from "../../api/authentication";
 import { BodyStyled } from "../../styles/components/middleSection";
 import {
@@ -25,22 +25,44 @@ interface IChatRooms {
 }
 
 export default function Messages() {
+  const [myId, setMyId] = useState<string>("");
   const [chatRoom, setChatRoom] = useState<Array<IChatRooms>>([]);
 
   useEffect(() => {
-    (async () => {
-      const id: string = Authentication.checkUserSession("");
-      const token: string = localStorage.getItem("token");
+    const id: string = Authentication.checkUserSession("");
+    const token: string = localStorage.getItem("token");
+    setMyId(id);
 
-      const data = await Chats.getChatByUserID(id, token);
-      setChatRoom(data);
-    })();
+    api
+      .get(`/api/chatsByUser/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      })
+      .then(({ data }) => {
+        setChatRoom(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
-  async function lastMessage(chatId: string): Promise<string> {
+  function lastMessage(chatId: string): string {
     const token: string = localStorage.getItem("token");
     let message: string = "Last Message";
-    message = await Chats.getChatMessages(chatId, token);
+    api
+      .get(`/api/chat/messages/${chatId}`, {
+        headers: {
+          authorization: token,
+        },
+      })
+      .then(({ data }) => {
+        message = data[data.length - 1].content;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     return message;
   }
 

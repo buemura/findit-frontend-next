@@ -12,6 +12,8 @@ import {
   NewMessagesContainer,
 } from "../../styles/pages/messages";
 import { FormatDate } from "../../utils/formatDate";
+import { Chats } from "../../api/chats";
+import { Users } from "../../api/users";
 
 interface IMessage {
   id: string;
@@ -74,59 +76,24 @@ export default function MessagesDetails({ id }) {
     return () => clearInterval(intervalId);
   }, [state]);
 
-  function getUserName(): void {
+  async function getUserName(): Promise<void> {
     const token: string = localStorage.getItem("token");
+    const data = await Chats.getChatByID(id, token, myId);
 
-    api
-      .get(`/api/chatsById/${id}`, {
-        headers: {
-          authorization: token,
-        },
-      })
-      .then(({ data }) => {
-        if (data[0].sender_id === myId) {
-          setUserID(data[0].receiver_id);
-        } else {
-          setUserID(data[0].sender_id);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (data.sender_id === myId) {
+      setUserID(data.receiver_id);
+    } else {
+      setUserID(data.sender_id);
+    }
 
-    api
-      .get(`/api/users/${userID}`)
-      .then(({ data }) => {
-        setUserName(data.name);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const user = await Users.getUserByID(userID);
+    setUserName(user.name);
   }
 
-  function sendMessage(): void {
+  async function sendMessage(): Promise<void> {
     const token: string = localStorage.getItem("token");
-
-    api
-      .post(
-        `/api/chat/send-message/${id}`,
-        {
-          sender_id: myId,
-          content: newMessage,
-        },
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      )
-      .then(() => {
-        setNewMessage("");
-      })
-      .catch((err) => {
-        setNewMessage("");
-        console.log(err);
-      });
+    await Chats.sendMessage(id, myId, newMessage, token);
+    setNewMessage("");
   }
 
   function redirectToUserProfile(userId: string): void {

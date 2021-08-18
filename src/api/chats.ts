@@ -1,7 +1,34 @@
 import api from "./baseURL";
 import router from "next/router";
 
+interface IUserInfo {
+  id: string;
+  name: string;
+}
+
+interface IChatRooms {
+  id: string;
+  sender_id: string;
+  receiver_id: string;
+  createdAt: string;
+  updatedAt: string;
+  userInfo: IUserInfo;
+}
+
 export class Chats {
+  static async getChatByID(id: string, token: string, myId: string) {
+    try {
+      const { data } = await api.get(`/api/chatsById/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
+      return data[0];
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   static async getChatByUserID(id: string, token: string) {
     try {
       const { data } = await api.get(`/api/chatsByUser/${id}`, {
@@ -48,6 +75,30 @@ export class Chats {
       );
 
       router.push(`/messages/${data.chat_id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async sendMessage(
+    id: string,
+    sender_id: string,
+    content: string,
+    token: string
+  ) {
+    try {
+      await api.post(
+        `/api/chat/send-message/${id}`,
+        {
+          sender_id,
+          content,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
     } catch (error) {
       console.log(error);
     }
