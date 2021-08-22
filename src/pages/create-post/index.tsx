@@ -12,7 +12,7 @@ import { Services } from "../../api/services";
 
 export default function Posts() {
   const [title, setTitle] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
+  //const [category, setCategory] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [city, setCity] = useState<string>("");
@@ -27,13 +27,13 @@ export default function Posts() {
 
   const router = useRouter();
 
-  const items: Array<string> = [
+  const items = [
     "",
     "Assistência Técnica",
     "Aulas",
     "Autos",
     "Consultoria",
-    "Design e Tenologia",
+    "Design e Tecnologia",
     "Eventos",
     "Moda e Beleza",
     "Reformas",
@@ -44,6 +44,12 @@ export default function Posts() {
   async function postService() {
     const token: string = localStorage.getItem("token");
     const id = Authentication.checkUserSession("");
+
+    let option_value = document.getElementById("select--category") as HTMLSelectElement;
+    let text: string = option_value.options[option_value.selectedIndex].text;
+    //setCategory(text);
+    let category = text;
+    console.log(category);    
 
     const result = await Services.createService(
       id,
@@ -60,6 +66,7 @@ export default function Posts() {
     if (result === true) {
       setIsModalPositive(true);
       setIsModalVisible(true);
+      //router.push(`/home`);
       return;
     }
 
@@ -114,7 +121,7 @@ export default function Posts() {
           <span>Category* </span>
           <select name="category" id="select--category">
             {items.map((i) => (
-              <option value={i} key={i} onClick={() => setCategory(i)}>
+              <option value={i} key={i}>
                 {i}
               </option>
             ))}

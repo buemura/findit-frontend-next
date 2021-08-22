@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { Authentication } from "../../api/authentication";
 import { Comments } from "../../api/comments";
 import { Services } from "../../api/services";
+import { url } from "inspector";
 
 interface UserType {
   id: string;
@@ -169,16 +170,25 @@ export default function PostDetails({ id }) {
             key={com.id}
             onClick={() => redirectToUserProfile(com.User.id)}
           >
-            <img
+            {/* <img
               src={`${process.env.BACKEND_API}/api/users/${com.User.id}/profile-image`}
               alt=""
-            />
-            <div>
-              <h3>{com.User.name}</h3>
-              <p>{com.comment}</p>
+            /> */}
+            <div className="image" 
+              style={
+                {
+                  backgroundImage: "url(" + `${process.env.BACKEND_API}/api/users/${com.User.id}/profile-image` + ")",
+                }
+              }>
             </div>
-            <div>
-              <p>{FormatDate.calculateDate(com.createdAt)}</p>
+            <div className="container--values">
+              <div className="data">
+                <h3>{com.User.name}</h3>
+                <p>{com.comment}</p>
+              </div>
+              <div className="date">
+                <p>{FormatDate.calculateDate(com.createdAt)}</p>
+              </div>
             </div>
           </CommentsContainer>
         ))}

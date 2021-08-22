@@ -66,25 +66,36 @@ export default function Posts() {
               key={post.id}
               onClick={() => router.push(`/posts/${post.id}`)}
             >
-              <h2>{post.title}</h2>
-              <div>
+              <div className="category-image" 
+                style={
+                  {
+                    backgroundImage: "url(" + `icons/categories/${post.category.replace(" ", "-").replace(" ", "-").replace(" ", "-")}` + ".png)",                    
+                    //backgroundImage: "url(" + `icons/categories/Serviços Domésticos` + ".png)",                    
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover"
+                  }
+                } ></div>
+              <div className="category-container">
+                <h2>{post.title}</h2>
                 <div>
-                  <h3>Category: {post.category}</h3>
-                  <p>
-                    {post.city}, {post.state} - {post.country}
-                  </p>
+                  <div>
+                    <h3>Category: {post.category}</h3>
+                    <p>
+                      {post.city}, {post.state} - {post.country}
+                    </p>
+                  </div>
+                  <div>
+                    <h3>R$ {post.price}</h3>
+                    <p>
+                      <strong>Posted by: </strong>
+                      {post.User.name}
+                    </p>
+                  </div>
+                  <div>
+                    <p>{FormatDate.calculateDate(post.createdAt)}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3>R$ {post.price}</h3>
-                  <p>
-                    <strong>Posted by: </strong>
-                    {post.User.name}
-                  </p>
-                </div>
-                <div>
-                  <p>{FormatDate.calculateDate(post.createdAt)}</p>
-                </div>
-              </div>
+              </div>              
             </Feed>
           ))
         ) : (

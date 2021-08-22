@@ -71,45 +71,60 @@ export const Filters = styled.div`
 
 export const Feed = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   width: 70%;
   margin: 0.3rem 0 0 0;
   padding: 0.6rem 2rem;
   background-color: #ffffff;
   border-radius: 3px;
 
-  h2 {
-    font-size: 1.8rem;
-    margin: 0.8rem 0;
+  .category-image {
+    height: 5rem;
+    width: 5rem;
+    filter: gray;
+    filter: grayscale(1);
+    -webkit-filter: grayscale(1) opacity(.4);
   }
 
-  div {
+  .category-container {    
+    margin-left: 1.3rem;
     display: flex;
-    justify-content: flex-end;
-    flex-direction: row;
-    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex: 1;
 
-    * {
-      margin: 0;
-      padding: 0;
+    h2 {
+      font-size: 1.8rem;
+      margin: 0.8rem 0;
     }
-
-    div {
+    
+      div {
       display: flex;
-      flex-direction: column;
+      justify-content: flex-end;
+      flex-direction: row;
+      width: 100%;
+
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      div {
+        display: flex;
+        flex-direction: column;
+      }
+
+      p,
+      h3 {
+        margin: 0.3rem 0;
+      }
     }
 
-    p,
-    h3 {
-      margin: 0.3rem 0;
+    div:last-child {
+      align-items: flex-end;
     }
-  }
-
-  div:last-child {
-    align-items: flex-end;
-  }
+  }  
 
   &:hover {
     cursor: pointer;
@@ -234,7 +249,7 @@ export const CommentsContainer = styled.div`
   padding: 10px 20px 10px 20px;
   background-color: #ffffff;
 
-  img {
+  .image {
     margin: 0 40px 0 0;
     border-radius: 30%;
 
@@ -243,6 +258,21 @@ export const CommentsContainer = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+  }
+
+  .container--values {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+
+    .date {
+      display: flex;
+      align-items: flex-end;
+
+      p {
+        margin: 0 .5rem 1rem 0;
+      }
+    }
   }
 
   &:hover {

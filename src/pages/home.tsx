@@ -19,7 +19,7 @@ export default function HomePage() {
     "Aulas",
     "Autos",
     "Consultoria",
-    "Design e Tenologia",
+    "Design e Tecnologia",
     "Eventos",
     "Moda e Beleza",
     "Reformas",
@@ -46,7 +46,7 @@ export default function HomePage() {
         <CategoryList>
           {items.map((i) => (
             <ListItem key={i}>
-              <img src={`icons/categories/${i}.png`} alt={i} />
+              <img src={`icons/categories/${i.replace(" ", "-").replace(" ", "-").replace(" ", "-")}.png`} alt={i} />
               <p>{i}</p>
             </ListItem>
           ))}

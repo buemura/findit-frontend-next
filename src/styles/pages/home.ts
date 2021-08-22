@@ -8,6 +8,7 @@ export const MainContainer = styled.div`
   margin: 60px 0 0 0;
   padding: 0;
   width: 100%;
+  min-height: calc(100vh - 60px);
   overflow-x: hidden;
 `;
 
