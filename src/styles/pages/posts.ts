@@ -79,14 +79,14 @@ export const Feed = styled.div`
   border-radius: 3px;
 
   .category-image {
-    height: 5rem;
-    width: 5rem;
+    height: 3.5rem;
+    width: 3.5rem;
     filter: gray;
     filter: grayscale(1);
-    -webkit-filter: grayscale(1) opacity(.4);
+    -webkit-filter: grayscale(1) opacity(0.4);
   }
 
-  .category-container {    
+  .category-container {
     margin-left: 1.3rem;
     display: flex;
     flex-direction: column;
@@ -98,8 +98,8 @@ export const Feed = styled.div`
       font-size: 1.8rem;
       margin: 0.8rem 0;
     }
-    
-      div {
+
+    div {
       display: flex;
       justify-content: flex-end;
       flex-direction: row;
@@ -124,7 +124,7 @@ export const Feed = styled.div`
     div:last-child {
       align-items: flex-end;
     }
-  }  
+  }
 
   &:hover {
     cursor: pointer;
@@ -270,7 +270,7 @@ export const CommentsContainer = styled.div`
       align-items: flex-end;
 
       p {
-        margin: 0 .5rem 1rem 0;
+        margin: 0 0.5rem 1rem 0;
       }
     }
   }

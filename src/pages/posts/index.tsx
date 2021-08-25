@@ -1,4 +1,3 @@
-import api from "../../api/baseURL";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { HeaderPage } from "../../components/HeaderPage";
@@ -6,6 +5,7 @@ import { BodyStyled } from "../../styles/components/middleSection";
 import { MainContainer, Filters, Feed, Title } from "../../styles/pages/posts";
 import { FormatDate } from "../../utils/formatDate";
 import { Services } from "../../api/services";
+import { Categories } from "../../api/categories";
 
 export default function Posts() {
   const router = useRouter();
@@ -16,10 +16,13 @@ export default function Posts() {
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
   const [filter, setFilter] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     (async () => {
       const data = await Services.getServices(category, city, state, country);
+      const allCategories = await Categories.getAllCategories();
+      setCategories(allCategories);
       setPosts(data);
       setFilter(false);
     })();
@@ -66,15 +69,20 @@ export default function Posts() {
               key={post.id}
               onClick={() => router.push(`/posts/${post.id}`)}
             >
-              <div className="category-image" 
-                style={
-                  {
-                    backgroundImage: "url(" + `icons/categories/${post.category.replace(" ", "-").replace(" ", "-").replace(" ", "-")}` + ".png)",                    
-                    //backgroundImage: "url(" + `icons/categories/Serviços Domésticos` + ".png)",                    
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover"
-                  }
-                } ></div>
+              {categories.map((c) =>
+                c.category === post.category ? (
+                  <div
+                    className="category-image"
+                    style={{
+                      backgroundImage: `url(${c.categoryPhoto})`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "cover",
+                    }}
+                  ></div>
+                ) : (
+                  <div></div>
+                )
+              )}
               <div className="category-container">
                 <h2>{post.title}</h2>
                 <div>
@@ -95,7 +103,7 @@ export default function Posts() {
                     <p>{FormatDate.calculateDate(post.createdAt)}</p>
                   </div>
                 </div>
-              </div>              
+              </div>
             </Feed>
           ))
         ) : (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
 import { MainContainer } from "../../styles/pages/create-post";
@@ -9,10 +9,11 @@ import countries from "../../utils/countries.json";
 import { useRouter } from "next/router";
 import { InputText, SelectStyled } from "../../styles/pages/profile-edit";
 import { Services } from "../../api/services";
+import { Categories } from "../../api/categories";
 
 export default function Posts() {
   const [title, setTitle] = useState<string>("");
-  //const [category, setCategory] = useState<string>("");
+  const [categories, setCategories] = useState([]);
   const [description, setDescription] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [city, setCity] = useState<string>("");
@@ -27,29 +28,24 @@ export default function Posts() {
 
   const router = useRouter();
 
-  const items = [
-    "",
-    "Assistência Técnica",
-    "Aulas",
-    "Autos",
-    "Consultoria",
-    "Design e Tecnologia",
-    "Eventos",
-    "Moda e Beleza",
-    "Reformas",
-    "Saúde",
-    "Serviços Domésticos",
-  ];
+  useEffect(() => {
+    (async () => {
+      const allCategories = await Categories.getAllCategories();
+      setCategories(allCategories);
+    })();
+  }, []);
 
   async function postService() {
     const token: string = localStorage.getItem("token");
     const id = Authentication.checkUserSession("");
 
-    let option_value = document.getElementById("select--category") as HTMLSelectElement;
+    let option_value = document.getElementById(
+      "select--category"
+    ) as HTMLSelectElement;
     let text: string = option_value.options[option_value.selectedIndex].text;
     //setCategory(text);
     let category = text;
-    console.log(category);    
+    console.log(category);
 
     const result = await Services.createService(
       id,
@@ -120,9 +116,9 @@ export default function Posts() {
         <div className="category container">
           <span>Category* </span>
           <select name="category" id="select--category">
-            {items.map((i) => (
-              <option value={i} key={i}>
-                {i}
+            {categories.map((c) => (
+              <option value={c.category} key={c.category}>
+                {c.category}
               </option>
             ))}
           </select>

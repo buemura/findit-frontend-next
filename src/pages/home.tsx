@@ -12,42 +12,36 @@ import {
 import { Authentication } from "../api/authentication";
 import { Users } from "../api/users";
 import { Services } from "../api/services";
+import { Categories } from "../api/categories";
 
 export default function HomePage() {
-  const items = [
-    "Assistência Técnica",
-    "Aulas",
-    "Autos",
-    "Consultoria",
-    "Design e Tecnologia",
-    "Eventos",
-    "Moda e Beleza",
-    "Reformas",
-    "Saúde",
-    "Serviços Domésticos",
-  ];
   const [usersQuantity, setUsersQuantity] = useState<number>(0);
   const [servicesQuantity, setServicesQuantity] = useState<number>(0);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     (async () => {
       const usersCount = await Users.getUsersCount();
       const servicesCount = await Services.getServicesCount();
+      const allCategories = await Categories.getAllCategories();
 
       setUsersQuantity(usersCount);
       setServicesQuantity(servicesCount);
+      setCategories(allCategories);
     })();
   }, []);
+
+  console.log(categories);
 
   return (
     <BodyStyled>
       <HeaderPage />
       <MainContainer>
         <CategoryList>
-          {items.map((i) => (
-            <ListItem key={i}>
-              <img src={`icons/categories/${i.replace(" ", "-").replace(" ", "-").replace(" ", "-")}.png`} alt={i} />
-              <p>{i}</p>
+          {categories.map((c) => (
+            <ListItem key={c._id}>
+              <img src={c.categoryPhoto} alt={c.categoryPhoto} />
+              <p>{c.category}</p>
             </ListItem>
           ))}
         </CategoryList>

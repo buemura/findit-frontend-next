@@ -1,4 +1,3 @@
-import api from "../../api/baseURL";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Authentication } from "../../api/authentication";
