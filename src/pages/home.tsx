@@ -31,7 +31,9 @@ export default function HomePage() {
     })();
   }, []);
 
-  console.log(categories);
+  function formatImageName(category: string): string {
+    return category.replace(/ /g, "-").replace("&", "e").toLowerCase();
+  }
 
   return (
     <BodyStyled>
@@ -40,7 +42,10 @@ export default function HomePage() {
         <CategoryList>
           {categories.map((c) => (
             <ListItem key={c._id}>
-              <img src={c.categoryPhoto} alt={c.categoryPhoto} />
+              <img
+                src={`/icons/categories/${formatImageName(c.category)}.png`}
+                alt={c.category}
+              />
               <p>{c.category}</p>
             </ListItem>
           ))}

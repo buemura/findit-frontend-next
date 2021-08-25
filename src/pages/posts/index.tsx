@@ -28,6 +28,10 @@ export default function Posts() {
     })();
   }, [filter]);
 
+  function formatImageName(category: string): string {
+    return category.replace(/ /g, "-").replace("&", "e").toLowerCase();
+  }
+
   return (
     <BodyStyled>
       <HeaderPage />
@@ -74,7 +78,9 @@ export default function Posts() {
                   <div
                     className="category-image"
                     style={{
-                      backgroundImage: `url(${c.categoryPhoto})`,
+                      backgroundImage: `url(icons/categories/${formatImageName(
+                        c.category
+                      )}.png)`,
                       backgroundRepeat: "no-repeat",
                       backgroundSize: "cover",
                     }}

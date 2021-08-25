@@ -8,12 +8,9 @@ import {
   AboutMe,
   Portfolio,
 } from "../../styles/pages/profile";
-import fetch from "node-fetch";
 import { GetServerSideProps } from "next";
-import Link from "next/link";
 import { Authentication } from "../../api/authentication";
 import { useRouter } from "next/router";
-import api from "../../api/baseURL";
 import { Users } from "../../api/users";
 import { Chats } from "../../api/chats";
 
