@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Authentication } from "../../api/authentication";
 import { Users } from "../../api/users";
+import { Portfolios } from "../../api/portfolio";
 
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
@@ -27,6 +28,7 @@ interface UserType {
 }
 
 export default function Profile() {
+  const [myId, setMyId] = useState<string>("");
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [profilePhoto, setProfilePhoto] = useState<string>("");
   const [user, setUser] = useState<UserType>({
@@ -40,6 +42,7 @@ export default function Profile() {
     about_me: "",
     user_photo: "",
   });
+  const [portfolios, setPortfolios] = useState([]);
 
   const hasNoPhoto = "/icons/user-icon.png";
 
@@ -54,10 +57,16 @@ export default function Profile() {
   useEffect(() => {
     (async () => {
       const id: string = Authentication.checkUserSession("");
-      setHasPhoto(false);
-
       const data = await Users.getUserByID(id);
+      const portfolioImages = await Portfolios.getUserPortfolios(id);
+
+      setMyId(id);
+      setHasPhoto(false);
       setUser(data);
+
+      if (portfolioImages.length > 0) {
+        setPortfolios(portfolioImages[0].userPortfolios);
+      }
 
       if (data.user_photo) {
         setHasPhoto(true);
@@ -123,8 +132,13 @@ export default function Profile() {
           <Portfolio>
             <h2>Portfolio</h2>
             <div>
-              <div className="div-img-portifolio d01"></div>
-              <div className="div-img-portifolio d02"></div>
+              {portfolios.map((portfolio) => (
+                <img
+                  className="portfolio-image"
+                  src={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
+                  alt={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
+                />
+              ))}
             </div>
           </Portfolio>
         </MainSection>

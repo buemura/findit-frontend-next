@@ -162,4 +162,17 @@ export const Portfolio = styled.div`
       background-image: url("assets/unix.jpg");
     }
   }
+
+  .portfolio-image {
+    height: 8rem;
+    width: 8rem;
+    border-radius: 10px;
+    margin: 5px;
+    transition: 0.2s;
+
+    &:hover {
+      transform: scale(1.1);
+      cursor: pointer;
+    }
+  }
 `;

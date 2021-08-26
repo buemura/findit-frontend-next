@@ -290,7 +290,19 @@ export default function Profile() {
             </div>
             <div className="portifolio">
               <h2>Portfolio</h2>
-              <a href="">Add +</a>
+              <div className="input-photo-container">
+                <label htmlFor="photo-input">Upload Portfolio</label>
+                <input
+                  type="file"
+                  id="photo-input"
+                  className="photo-input"
+                  onChange={(e) => {
+                    selectPhoto();
+                    setSelectedFile(e.target.files[0]);
+                  }}
+                />
+                <span id="photo-output"></span>
+              </div>
               <div className="portifolio-container">
                 {portifolioImageList.map((img) => (
                   <div
