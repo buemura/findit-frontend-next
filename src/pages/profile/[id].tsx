@@ -13,6 +13,7 @@ import { Authentication } from "../../api/authentication";
 import { useRouter } from "next/router";
 import { Users } from "../../api/users";
 import { Chats } from "../../api/chats";
+import { Portfolios } from "../../api/portfolio";
 
 interface UserType {
   name: string;
@@ -35,6 +36,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
 export default function UsersProfile({ id }) {
   const router = useRouter();
+  const [myId, setMyId] = useState<string>("");
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [profilePhoto, setProfilePhoto] = useState<string>("");
   const [user, setUser] = useState<UserType>({
@@ -48,6 +50,7 @@ export default function UsersProfile({ id }) {
     about_me: "",
     user_photo: "",
   });
+  const [portfolios, setPortfolios] = useState([]);
 
   const hasNoPhoto = "/icons/user-icon.png";
 
@@ -61,12 +64,19 @@ export default function UsersProfile({ id }) {
 
   useEffect(() => {
     (async () => {
-      const myId = Authentication.checkUserSession("");
+      const myID = Authentication.checkUserSession("");
       const data = await Users.getUserByID(id);
-      setUser(data);
+      const portfolioImages = await Portfolios.getUserPortfolios(id);
 
-      if (myId === id) {
+      setUser(data);
+      setMyId(myID);
+
+      if (myID === id) {
         router.push("/profile");
+      }
+
+      if (portfolioImages.length > 0) {
+        setPortfolios(portfolioImages[0].userPortfolios);
       }
 
       if (data.user_photo) {
@@ -79,10 +89,9 @@ export default function UsersProfile({ id }) {
   }, []);
 
   function sendMessage(): void {
-    const myID: string = Authentication.checkUserSession("");
     const token = localStorage.getItem("token");
 
-    Chats.createChatRoom(myID, id, token);
+    Chats.createChatRoom(myId, id, token);
   }
 
   return (
@@ -136,8 +145,13 @@ export default function UsersProfile({ id }) {
           <Portfolio>
             <h2>Portfolio</h2>
             <div>
-              <div className="div-img-portifolio d01"></div>
-              <div className="div-img-portifolio d02"></div>
+              {portfolios.map((portfolio) => (
+                <img
+                  className="portfolio-image"
+                  src={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio._id}`}
+                  alt={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio._id}`}
+                />
+              ))}
             </div>
           </Portfolio>
         </MainSection>

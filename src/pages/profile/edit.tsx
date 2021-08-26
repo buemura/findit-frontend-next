@@ -14,10 +14,12 @@ import {
 } from "../../styles/pages/profile-edit";
 import countries from "../../utils/countries.json";
 import { Users } from "../../api/users";
+import { Portfolios } from "../../api/portfolio";
 
 export default function Profile() {
   const router = useRouter();
 
+  const [myId, setMyId] = useState<string>("");
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -28,6 +30,7 @@ export default function Profile() {
   const [occupation, setOccupation] = useState<string>("");
   const [about_me, setAboutMe] = useState<string>("");
   const [user_photo, setUserPhoto] = useState<string>("");
+  const [portfolios, setPortfolios] = useState([]);
 
   const [selectedFile, setSelectedFile] = useState<File>(null);
   const [hasSelectedCountry, setHasSelectedCountry] = useState<boolean>(false);
@@ -52,9 +55,11 @@ export default function Profile() {
   useEffect(() => {
     (async () => {
       const id: string = Authentication.checkUserSession("");
+      setMyId(id);
       setHasPhoto(false);
 
       const data = await Users.getUserByID(id);
+      const portfolioImages = await Portfolios.getUserPortfolios(id);
       setName(data.name);
       setEmail(data.email);
       setCity(data.city);
@@ -63,6 +68,10 @@ export default function Profile() {
       setPhone(data.phone);
       setOccupation(data.occupation);
       setAboutMe(data.about_me);
+
+      if (portfolioImages.length > 0) {
+        setPortfolios(portfolioImages[0].userPortfolios);
+      }
 
       if (data.user_photo) {
         setHasPhoto(true);
@@ -304,12 +313,12 @@ export default function Profile() {
                 <span id="photo-output"></span>
               </div>
               <div className="portifolio-container">
-                {portifolioImageList.map((img) => (
-                  <div
-                    key={img.toString()}
-                    className="portifolio-image"
-                    style={{ backgroundImage: "url(" + img + ")" }}
-                  ></div>
+                {portfolios.map((portfolio) => (
+                  <img
+                    className="portfolio-image"
+                    src={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
+                    alt={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
+                  />
                 ))}
               </div>
             </div>
