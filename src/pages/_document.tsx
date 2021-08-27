@@ -5,6 +5,10 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <meta
+            http-equiv="Content-Security-Policy"
+            content="upgrade-insecure-requests"
+          ></meta>
           <link rel="shortcut icon" href="icons/logo.png" type="image/png" />
 
           <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -18,7 +22,14 @@ export default class MyDocument extends Document {
             }
           `}</style>
         </Head>
-        <body style={{ margin: 0, padding: 0, boxSizing: "border-box", minHeight: "100vh" }}>
+        <body
+          style={{
+            margin: 0,
+            padding: 0,
+            boxSizing: "border-box",
+            minHeight: "100vh",
+          }}
+        >
           <Main />
           <NextScript />
         </body>
@@ -26,8 +37,3 @@ export default class MyDocument extends Document {
     );
   }
 }
-
-
-
-
-
