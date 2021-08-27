@@ -27,7 +27,10 @@ export default function HomePage() {
 
       setUsersQuantity(usersCount);
       setServicesQuantity(servicesCount);
-      setCategories(allCategories);
+
+      if (allCategories) {
+        setCategories(allCategories);
+      }
     })();
   }, []);
 
