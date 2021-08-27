@@ -1,7 +1,9 @@
-import api from "../../services/api";
+import api from "../../api/baseURL";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import authentication from "../../services/authentication";
+import { Authentication } from "../../api/authentication";
+import { Users } from "../../api/users";
+import { Portfolios } from "../../api/portfolio";
 
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
@@ -26,6 +28,7 @@ interface UserType {
 }
 
 export default function Profile() {
+  const [myId, setMyId] = useState<string>("");
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [profilePhoto, setProfilePhoto] = useState<string>("");
   const [user, setUser] = useState<UserType>({
@@ -39,6 +42,7 @@ export default function Profile() {
     about_me: "",
     user_photo: "",
   });
+  const [portfolios, setPortfolios] = useState([]);
 
   const hasNoPhoto = "/icons/user-icon.png";
 
@@ -51,23 +55,26 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    const id: string = authentication.checkUserSession("");
-    setHasPhoto(false);
+    (async () => {
+      const id: string = Authentication.checkUserSession("");
+      const data = await Users.getUserByID(id);
+      const portfolioImages = await Portfolios.getUserPortfolios(id);
 
-    api
-      .get(`/api/users/${id}`)
-      .then(({ data }) => {
-        setUser(data);
-        if (data.user_photo) {
-          setHasPhoto(true);
-          setProfilePhoto(
-            `${process.env.BACKEND_API}/api/users/${id}/profile-image`
-          );
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      setMyId(id);
+      setHasPhoto(false);
+      setUser(data);
+
+      if (portfolioImages.length > 0) {
+        setPortfolios(portfolioImages[0].userPortfolios);
+      }
+
+      if (data.user_photo) {
+        setHasPhoto(true);
+        setProfilePhoto(
+          `${process.env.BACKEND_API}/api/users/${id}/profile-image`
+        );
+      }
+    })();
   }, []);
 
   return (
@@ -125,8 +132,13 @@ export default function Profile() {
           <Portfolio>
             <h2>Portfolio</h2>
             <div>
-              <div className="div-img-portifolio d01"></div>
-              <div className="div-img-portifolio d02"></div>
+              {portfolios.map((portfolio) => (
+                <img
+                  className="portfolio-image"
+                  src={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
+                  alt={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
+                />
+              ))}
             </div>
           </Portfolio>
         </MainSection>

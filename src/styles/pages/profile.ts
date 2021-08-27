@@ -8,6 +8,7 @@ export const MainContainer = styled.div`
   margin: 60px 0 0 0;
   padding: 0;
   width: 100%;
+  min-height: calc(100vh - 60px);
   overflow-x: hidden;
   background-color: #fff;
 `;
@@ -159,6 +160,19 @@ export const Portfolio = styled.div`
     }
     .div-img-portifolio.d02 {
       background-image: url("assets/unix.jpg");
+    }
+  }
+
+  .portfolio-image {
+    height: 8rem;
+    width: 8rem;
+    border-radius: 10px;
+    margin: 5px;
+    transition: 0.2s;
+
+    &:hover {
+      transform: scale(1.1);
+      cursor: pointer;
     }
   }
 `;

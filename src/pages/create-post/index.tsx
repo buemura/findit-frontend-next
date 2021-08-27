@@ -1,19 +1,19 @@
-import api from "../../services/api";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
 import { MainContainer } from "../../styles/pages/create-post";
 import { Modal } from "../../components/modal";
 
-import authentication from "../../services/authentication";
+import { Authentication } from "../../api/authentication";
 import countries from "../../utils/countries.json";
-import { route } from "next/dist/next-server/server/router";
 import { useRouter } from "next/router";
 import { InputText, SelectStyled } from "../../styles/pages/profile-edit";
+import { Services } from "../../api/services";
+import { Categories } from "../../api/categories";
 
 export default function Posts() {
   const [title, setTitle] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
+  const [categories, setCategories] = useState([]);
   const [description, setDescription] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [city, setCity] = useState<string>("");
@@ -28,57 +28,47 @@ export default function Posts() {
 
   const router = useRouter();
 
-  let id: string;
-
-  const items: Array<string> = [
-    "",
-    "Assistência Técnica",
-    "Aulas",
-    "Autos",
-    "Consultoria",
-    "Design e Tenologia",
-    "Eventos",
-    "Moda e Beleza",
-    "Reformas",
-    "Saúde",
-    "Serviços Domésticos",
-  ];
-
   useEffect(() => {
-    id = authentication.checkUserSession("");
+    (async () => {
+      const allCategories = await Categories.getAllCategories();
+      setCategories(allCategories);
+    })();
   }, []);
 
-  function postService(): void {
+  async function postService() {
     const token: string = localStorage.getItem("token");
-    id = authentication.checkUserSession("");
+    const id = Authentication.checkUserSession("");
 
-    api
-      .post(
-        "/api/services",
-        {
-          user_id: id,
-          title,
-          category,
-          description,
-          price,
-          city,
-          state,
-          country,
-        },
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      )
-      .then(({ data }) => {
-        setIsModalPositive(true);
-        setIsModalVisible(true);
-      })
-      .catch((err) => {
-        setIsModalPositive(false);
-        setIsModalVisible(true);
-      });
+    let option_value = document.getElementById(
+      "select--category"
+    ) as HTMLSelectElement;
+    let text: string = option_value.options[option_value.selectedIndex].text;
+    //setCategory(text);
+    let category = text;
+    console.log(category);
+
+    const result = await Services.createService(
+      id,
+      title,
+      category,
+      description,
+      price,
+      city,
+      state,
+      country,
+      token
+    );
+
+    if (result === true) {
+      setIsModalPositive(true);
+      setIsModalVisible(true);
+      //router.push(`/home`);
+      return;
+    }
+
+    setIsModalPositive(false);
+    setIsModalVisible(true);
+    return;
   }
 
   function onChangeSelectCountry(): void {
@@ -126,9 +116,9 @@ export default function Posts() {
         <div className="category container">
           <span>Category* </span>
           <select name="category" id="select--category">
-            {items.map((i) => (
-              <option value={i} key={i} onClick={() => setCategory(i)}>
-                {i}
+            {categories.map((c) => (
+              <option value={c.category} key={c.category}>
+                {c.category}
               </option>
             ))}
           </select>

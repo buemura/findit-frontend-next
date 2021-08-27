@@ -22,8 +22,8 @@ export const Filters = styled.div`
   margin: 20px 0;
 
   input {
-    margin: .1rem 0;
-    padding: 0 0 0 .8rem;
+    margin: 0.1rem 0;
+    padding: 0 0 0 0.8rem;
     width: 100%;
 
     border: 0.2px solid #b8b8b8;
@@ -36,9 +36,8 @@ export const Filters = styled.div`
     }
   }
 
-
   button {
-    margin: .8rem 0;
+    margin: 0.8rem 0;
     background-color: #4169e1;
     color: #ffffff;
 
@@ -57,7 +56,7 @@ export const Filters = styled.div`
 
   @media (max-width: 1020px) {
     width: 95%;
-    
+
     input {
       width: 95%;
     }
@@ -72,43 +71,59 @@ export const Filters = styled.div`
 
 export const Feed = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   width: 70%;
-  margin: .3rem 0 0 0;
-  padding: .6rem 2rem;
+  margin: 0.3rem 0 0 0;
+  padding: 0.6rem 2rem;
   background-color: #ffffff;
   border-radius: 3px;
 
-  h2 {
-    font-size: 1.8rem;
-    margin: .8rem 0;
+  .category-image {
+    height: 3.5rem;
+    width: 3.5rem;
+    filter: gray;
+    filter: grayscale(1);
+    -webkit-filter: grayscale(1) opacity(0.4);
   }
 
-  div {
+  .category-container {
+    margin-left: 1.3rem;
     display: flex;
-    justify-content: flex-end;
-    flex-direction: row;
-    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex: 1;
 
-    * {
-      margin: 0;
-      padding: 0;
+    h2 {
+      font-size: 1.8rem;
+      margin: 0.8rem 0;
     }
 
     div {
       display: flex;
-      flex-direction: column;
+      justify-content: flex-end;
+      flex-direction: row;
+      width: 100%;
+
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      div {
+        display: flex;
+        flex-direction: column;
+      }
+
+      p,
+      h3 {
+        margin: 0.3rem 0;
+      }
     }
 
-    p, h3 {
-      margin: .3rem 0;
+    div:last-child {
+      align-items: flex-end;
     }
-  }
-
-  div:last-child {
-    align-items: flex-end;
   }
 
   &:hover {
@@ -142,8 +157,9 @@ export const Post = styled.div`
       margin: 1rem 0;
     }
 
-    p, h3 {
-      margin: .3rem 0;
+    p,
+    h3 {
+      margin: 0.3rem 0;
     }
   }
 
@@ -223,7 +239,7 @@ export const PostComments = styled.div`
   }
 `;
 
-export const Comments = styled.div`
+export const CommentsContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: left;
@@ -233,7 +249,7 @@ export const Comments = styled.div`
   padding: 10px 20px 10px 20px;
   background-color: #ffffff;
 
-  img {
+  .image {
     margin: 0 40px 0 0;
     border-radius: 30%;
 
@@ -242,6 +258,21 @@ export const Comments = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+  }
+
+  .container--values {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+
+    .date {
+      display: flex;
+      align-items: flex-end;
+
+      p {
+        margin: 0 0.5rem 1rem 0;
+      }
+    }
   }
 
   &:hover {

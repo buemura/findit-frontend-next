@@ -1,36 +1,38 @@
-import api from "./api";
+import api from "./baseURL";
 import router from "next/router";
 import jwt_decode from "jwt-decode";
 
-const authentication = {
-  register: async ({ name, email, password }) => {
-    return await api
-      .post("/api/auth/register", {
+export class Authentication {
+  static async register({ name, email, password }) {
+    try {
+      const { data } = await api.post("/api/auth/register", {
         name,
         email,
         password,
-      })
-      .then(({ data }) => {
-        return data;
       });
-  },
-  logIn: async ({ email, password }) => {
-    return await api
-      .post("/api/auth/login", {
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async logIn({ email, password }) {
+    try {
+      const { data } = await api.post("/api/auth/login", {
         email,
         password,
-      })
-      .then(({ data }) => {
-        if (data.auth) {
-          return data.token;
-        }
-        return;
-      })
-      .catch((err) => {
-        console.error(err);
       });
-  },
-  logOut: async () => {
+
+      if (data.auth) {
+        return data.token;
+      }
+      return;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  static async logOut() {
     const token = localStorage.getItem("token");
 
     try {
@@ -42,8 +44,9 @@ const authentication = {
     } catch (err) {
       alert("Failed to Sign Out!");
     }
-  },
-  checkUserSession: (page: string) => {
+  }
+
+  static checkUserSession(page: string) {
     /**
      * JWT token is needed in order to make a POST, PUT or DELETE request.
      * Also this token expires in 1 hour. So you will need to Sign in again to generate a new one.
@@ -75,7 +78,5 @@ const authentication = {
       return id;
     }
     return id;
-  },
-};
-
-export default authentication;
+  }
+}

@@ -1,10 +1,14 @@
 import router from "next/router";
 import React, { useEffect, useState } from "react";
 import { HeaderPage } from "../../components/HeaderPage";
-import api from "../../services/api";
-import authentication from "../../services/authentication";
+import api from "../../api/baseURL";
+import { Authentication } from "../../api/authentication";
 import { BodyStyled } from "../../styles/components/middleSection";
-import { MainContainer, ChatContainer } from "../../styles/pages/messages";
+import {
+  MainContainer,
+  ChatContainer,
+  Title,
+} from "../../styles/pages/messages";
 
 interface IUserInfo {
   id: string;
@@ -25,7 +29,7 @@ export default function Messages() {
   const [chatRoom, setChatRoom] = useState<Array<IChatRooms>>([]);
 
   useEffect(() => {
-    const id: string = authentication.checkUserSession("");
+    const id: string = Authentication.checkUserSession("");
     const token: string = localStorage.getItem("token");
     setMyId(id);
 
@@ -70,21 +74,27 @@ export default function Messages() {
     <BodyStyled>
       <HeaderPage />
       <MainContainer>
-        {chatRoom.map((chat) => (
-          <ChatContainer
-            key={chat.id}
-            onClick={() => redirectToConversation(chat.id)}
-          >
-            <img
-              src={`${process.env.BACKEND_API}/api/users/${chat.userInfo.id}/profile-image`}
-              alt={chat.userInfo.id}
-            />
-            <div>
-              <h2>{chat.userInfo.name}</h2>
-              <p>{lastMessage(chat.id)}</p>
-            </div>
-          </ChatContainer>
-        ))}
+        {chatRoom.length != 0 ? (
+          chatRoom.map((chat) => (
+            <ChatContainer
+              key={chat.id}
+              onClick={() => redirectToConversation(chat.id)}
+            >
+              <img
+                src={`${process.env.BACKEND_API}/api/users/${chat.userInfo.id}/profile-image`}
+                alt={chat.userInfo.id}
+              />
+              <div>
+                <h2>{chat.userInfo.name}</h2>
+                <p>{lastMessage(chat.id)}</p>
+              </div>
+            </ChatContainer>
+          ))
+        ) : (
+          <Title>
+            <h1>You have no message yet...</h1>
+          </Title>
+        )}
         <div></div>
       </MainContainer>
     </BodyStyled>

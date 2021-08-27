@@ -1,7 +1,6 @@
-import api from "../../services/api";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import authentication from "../../services/authentication";
+import { Authentication } from "../../api/authentication";
 
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
@@ -14,10 +13,13 @@ import {
   SelectStyled,
 } from "../../styles/pages/profile-edit";
 import countries from "../../utils/countries.json";
+import { Users } from "../../api/users";
+import { Portfolios } from "../../api/portfolio";
 
 export default function Profile() {
   const router = useRouter();
 
+  const [myId, setMyId] = useState<string>("");
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -28,6 +30,7 @@ export default function Profile() {
   const [occupation, setOccupation] = useState<string>("");
   const [about_me, setAboutMe] = useState<string>("");
   const [user_photo, setUserPhoto] = useState<string>("");
+  const [portfolios, setPortfolios] = useState([]);
 
   const [selectedFile, setSelectedFile] = useState<File>(null);
   const [hasSelectedCountry, setHasSelectedCountry] = useState<boolean>(false);
@@ -50,77 +53,57 @@ export default function Profile() {
   ];
 
   useEffect(() => {
-    const id: string = authentication.checkUserSession("");
-    setHasPhoto(false);
+    (async () => {
+      const id: string = Authentication.checkUserSession("");
+      setMyId(id);
+      setHasPhoto(false);
 
-    api
-      .get(`/api/users/${id}`)
-      .then(({ data }) => {
-        setName(data.name);
-        setEmail(data.email);
-        setCity(data.city);
-        setState(data.state);
-        setCountry(data.country);
-        setPhone(data.phone);
-        setOccupation(data.occupation);
-        setAboutMe(data.about_me);
+      const data = await Users.getUserByID(id);
+      const portfolioImages = await Portfolios.getUserPortfolios(id);
+      setName(data.name);
+      setEmail(data.email);
+      setCity(data.city);
+      setState(data.state);
+      setCountry(data.country);
+      setPhone(data.phone);
+      setOccupation(data.occupation);
+      setAboutMe(data.about_me);
+
+      if (portfolioImages.length > 0) {
+        setPortfolios(portfolioImages[0].userPortfolios);
+      }
+
+      if (data.user_photo) {
+        setHasPhoto(true);
         setUserPhoto(
           `${process.env.BACKEND_API}/api/users/${id}/profile-image`
         );
-
-        if (data.user_photo) {
-          setHasPhoto(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+    })();
   }, []);
 
   // Update profile by sending a PUT request do backend API.
   function updateProfile(): void {
-    const id: string = authentication.checkUserSession("");
+    const id: string = Authentication.checkUserSession("");
     const token: string = localStorage.getItem("token");
 
     // Update User Photo
     const data = new FormData();
     data.append("file", selectedFile);
 
-    api
-      .post(`/api/users/${id}/profile-image/upload`, data, {
-        headers: {
-          authorization: token,
-        },
-      })
-      .then((res) => {})
-      .catch((err) => {
-        console.log(err);
-      });
-
-    // Update User Info
-    api
-      .put(
-        `/api/users/${id}`,
-        {
-          name,
-          email,
-          city,
-          state,
-          country,
-          phone,
-          occupation,
-          about_me,
-        },
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      )
-      .then((res) => {})
-      .catch((err) => {
-        alert("Failed to Update user!");
-      });
+    Users.updateProfilePhoto(id, data, token);
+    Users.updateUser(
+      id,
+      name,
+      email,
+      city,
+      state,
+      country,
+      phone,
+      occupation,
+      about_me,
+      token
+    );
 
     router.push("/profile", null, { shallow: false });
   }
@@ -316,14 +299,26 @@ export default function Profile() {
             </div>
             <div className="portifolio">
               <h2>Portfolio</h2>
-              <a href="">Add +</a>
+              <div className="input-photo-container">
+                <label htmlFor="photo-input">Upload Portfolio</label>
+                <input
+                  type="file"
+                  id="photo-input"
+                  className="photo-input"
+                  onChange={(e) => {
+                    selectPhoto();
+                    setSelectedFile(e.target.files[0]);
+                  }}
+                />
+                <span id="photo-output"></span>
+              </div>
               <div className="portifolio-container">
-                {portifolioImageList.map((img) => (
-                  <div
-                    key={img.toString()}
-                    className="portifolio-image"
-                    style={{ backgroundImage: "url(" + img + ")" }}
-                  ></div>
+                {portfolios.map((portfolio) => (
+                  <img
+                    className="portfolio-image"
+                    src={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
+                    alt={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
+                  />
                 ))}
               </div>
             </div>

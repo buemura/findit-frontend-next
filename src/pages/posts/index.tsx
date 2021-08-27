@@ -1,10 +1,11 @@
-import api from "../../services/api";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
 import { MainContainer, Filters, Feed, Title } from "../../styles/pages/posts";
 import { FormatDate } from "../../utils/formatDate";
+import { Services } from "../../api/services";
+import { Categories } from "../../api/categories";
 
 export default function Posts() {
   const router = useRouter();
@@ -15,20 +16,21 @@ export default function Posts() {
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
   const [filter, setFilter] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    api
-      .get(
-        `/api/services?category=${category}&city=${city}&state=${state}&country=${country}`
-      )
-      .then(({ data }) => {
-        setPosts(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setFilter(false);
+    (async () => {
+      const data = await Services.getServices(category, city, state, country);
+      const allCategories = await Categories.getAllCategories();
+      setCategories(allCategories);
+      setPosts(data);
+      setFilter(false);
+    })();
   }, [filter]);
+
+  function formatImageName(category: string): string {
+    return category.replace(/ /g, "-").replace("&", "e").toLowerCase();
+  }
 
   return (
     <BodyStyled>
@@ -71,23 +73,41 @@ export default function Posts() {
               key={post.id}
               onClick={() => router.push(`/posts/${post.id}`)}
             >
-              <h2>{post.title}</h2>
-              <div>
+              {categories.map((c) =>
+                c.category === post.category ? (
+                  <div
+                    className="category-image"
+                    style={{
+                      backgroundImage: `url(icons/categories/${formatImageName(
+                        c.category
+                      )}.png)`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "cover",
+                    }}
+                  ></div>
+                ) : (
+                  <div></div>
+                )
+              )}
+              <div className="category-container">
+                <h2>{post.title}</h2>
                 <div>
-                  <h3>Category: {post.category}</h3>
-                  <p>
-                    {post.city}, {post.state} - {post.country}
-                  </p>
-                </div>
-                <div>
-                  <h3>R$ {post.price}</h3>
-                  <p>
-                    <strong>Posted by: </strong>
-                    {post.User.name}
-                  </p>
-                </div>
-                <div>
-                  <p>{FormatDate.calculateDate(post.createdAt)}</p>
+                  <div>
+                    <h3>Category: {post.category}</h3>
+                    <p>
+                      {post.city}, {post.state} - {post.country}
+                    </p>
+                  </div>
+                  <div>
+                    <h3>R$ {post.price}</h3>
+                    <p>
+                      <strong>Posted by: </strong>
+                      {post.User.name}
+                    </p>
+                  </div>
+                  <div>
+                    <p>{FormatDate.calculateDate(post.createdAt)}</p>
+                  </div>
                 </div>
               </div>
             </Feed>

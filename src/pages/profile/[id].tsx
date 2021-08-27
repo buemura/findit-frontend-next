@@ -8,28 +8,49 @@ import {
   AboutMe,
   Portfolio,
 } from "../../styles/pages/profile";
-import fetch from "node-fetch";
 import { GetServerSideProps } from "next";
-import Link from "next/link";
-import authentication from "../../services/authentication";
+import { Authentication } from "../../api/authentication";
 import { useRouter } from "next/router";
-import api from "../../services/api";
+import { Users } from "../../api/users";
+import { Chats } from "../../api/chats";
+import { Portfolios } from "../../api/portfolio";
+
+interface UserType {
+  name: string;
+  email: string;
+  city: string;
+  state: string;
+  country: string;
+  phone: string;
+  occupation: string;
+  about_me: string;
+  user_photo: string;
+}
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { id } = params;
-  const url = `${process.env.BACKEND_API}/api/users/${id}`;
-  const result = await fetch(url);
-  const data = await result.json();
-
   return {
-    props: { data },
+    props: { id },
   };
 };
 
-export default function UsersProfile({ data }) {
+export default function UsersProfile({ id }) {
   const router = useRouter();
+  const [myId, setMyId] = useState<string>("");
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [profilePhoto, setProfilePhoto] = useState<string>("");
+  const [user, setUser] = useState<UserType>({
+    name: "",
+    email: "",
+    city: "",
+    state: "",
+    country: "",
+    phone: "",
+    occupation: "",
+    about_me: "",
+    user_photo: "",
+  });
+  const [portfolios, setPortfolios] = useState([]);
 
   const hasNoPhoto = "/icons/user-icon.png";
 
@@ -42,47 +63,35 @@ export default function UsersProfile({ data }) {
   };
 
   useEffect(() => {
-    const myId = authentication.checkUserSession("");
+    (async () => {
+      const myID = Authentication.checkUserSession("");
+      const data = await Users.getUserByID(id);
+      const portfolioImages = await Portfolios.getUserPortfolios(id);
 
-    if (myId === data.id) {
-      router.push("/profile");
-    }
+      setUser(data);
+      setMyId(myID);
 
-    if (data.user_photo) {
-      setHasPhoto(true);
-      setProfilePhoto(
-        `${process.env.BACKEND_API}/api/users/${data.id}/profile-image`
-      );
-    }
+      if (myID === id) {
+        router.push("/profile");
+      }
+
+      if (portfolioImages.length > 0) {
+        setPortfolios(portfolioImages[0].userPortfolios);
+      }
+
+      if (data.user_photo) {
+        setHasPhoto(true);
+        setProfilePhoto(
+          `${process.env.BACKEND_API}/api/users/${id}/profile-image`
+        );
+      }
+    })();
   }, []);
 
   function sendMessage(): void {
-    const myId = authentication.checkUserSession("");
-    let token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-    console.log(`myID: ${myId}`);
-    console.log(`token: ${token}`);
-
-    api
-      .post(
-        `/api/chat/create-chat`,
-        {
-          sender_id: myId,
-          receiver_id: data.id,
-        },
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      )
-      .then(({ data }) => {
-        token = btoa(token);
-        router.push(`/messages/${data.chat_id}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    Chats.createChatRoom(myId, id, token);
   }
 
   return (
@@ -97,8 +106,8 @@ export default function UsersProfile({ data }) {
               <div className="user-photo" style={divStyleHasNoPhoto}></div>
             )}
             <div className="title">
-              <h1>{data.name}</h1>
-              <h3>{data.occupation}</h3>
+              <h1>{user.name}</h1>
+              <h3>{user.occupation}</h3>
               <button onClick={sendMessage}>Send message</button>
             </div>
           </div>
@@ -116,28 +125,33 @@ export default function UsersProfile({ data }) {
             </div>
             <div>
               <p>
-                <strong>Local:</strong> {data.city}, {data.state} -{" "}
-                {data.country}
+                <strong>Local:</strong> {user.city}, {user.state} -{" "}
+                {user.country}
               </p>
               <p>
-                <strong>Phone:</strong> {data.phone}
+                <strong>Phone:</strong> {user.phone}
               </p>
               <p>
-                <strong>Email:</strong> {data.email}
+                <strong>Email:</strong> {user.email}
               </p>
             </div>
           </PersonalInfo>
 
           <AboutMe>
             <h2>About me</h2>
-            <p>{data.about_me}</p>
+            <p>{user.about_me}</p>
           </AboutMe>
 
           <Portfolio>
             <h2>Portfolio</h2>
             <div>
-              <div className="div-img-portifolio d01"></div>
-              <div className="div-img-portifolio d02"></div>
+              {portfolios.map((portfolio) => (
+                <img
+                  className="portfolio-image"
+                  src={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio._id}`}
+                  alt={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio._id}`}
+                />
+              ))}
             </div>
           </Portfolio>
         </MainSection>

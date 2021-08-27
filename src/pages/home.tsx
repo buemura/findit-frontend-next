@@ -1,4 +1,4 @@
-import api from "../services/api";
+import api from "../api/baseURL";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { HeaderPage } from "../components/HeaderPage";
@@ -9,53 +9,44 @@ import {
   MainSection,
   ListItem,
 } from "../styles/pages/home";
-import authentication from "../services/authentication";
+import { Authentication } from "../api/authentication";
+import { Users } from "../api/users";
+import { Services } from "../api/services";
+import { Categories } from "../api/categories";
 
 export default function HomePage() {
-  const items = [
-    "Assistência Técnica",
-    "Aulas",
-    "Autos",
-    "Consultoria",
-    "Design e Tenologia",
-    "Eventos",
-    "Moda e Beleza",
-    "Reformas",
-    "Saúde",
-    "Serviços Domésticos",
-  ];
   const [usersQuantity, setUsersQuantity] = useState<number>(0);
   const [servicesQuantity, setServicesQuantity] = useState<number>(0);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    api
-      .get("/api/users/all/count")
-      .then(({ data }) => {
-        setUsersQuantity(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    (async () => {
+      const usersCount = await Users.getUsersCount();
+      const servicesCount = await Services.getServicesCount();
+      const allCategories = await Categories.getAllCategories();
 
-    api
-      .get("/api/services/all/count")
-      .then(({ data }) => {
-        setServicesQuantity(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      setUsersQuantity(usersCount);
+      setServicesQuantity(servicesCount);
+      setCategories(allCategories);
+    })();
   }, []);
+
+  function formatImageName(category: string): string {
+    return category.replace(/ /g, "-").replace("&", "e").toLowerCase();
+  }
 
   return (
     <BodyStyled>
       <HeaderPage />
       <MainContainer>
         <CategoryList>
-          {items.map((i) => (
-            <ListItem key={i}>
-              <img src={`icons/categories/${i}.png`} alt={i} />
-              <p>{i}</p>
+          {categories.map((c) => (
+            <ListItem key={c._id}>
+              <img
+                src={`/icons/categories/${formatImageName(c.category)}.png`}
+                alt={c.category}
+              />
+              <p>{c.category}</p>
             </ListItem>
           ))}
         </CategoryList>
@@ -68,7 +59,7 @@ export default function HomePage() {
             <div className="buttons-container">
               <button
                 className="post-services"
-                onClick={() => authentication.checkUserSession("create-post")}
+                onClick={() => Authentication.checkUserSession("create-post")}
               >
                 Post Services
               </button>
