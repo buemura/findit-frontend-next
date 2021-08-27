@@ -40,15 +40,19 @@ export default function HomePage() {
       <HeaderPage />
       <MainContainer>
         <CategoryList>
-          {categories.map((c) => (
-            <ListItem key={c._id}>
-              <img
-                src={`/icons/categories/${formatImageName(c.category)}.png`}
-                alt={c.category}
-              />
-              <p>{c.category}</p>
-            </ListItem>
-          ))}
+          {categories.length > 0 ? (
+            categories.map((c) => (
+              <ListItem key={c._id}>
+                <img
+                  src={`/icons/categories/${formatImageName(c.category)}.png`}
+                  alt={c.category}
+                />
+                <p>{c.category}</p>
+              </ListItem>
+            ))
+          ) : (
+            <div></div>
+          )}
         </CategoryList>
         <MainSection>
           <div className="main-texts">
