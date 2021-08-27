@@ -5,10 +5,6 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <meta
-            http-equiv="Content-Security-Policy"
-            content="upgrade-insecure-requests"
-          ></meta>
           <link rel="shortcut icon" href="icons/logo.png" type="image/png" />
 
           <link rel="preconnect" href="https://fonts.gstatic.com" />
