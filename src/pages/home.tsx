@@ -45,7 +45,7 @@ export default function HomePage() {
         <CategoryList>
           {categories.length > 0 ? (
             categories.map((c) => (
-              <ListItem key={c._id}>
+              <ListItem key={c.category}>
                 <img
                   src={`/icons/categories/${formatImageName(c.category)}.png`}
                   alt={c.category}

@@ -12,7 +12,7 @@ export class Portfolios {
 
   static async uploadPortfolioImages(
     id: string,
-    files: Array<FormData>,
+    files: FormData,
     token: string
   ) {
     try {

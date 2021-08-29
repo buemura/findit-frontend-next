@@ -132,13 +132,18 @@ export default function Profile() {
           <Portfolio>
             <h2>Portfolio</h2>
             <div>
-              {portfolios.map((portfolio) => (
-                <img
-                  className="portfolio-image"
-                  src={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
-                  alt={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
-                />
-              ))}
+              {portfolios.length > 0 ? (
+                portfolios.map((portfolio) => (
+                  <img
+                    className="portfolio-image"
+                    key={portfolio._id}
+                    src={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
+                    alt={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
+                  />
+                ))
+              ) : (
+                <div></div>
+              )}
             </div>
           </Portfolio>
         </MainSection>

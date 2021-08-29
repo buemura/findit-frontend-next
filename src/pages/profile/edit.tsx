@@ -32,7 +32,9 @@ export default function Profile() {
   const [user_photo, setUserPhoto] = useState<string>("");
   const [portfolios, setPortfolios] = useState([]);
 
-  const [selectedFile, setSelectedFile] = useState<File>(null);
+  const [selectedProfilePhoto, setSelectedProfilePhoto] = useState<File>(null);
+  const [selectedPortfolioPhoto, setSelectedPortfolioPhoto] =
+    useState<File>(null);
   const [hasSelectedCountry, setHasSelectedCountry] = useState<boolean>(false);
   const [mapIndex, setMapIndex] = useState<number>(0);
 
@@ -45,12 +47,6 @@ export default function Profile() {
   const divStyleHasNoPhoto = {
     backgroundImage: "url(" + hasNoPhoto + ")",
   };
-
-  let portifolioImageList = [
-    "https://www.webnaveia.com.br/wp-content/uploads/2019/10/Como-Criar-um-Site-de-Empregos.png",
-    "https://lh3.googleusercontent.com/ho4N9JX2-O8IpBfs5lgVnzUagL1AXTpyG3QT-X3pSoOv0u35egobcOGbldO1LQWCrh6K0QN8BEUP8Y4TXTR1IafZBKlmCcervIDE=w960",
-    "https://img.ibxk.com.br/2015/06/29/29190710950506.jpg",
-  ];
 
   useEffect(() => {
     (async () => {
@@ -83,16 +79,26 @@ export default function Profile() {
   }, []);
 
   // Update profile by sending a PUT request do backend API.
-  function updateProfile(): void {
+  async function updateProfile(): Promise<void> {
     const id: string = Authentication.checkUserSession("");
     const token: string = localStorage.getItem("token");
 
     // Update User Photo
-    const data = new FormData();
-    data.append("file", selectedFile);
+    if (selectedProfilePhoto) {
+      const profilePhoto = new FormData();
+      profilePhoto.append("file", selectedProfilePhoto);
 
-    Users.updateProfilePhoto(id, data, token);
-    Users.updateUser(
+      await Users.updateProfilePhoto(id, profilePhoto, token);
+    }
+
+    if (selectedPortfolioPhoto) {
+      const portfolioImages = new FormData();
+      portfolioImages.append("file", selectedPortfolioPhoto);
+
+      await Portfolios.uploadPortfolioImages(id, portfolioImages, token);
+    }
+
+    await Users.updateUser(
       id,
       name,
       email,
@@ -112,10 +118,20 @@ export default function Profile() {
     history.back();
   }
 
-  function selectPhoto(): void {
-    var input = document.getElementById("photo-input") as HTMLInputElement;
+  function selectPhoto(elementInputId: string, elementOutputId: string): void {
+    var input = document.getElementById(elementInputId) as HTMLInputElement;
 
-    const fileName = document.getElementById("photo-output");
+    const fileName = document.getElementById(elementOutputId);
+    fileName.textContent = input.value.split("\\").reverse()[0];
+  }
+
+  function selectPortfolio(
+    elementInputId: string,
+    elementOutputId: string
+  ): void {
+    var input = document.getElementById(elementInputId) as HTMLInputElement;
+
+    const fileName = document.getElementById(elementOutputId);
     fileName.textContent = input.value.split("\\").reverse()[0];
   }
 
@@ -155,8 +171,8 @@ export default function Profile() {
                     id="photo-input"
                     className="photo-input"
                     onChange={(e) => {
-                      selectPhoto();
-                      setSelectedFile(e.target.files[0]);
+                      selectPhoto("photo-input", "photo-output");
+                      setSelectedProfilePhoto(e.target.files[0]);
                     }}
                   />
                   <span id="photo-output"></span>
@@ -172,8 +188,8 @@ export default function Profile() {
                     id="photo-input"
                     className="photo-input"
                     onChange={(e) => {
-                      selectPhoto();
-                      setSelectedFile(e.target.files[0]);
+                      selectPhoto("photo-input", "photo-output");
+                      setSelectedProfilePhoto(e.target.files[0]);
                     }}
                   />
                   <span id="photo-output"></span>
@@ -300,21 +316,22 @@ export default function Profile() {
             <div className="portifolio">
               <h2>Portfolio</h2>
               <div className="input-photo-container">
-                <label htmlFor="photo-input">Upload Portfolio</label>
+                <label htmlFor="portfolio-input">Upload Portfolio</label>
                 <input
                   type="file"
-                  id="photo-input"
-                  className="photo-input"
+                  id="portfolio-input"
+                  className="portfolio-input"
                   onChange={(e) => {
-                    selectPhoto();
-                    setSelectedFile(e.target.files[0]);
+                    selectPortfolio("portfolio-input", "portfolio-output");
+                    setSelectedPortfolioPhoto(e.target.files[0]);
                   }}
                 />
-                <span id="photo-output"></span>
+                <span id="portfolio-output"></span>
               </div>
               <div className="portifolio-container">
                 {portfolios.map((portfolio) => (
                   <img
+                    key={portfolio._id}
                     className="portfolio-image"
                     src={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
                     alt={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
