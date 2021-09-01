@@ -165,16 +165,23 @@ export const Header = styled.div`
     background: rgba(255, 255, 255, 0.1);
   }
   .profile {
-    background: transparent;
-    border: 1px solid #fff !important;
     color: white;
     transition: 0.2s;
     box-sizing: border-box;
     position: relative;
-  }
-  .profile:hover {
-    background: #3159d1;
-    box-sizing: border-box;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    img {
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
   }
   .user-logout {
     font-size: 0.7rem !important;
@@ -240,7 +247,7 @@ export const Header = styled.div`
   }
   .menu-open {
     width: 100%;
-    background: #7F7F7F;
+    background: #7f7f7f;
     position: absolute;
     right: 0;
     bottom: 0;
@@ -255,7 +262,7 @@ export const Header = styled.div`
 
     a {
       width: 100%;
-      padding: .6rem 0;
+      padding: 0.6rem 0;
       margin: 0;
       border-radius: 0px;
 
@@ -263,7 +270,7 @@ export const Header = styled.div`
         background: #777;
       }
     }
-    
+
     li {
       display: flex;
       justify-content: center;

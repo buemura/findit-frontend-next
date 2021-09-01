@@ -174,13 +174,15 @@ export default function PostDetails({ id }) {
               src={`${process.env.BACKEND_API}/api/users/${com.User.id}/profile-image`}
               alt=""
             /> */}
-            <div className="image" 
-              style={
-                {
-                  backgroundImage: "url(" + `${process.env.BACKEND_API}/api/users/${com.User.id}/profile-image` + ")",
-                }
-              }>
-            </div>
+            <div
+              className="image"
+              style={{
+                backgroundImage:
+                  "url(" +
+                  `${process.env.BACKEND_API}/api/users/${com.User.id}/profile-image` +
+                  ")",
+              }}
+            ></div>
             <div className="container--values">
               <div className="data">
                 <h3>{com.User.name}</h3>

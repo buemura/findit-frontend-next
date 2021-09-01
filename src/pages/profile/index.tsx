@@ -1,4 +1,3 @@
-import api from "../../api/baseURL";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Authentication } from "../../api/authentication";
@@ -132,18 +131,14 @@ export default function Profile() {
           <Portfolio>
             <h2>Portfolio</h2>
             <div>
-              {portfolios.length > 0 ? (
-                portfolios.map((portfolio) => (
-                  <img
-                    className="portfolio-image"
-                    key={portfolio._id}
-                    src={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
-                    alt={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
-                  />
-                ))
-              ) : (
-                <div></div>
-              )}
+              {portfolios.map((portfolio) => (
+                <img
+                  className="portfolio-image"
+                  key={portfolio._id}
+                  src={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
+                  alt={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
+                />
+              ))}
             </div>
           </Portfolio>
         </MainSection>
