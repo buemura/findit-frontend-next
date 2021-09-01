@@ -8,7 +8,6 @@ import { Authentication } from "../api/authentication";
 import { Users } from "../api/users";
 
 export function HeaderUser() {
-  const [myId, setMyId] = useState<string>("");
   const [hasNotification, setHasNotification] = useState<number>(0);
   const [hasSelected, setHasSelected] = useState<boolean>(false);
   const [profilePhoto, setProfilePhoto] = useState<string>("");
@@ -17,8 +16,6 @@ export function HeaderUser() {
     (async () => {
       const id: string = Authentication.checkUserSession("");
       const data = await Users.getUserProfilePhoto(id);
-
-      setMyId(id);
 
       if (data.hasPhoto === false) {
         setProfilePhoto("/icons/user-icon.png");

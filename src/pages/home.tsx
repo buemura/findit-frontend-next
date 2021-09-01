@@ -1,4 +1,3 @@
-import api from "../api/baseURL";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { HeaderPage } from "../components/HeaderPage";
