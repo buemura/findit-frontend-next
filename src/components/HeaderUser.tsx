@@ -3,10 +3,12 @@ import Switch from "./Switch";
 
 import Link from "next/link";
 import { useState } from "react";
+import { CSSTransition } from "react-transition-group";
 import { Authentication } from "../api/authentication";
 
 export function HeaderUser() {
   const [hasNotification, setHasNotification] = useState<number>(0);
+  const [hasSelected, setHasSelected] = useState<boolean>(false);
 
   return (
     <Container>
@@ -61,12 +63,32 @@ export function HeaderUser() {
                   </div>
                 </a>
               </Link>
+
+
               <a
                 className="profile"
-                onClick={() => Authentication.checkUserSession("profile")}
+                onClick={() => {
+                  Authentication.checkUserSession("profile");
+                  setHasSelected(!hasSelected);
+                  console.log(hasSelected);
+                }}
               >
                 Profile
               </a>
+              <CSSTransition
+                in={hasSelected === true}
+                unmountOnExit
+              >
+                <div className="menu-open">
+                  <ul>
+                    <a href=""><li>My Profile</li></a>
+                    <a href=""><li>My Services</li></a>
+                    <a href=""><li>Logout</li></a>
+                  </ul>
+                </div>
+              </CSSTransition>
+
+
               <a className="user-logout" onClick={Authentication.logOut}>
                 Logout
               </a>

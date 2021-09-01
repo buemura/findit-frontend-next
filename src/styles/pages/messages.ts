@@ -135,6 +135,9 @@ export const NewMessagesContainer = styled.div`
     width: 90%;
     height: 30px;
     border-radius: 10px;
+    outline: none;
+    border: none;
+    background: #c4c4c4;
   }
 
   .send-button {

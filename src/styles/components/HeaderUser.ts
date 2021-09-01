@@ -106,6 +106,7 @@ export const Header = styled.div`
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+    position: relative;
   }
   .pageLinks a,
   .profileLinks a {
@@ -169,6 +170,7 @@ export const Header = styled.div`
     color: white;
     transition: 0.2s;
     box-sizing: border-box;
+    position: relative;
   }
   .profile:hover {
     background: #3159d1;
@@ -235,6 +237,41 @@ export const Header = styled.div`
   }
   .pageLinks a:hover {
     background: #5179f1;
+  }
+  .menu-open {
+    width: 100%;
+    background: #7F7F7F;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(0, calc(100% + 15px));
+    margin: 0;
+    padding: 0;
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    a {
+      width: 100%;
+      padding: .6rem 0;
+      margin: 0;
+      border-radius: 0px;
+
+      &:hover {
+        background: #777;
+      }
+    }
+    
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      list-style: none;
+    }
   }
   @media (max-width: 1000px) {
     .menu {
