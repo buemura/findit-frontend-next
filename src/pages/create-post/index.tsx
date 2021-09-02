@@ -62,12 +62,13 @@ export default function Posts() {
     if (result === true) {
       setIsModalPositive(true);
       setIsModalVisible(true);
-      //router.push(`/home`);
       return;
     }
 
     setIsModalPositive(false);
     setIsModalVisible(true);
+
+    //router.push(`/home`);
     return;
   }
 

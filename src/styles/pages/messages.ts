@@ -58,9 +58,10 @@ export const UserName = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  position: fixed;
   align-items: center;
   width: 60%;
-  margin: 1px 0 10px 0;
+  margin: 0 0 10px 0;
   padding: 0px 5px 0px 5px;
   background-color: #ffffff;
 
@@ -89,6 +90,12 @@ export const UserName = styled.div`
 export const MessagesContainer = styled.div`
   width: 60%;
   float: right;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  
+  margin-top: 80px;
+  margin-bottom: 80px;
 
   background-color: #ffffff;
 
@@ -97,11 +104,13 @@ export const MessagesContainer = styled.div`
     padding-right: 20px;
     padding-left: 20px;
     border-radius: 20px;
-    width: 50%;
+    min-width: 10%;
+    max-width: 60%;
   }
 
   .iam-sender {
     text-align: right;
+    margin: 3px 10px 0 auto;
     float: right;
     background-color: #2e384d;
     color: #ffffff;
@@ -109,11 +118,13 @@ export const MessagesContainer = styled.div`
 
   .iamnot-sender {
     text-align: left;
+    margin: 3px auto 0 10px;
     float: left;
     background-color: #dcdde0;
   }
 
   .message {
+    word-wrap: break-word;
   }
 
   .message-date {
@@ -123,11 +134,13 @@ export const MessagesContainer = styled.div`
 
 export const NewMessagesContainer = styled.div`
   width: 60%;
-  margin: 15px;
+  padding: 15px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  bottom: 0;
 
   background-color: #ffffff;
 
@@ -135,6 +148,8 @@ export const NewMessagesContainer = styled.div`
     width: 90%;
     height: 30px;
     border-radius: 10px;
+    padding: .1rem 2rem .1rem 1.3rem;
+    margin-right: .3rem;
     outline: none;
     border: none;
     background: #c4c4c4;

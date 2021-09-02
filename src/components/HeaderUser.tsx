@@ -99,7 +99,7 @@ export function HeaderUser() {
                     <a href="/my-posts">
                       <li>My Services</li>
                     </a>
-                    <a href="/home" onClick={Authentication.logOut}>
+                    <a href="" onClick={Authentication.logOut}>
                       <li>Logout</li>
                     </a>
                   </ul>
