@@ -278,4 +278,8 @@ export const ButtonsStyled = styled.button`
   outline: none;
   border: none;
   margin: 0 0.5rem;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
