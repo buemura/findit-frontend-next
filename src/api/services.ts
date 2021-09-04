@@ -2,6 +2,7 @@ import api from "./baseURL";
 
 export class Services {
   static async getServices(
+    title?: string,
     category?: string,
     city?: string,
     state?: string,
@@ -9,7 +10,7 @@ export class Services {
   ) {
     try {
       const { data } = await api.get(
-        `/api/services?category=${category}&city=${city}&state=${state}&country=${country}`
+        `/api/services?title=${title}&category=${category}&city=${city}&state=${state}&country=${country}`
       );
       return data;
     } catch (error) {

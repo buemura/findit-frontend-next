@@ -11,6 +11,7 @@ export default function Posts() {
   const router = useRouter();
 
   const [posts, setPosts] = useState([]);
+  const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -20,7 +21,13 @@ export default function Posts() {
 
   useEffect(() => {
     (async () => {
-      const data = await Services.getServices(category, city, state, country);
+      const data = await Services.getServices(
+        title,
+        category,
+        city,
+        state,
+        country
+      );
       const allCategories = await Categories.getAllCategories();
       setCategories(allCategories);
       setPosts(data);
@@ -37,6 +44,13 @@ export default function Posts() {
       <HeaderPage />
       <MainContainer>
         <Filters>
+          <input
+            type="text"
+            placeholder="Title"
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          />
           <input
             type="text"
             placeholder="Category"
@@ -102,7 +116,7 @@ export default function Posts() {
                     <h3>R$ {post.price}</h3>
                     <p>
                       <strong>Posted by: </strong>
-                      {post.User.name}
+                      {post.user.name}
                     </p>
                   </div>
                   <div>
