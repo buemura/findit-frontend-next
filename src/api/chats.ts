@@ -16,14 +16,15 @@ interface IChatRooms {
 }
 
 export class Chats {
-  static async getChatByID(id: string, token: string, myId: string) {
+  static async getChatByID(id: string, token: string) {
     try {
       const { data } = await api.get(`/api/chatsById/${id}`, {
         headers: {
           authorization: token,
         },
       });
-      return data[0];
+
+      return data;
     } catch (error) {
       console.log(error);
     }

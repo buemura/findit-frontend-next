@@ -50,7 +50,6 @@ export default function MessagesDetails({ id }) {
     const token: string = localStorage.getItem("token");
     const authenticatedID: string = Authentication.checkUserSession("");
     setMyId(authenticatedID);
-
     getUserName();
 
     const intervalId = setInterval(() => {
@@ -72,21 +71,17 @@ export default function MessagesDetails({ id }) {
           setState({ data: null, error: true, loading: false });
         });
     }, 1000);
-
     return () => clearInterval(intervalId);
   }, [state]);
 
   async function getUserName(): Promise<void> {
     const token: string = localStorage.getItem("token");
-    const data = await Chats.getChatByID(id, token, myId);
+    const data = await Chats.getChatByID(id, token);
+    const userId = data.sender_id === myId ? data.receiver_id : data.sender_id;
 
-    if (data.sender_id === myId) {
-      setUserID(data.receiver_id);
-    } else {
-      setUserID(data.sender_id);
-    }
+    setUserID(userId);
 
-    const user = await Users.getUserByID(userID);
+    const user = await Users.getUserByID(userId);
     setUserName(user.name);
   }
 
