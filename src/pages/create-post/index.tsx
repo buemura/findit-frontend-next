@@ -68,7 +68,6 @@ export default function Posts() {
     setIsModalPositive(false);
     setIsModalVisible(true);
 
-    //router.push(`/home`);
     return;
   }
 
@@ -98,7 +97,7 @@ export default function Posts() {
           onClose={() => setIsModalVisible(false)}
           message={
             isModalPositive
-              ? "Your service was posted successfully!"
+              ? "Your service was posted successfully! Click here to redirect you to home page."
               : "Unable to post service. Check the information and try again later!"
           }
         ></Modal>

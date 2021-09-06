@@ -14,6 +14,7 @@ import {
 import { FormatDate } from "../../utils/formatDate";
 import { Chats } from "../../api/chats";
 import { Users } from "../../api/users";
+import { scrypt } from "crypto";
 
 interface IMessage {
   id: string;
@@ -71,6 +72,7 @@ export default function MessagesDetails({ id }) {
           setState({ data: null, error: true, loading: false });
         });
     }, 1000);
+
     return () => clearInterval(intervalId);
   }, [state]);
 
@@ -86,9 +88,27 @@ export default function MessagesDetails({ id }) {
   }
 
   async function sendMessage(): Promise<void> {
-    const token: string = localStorage.getItem("token");
-    await Chats.sendMessage(id, myId, newMessage, token);
-    setNewMessage("");
+    if (newMessage.replaceAll(" ", "") !== "") {
+      const token: string = localStorage.getItem("token");
+      await Chats.sendMessage(id, myId, newMessage, token);
+      setNewMessage("");
+    } else {
+      setNewMessage("");
+      console.log("Blank message to send!");
+    }
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      console.log('Enter key pressed!');
+      sendMessage();
+      handleLastMessage();
+    }
+  }
+
+  const handleLastMessage = () => {
+    var heightPage = document.body.scrollHeight;
+    window.scrollTo(0, heightPage);
   }
 
   function redirectToUserProfile(userId: string): void {
@@ -111,32 +131,36 @@ export default function MessagesDetails({ id }) {
           <p>{userName}</p>
         </UserName>
         <MessagesContainer>
-          {messages.map((message) =>
-            myId === message.sender_id ? (
-              <div key={message.id} className="iam-sender">
-                <p className="message">{message.content}</p>
-                <p className="message-date">
-                  {FormatDate.calculateDate(message.createdAt)}
-                </p>
-              </div>
-            ) : (
-              <div key={message.id} className="iamnot-sender">
-                <p className="message">{message.content}</p>
-                <p className="message-date">
-                  {FormatDate.calculateDate(message.createdAt)}
-                </p>
-              </div>
+          {
+            messages.map((message) => 
+              myId === message.sender_id ? (
+                <div key={message.id} className="iam-sender">
+                  <p className="message">{message.content}</p>
+                  <p className="message-date">
+                    {FormatDate.calculateDate(message.createdAt)}
+                  </p>
+                </div>                
+              ) : (
+                <div key={message.id} className="iamnot-sender">
+                  <p className="message">{message.content}</p>
+                  <p className="message-date">
+                    {FormatDate.calculateDate(message.createdAt)}
+                  </p>
+                </div>
+              )
             )
-          )}
+          }
         </MessagesContainer>
         <NewMessagesContainer>
           <input
             className="message-input"
+            id="message-input"
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
-          <button className="send-button" onClick={sendMessage}>
+          <button className="send-button" id="send-button" onClick={sendMessage}>
             Send
           </button>
         </NewMessagesContainer>

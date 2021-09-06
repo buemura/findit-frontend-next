@@ -2,8 +2,8 @@ import router from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-export const Modal = ({ message }) => {
-  const onClose = () => {
+export const Modal = ({ onClose, message }) => {
+  onClose = () => {
     router.push("/home");
   };
 

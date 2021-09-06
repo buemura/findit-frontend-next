@@ -76,6 +76,16 @@ export default function Profile() {
     })();
   }, []);
 
+  const setImageDescription = (alt) => {
+    var my_p = document.getElementById("image-description") as HTMLParagraphElement;
+    return my_p.innerHTML = alt;
+  }
+
+  const cleanImageDescription = (alt) => {
+    var my_p = document.getElementById("image-description") as HTMLParagraphElement;
+    return my_p.innerHTML = "";
+  }
+
   return (
     <BodyStyled>
       <HeaderPage />
@@ -132,12 +142,20 @@ export default function Profile() {
             <h2>Portfolio</h2>
             <div>
               {portfolios.map((portfolio) => (
-                <img
+                /*<img
                   className="portfolio-image"
                   key={portfolio._id}
                   src={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
                   alt={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
-                />
+                />*/
+                <div className="portfolio-container">
+                  <div
+                    className="portfolio-image"
+                    style={{ backgroundImage: `url(${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id})` }}>
+                  </div>
+                  <p className="image-description">{`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}</p>
+                </div>
+
               ))}
             </div>
           </Portfolio>

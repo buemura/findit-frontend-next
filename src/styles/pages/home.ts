@@ -16,7 +16,7 @@ export const CategoryList = styled.ul`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   height: 160px;
   padding: 15px;

@@ -143,36 +143,75 @@ export const Portfolio = styled.div`
   }
   div {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: 0 10px 0 10px;
+    .portfolio-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin: 0 10px 0 10px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
 
-    .div-img-portifolio {
-      height: 80px;
-      width: 80px;
-      background-position: center;
-      background-size: cover;
-    }
+      .div-img-portifolio {
+        height: 80px;
+        width: 80px;
+        background-position: center;
+        background-size: cover;
+      }
 
-    .div-img-portifolio.d01 {
-      background-image: url("assets/linux.jpg");
-    }
-    .div-img-portifolio.d02 {
-      background-image: url("assets/unix.jpg");
-    }
-  }
+      .div-img-portifolio.d01 {
+        background-image: url("assets/linux.jpg");
+      }
+      .div-img-portifolio.d02 {
+        background-image: url("assets/unix.jpg");
+      }
 
-  .portfolio-image {
-    height: 8rem;
-    width: 8rem;
-    border-radius: 10px;
-    margin: 5px;
-    transition: 0.2s;
+      .image-description {
+        display: none;
+        transition: .2s;
+        position: absolute;
+        text-align: center;
+        background: #232329;
+        transform: scale(.1);
+        padding: 1rem;
+        margin: 0;
+        color: #fff;
+        border-radius: 5px;
+      }
 
-    &:hover {
-      transform: scale(1.1);
-      cursor: pointer;
-    }
+      .portfolio-image {
+        height: 8rem;
+        width: 8rem;
+        border-radius: 10px;
+        margin: 5px;
+        transition: 0.2s;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+
+        &:hover {
+          transform: scale(1.05);
+          cursor: pointer;
+        }
+      }
+
+      &:hover .image-description {
+        display: flex;
+        animation-name: anm1;
+        animation-duration: .6s;
+        animation-iteration-count: ease-out;
+        transform: scale(1) translateY(125%);
+      }
+
+      @keyframes anm1 {
+        0% {
+        transform: scale(0) translateY(0%);
+        }
+        100% {
+        transform: scale(1) translateY(125%);
+        }
+      }
+    }  
   }
 `;
