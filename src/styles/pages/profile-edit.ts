@@ -132,12 +132,123 @@ export const MainSection = styled.div`
     background-size: contain;
   }
 
+  .portifolio {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    h2 {
+      width: 100%;
+    }
+
+    .portfolio-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      .portfolio-map {
+        display: flex;
+        margin: .3rem 0 0 0;
+
+
+        .portfolio-image {
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center;
+          margin: 0;
+          padding: 0;
+          border-radius: .1rem 0 0 .1rem;
+          height: 3rem;
+          cursor: default;
+        }
+
+        .portfolio-input-container {
+          display: flex;
+          flex: 1;
+          align-items: center;
+          justify-content: space-between;
+
+          .portfolio-description {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 1.2rem 0 1.2rem;
+            background: #EEEEEE;
+            outline: none;
+            border: none;
+          }
+
+          .portfolio-edit {
+            display: flex;
+            width: 7rem;
+            height: 100%;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            margin: 0;
+            border-radius: 0 .1rem .1rem 0;
+            background: #4169E1;
+
+            &:hover {
+              background: #3a5dc4;
+            }
+          }
+
+          .portfolio-remove {
+            display: flex;
+            width: 7rem;
+            height: 100%;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            margin: 0;
+            border-radius: 0 .1rem .1rem 0;
+            background: #D43844;
+            color: #fff;
+            cursor: pointer;
+
+            &:hover {
+              background: #cc3741;
+            }
+          }
+
+          .portfolio-input {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            border-radius: 0;
+          } 
+        } 
+      } 
+    }
+
+    .add-portfolio {
+      .add-portfolio-button {
+        margin: .3rem 0 0 0;
+        display: flex;
+        color: #fff;
+        background: #1FB852;
+        width: 7rem;
+        height: 3rem;
+        border-radius: .1rem;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;      
+
+        &:hover {
+          background: #18a045;
+        }
+      }
+    }    
+  }
+
   .portfolio-image {
     height: 8rem;
     width: 8rem;
     border-radius: 10px;
     margin: 5px;
-
+    
     &:hover {
       cursor: pointer;
     }

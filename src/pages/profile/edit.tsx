@@ -33,8 +33,7 @@ export default function Profile() {
   const [portfolios, setPortfolios] = useState([]);
 
   const [selectedProfilePhoto, setSelectedProfilePhoto] = useState<File>(null);
-  const [selectedPortfolioPhoto, setSelectedPortfolioPhoto] =
-    useState<File>(null);
+  const [selectedPortfolioPhoto, setSelectedPortfolioPhoto] = useState<File>(null);
   const [hasSelectedCountry, setHasSelectedCountry] = useState<boolean>(false);
   const [mapIndex, setMapIndex] = useState<number>(0);
 
@@ -91,13 +90,6 @@ export default function Profile() {
       await Users.updateProfilePhoto(id, profilePhoto, token);
     }
 
-    if (selectedPortfolioPhoto) {
-      const portfolioImages = new FormData();
-      portfolioImages.append("file", selectedPortfolioPhoto);
-
-      await Portfolios.uploadPortfolioImages(id, portfolioImages, token);
-    }
-
     await Users.updateUser(
       id,
       name,
@@ -112,6 +104,20 @@ export default function Profile() {
     );
 
     router.push("/profile", null, { shallow: false });
+  }
+
+  async function testUpdatePortfolio(value): Promise<void> {
+    const id: string = Authentication.checkUserSession("");
+    const token: string = localStorage.getItem("token");
+    
+    if (value) {
+      const portfolioImages = new FormData();
+      portfolioImages.append("file", value);
+
+      await Portfolios.uploadPortfolioImages(id, portfolioImages, token);
+    }
+
+    router.push("/profile/edit", null, { shallow: false });
   }
 
   function discardChanges(): void {
@@ -315,28 +321,49 @@ export default function Profile() {
             </div>
             <div className="portifolio">
               <h2>Portfolio</h2>
-              <div className="input-photo-container">
-                <label htmlFor="portfolio-input">Upload Portfolio</label>
+              <div className="portfolio-container" id="portfolio-container">
+                {portfolios.map((portfolio) => (
+                  <div className="portfolio-map" key={portfolio._id}>
+                    <div className="portfolio-image" style={{ backgroundImage: `url(${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id})` }}></div>
+                    <div className="portfolio-input-container">
+                      <input
+                        type="text"
+                        className={`portfolio-description`} 
+                        id={`span-${portfolio._id}`}
+                        placeholder={portfolio._id}
+                      />
+                      <label htmlFor={`portfolio-input-${portfolio._id}`} className={`portfolio-edit label-${portfolio._id}`}>Edit</label>
+                      <input
+                        type="file"
+                        id={`portfolio-input-${portfolio._id}`}
+                        className={`portfolio-input input-${portfolio._id}`}
+                        onChange={(e) => {
+                          // aqui deve ser adicionado o código para atualizar ou remover e atualizar em seguida a imagem do portfólio
+                          //selectPortfolio(`portfolio-input-${portfolio._id}`, `span-${portfolio._id}`);
+                          //setSelectedPortfolioPhoto(e.target.files[0]);
+                          console.log("Edita imagem");
+                          
+                        }}
+                      />
+                      <span className="portfolio-remove" onClick={() => {
+                        //Função para remover imagem do portfolio
+                        console.log("Remove imagem");
+                        
+                      }}>Remove</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="add-portfolio">
+                <label htmlFor="add-portfolio-input" className="add-portfolio-button">Insert</label>
                 <input
                   type="file"
-                  id="portfolio-input"
+                  id="add-portfolio-input"
                   className="portfolio-input"
-                  onChange={(e) => {
-                    selectPortfolio("portfolio-input", "portfolio-output");
-                    setSelectedPortfolioPhoto(e.target.files[0]);
+                  onChange={(e) => {                 
+                    testUpdatePortfolio(e.target.files[0]);
                   }}
                 />
-                <span id="portfolio-output"></span>
-              </div>
-              <div className="portifolio-container">
-                {portfolios.map((portfolio) => (
-                  <img
-                    key={portfolio._id}
-                    className="portfolio-image"
-                    src={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
-                    alt={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
-                  />
-                ))}
               </div>
             </div>
 
