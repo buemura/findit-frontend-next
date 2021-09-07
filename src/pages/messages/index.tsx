@@ -19,8 +19,8 @@ interface IChatRooms {
   id: string;
   sender_id: string;
   receiver_id: string;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
   userInfo: IUserInfo;
 }
 

@@ -120,7 +120,7 @@ export default function Posts() {
                     </p>
                   </div>
                   <div>
-                    <p>{FormatDate.calculateDate(post.createdAt)}</p>
+                    <p>{FormatDate.calculateDate(post.created_at)}</p>
                   </div>
                 </div>
               </div>

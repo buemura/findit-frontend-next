@@ -41,6 +41,7 @@ export default function Profile() {
     about_me: "",
     user_photo: "",
   });
+  const [workdDone, setWorkdDone] = useState(0);
   const [portfolios, setPortfolios] = useState([]);
 
   const hasNoPhoto = "/icons/user-icon.png";
@@ -57,11 +58,13 @@ export default function Profile() {
     (async () => {
       const id: string = Authentication.checkUserSession("");
       const data = await Users.getUserByID(id);
+      const completedServices = await Users.getUserCompletedServices(id);
       const portfolioImages = await Portfolios.getUserPortfolios(id);
 
       setMyId(id);
       setHasPhoto(false);
       setUser(data);
+      setWorkdDone(completedServices);
 
       if (portfolioImages.length > 0) {
         setPortfolios(portfolioImages[0].userPortfolios);
@@ -77,14 +80,18 @@ export default function Profile() {
   }, []);
 
   const setImageDescription = (alt) => {
-    var my_p = document.getElementById("image-description") as HTMLParagraphElement;
-    return my_p.innerHTML = alt;
-  }
+    var my_p = document.getElementById(
+      "image-description"
+    ) as HTMLParagraphElement;
+    return (my_p.innerHTML = alt);
+  };
 
   const cleanImageDescription = (alt) => {
-    var my_p = document.getElementById("image-description") as HTMLParagraphElement;
-    return my_p.innerHTML = "";
-  }
+    var my_p = document.getElementById(
+      "image-description"
+    ) as HTMLParagraphElement;
+    return (my_p.innerHTML = "");
+  };
 
   return (
     <BodyStyled>
@@ -110,13 +117,8 @@ export default function Profile() {
           <PersonalInfo>
             <div>
               <p>
-                <strong>Works Done:</strong>{" "}
-              </p>
-              <p>
-                <strong>Works Done in Time:</strong>{" "}
-              </p>
-              <p>
-                <strong>Works Done Within Budget:</strong>{" "}
+                <strong>Works Done: </strong>
+                {workdDone}
               </p>
             </div>
             <div>
@@ -151,11 +153,12 @@ export default function Profile() {
                 <div className="portfolio-container">
                   <div
                     className="portfolio-image"
-                    style={{ backgroundImage: `url(${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id})` }}>
-                  </div>
+                    style={{
+                      backgroundImage: `url(${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id})`,
+                    }}
+                  ></div>
                   <p className="image-description">{`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}</p>
                 </div>
-
               ))}
             </div>
           </Portfolio>

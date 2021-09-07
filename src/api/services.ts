@@ -72,4 +72,16 @@ export class Services {
       return false;
     }
   }
+
+  static async deleteService(id: string, token: string) {
+    try {
+      await api.delete(`/api/services/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

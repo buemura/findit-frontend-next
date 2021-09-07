@@ -38,7 +38,8 @@ interface ServiceType {
   city: string;
   state: string;
   country: string;
-  createdAt: string;
+  created_at: string;
+  updated_at: string;
   User?: UserType;
 }
 
@@ -65,7 +66,8 @@ export default function PostDetails({ id }) {
     city: "",
     state: "",
     country: "",
-    createdAt: "",
+    created_at: "",
+    updated_at: "",
     user: {
       id: "",
       name: "",
@@ -78,9 +80,9 @@ export default function PostDetails({ id }) {
       occupation: "",
       about_me: "",
       email_verified: "",
-      createdAt: "",
-      updatedAt: "",
-      deletedAt: "",
+      created_at: "",
+      updated_at: "",
+      deleted_at: "",
     },
   });
   const [comment, setComment] = useState<string>("");
@@ -151,7 +153,7 @@ export default function PostDetails({ id }) {
             </p>
           </div>
           <div>
-            <p>{FormatDate.calculateDate(post.createdAt)}</p>
+            <p>{FormatDate.calculateDate(post.created_at)}</p>
           </div>
         </Post>
         <PostComments>

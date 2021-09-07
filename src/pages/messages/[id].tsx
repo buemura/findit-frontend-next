@@ -21,8 +21,8 @@ interface IMessage {
   chat_id: string;
   sender_id: string;
   content: string;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({
@@ -99,17 +99,17 @@ export default function MessagesDetails({ id }) {
   }
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      console.log('Enter key pressed!');
+    if (event.key === "Enter") {
+      console.log("Enter key pressed!");
       sendMessage();
       handleLastMessage();
     }
-  }
+  };
 
   const handleLastMessage = () => {
     var heightPage = document.body.scrollHeight;
     window.scrollTo(0, heightPage);
-  }
+  };
 
   function redirectToUserProfile(userId: string): void {
     if (myId === userId) {
@@ -131,25 +131,23 @@ export default function MessagesDetails({ id }) {
           <p>{userName}</p>
         </UserName>
         <MessagesContainer>
-          {
-            messages.map((message) => 
-              myId === message.sender_id ? (
-                <div key={message.id} className="iam-sender">
-                  <p className="message">{message.content}</p>
-                  <p className="message-date">
-                    {FormatDate.calculateDate(message.createdAt)}
-                  </p>
-                </div>                
-              ) : (
-                <div key={message.id} className="iamnot-sender">
-                  <p className="message">{message.content}</p>
-                  <p className="message-date">
-                    {FormatDate.calculateDate(message.createdAt)}
-                  </p>
-                </div>
-              )
+          {messages.map((message) =>
+            myId === message.sender_id ? (
+              <div key={message.id} className="iam-sender">
+                <p className="message">{message.content}</p>
+                <p className="message-date">
+                  {FormatDate.calculateDate(message.created_at)}
+                </p>
+              </div>
+            ) : (
+              <div key={message.id} className="iamnot-sender">
+                <p className="message">{message.content}</p>
+                <p className="message-date">
+                  {FormatDate.calculateDate(message.created_at)}
+                </p>
+              </div>
             )
-          }
+          )}
         </MessagesContainer>
         <NewMessagesContainer>
           <input
@@ -160,7 +158,11 @@ export default function MessagesDetails({ id }) {
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyDown={handleKeyDown}
           />
-          <button className="send-button" id="send-button" onClick={sendMessage}>
+          <button
+            className="send-button"
+            id="send-button"
+            onClick={sendMessage}
+          >
             Send
           </button>
         </NewMessagesContainer>

@@ -50,6 +50,7 @@ export default function UsersProfile({ id }) {
     about_me: "",
     user_photo: "",
   });
+  const [workdDone, setWorkdDone] = useState(0);
   const [portfolios, setPortfolios] = useState([]);
 
   const hasNoPhoto = "/icons/user-icon.png";
@@ -66,10 +67,12 @@ export default function UsersProfile({ id }) {
     (async () => {
       const myID = Authentication.checkUserSession("");
       const data = await Users.getUserByID(id);
+      const completedServices = await Users.getUserCompletedServices(id);
       const portfolioImages = await Portfolios.getUserPortfolios(id);
 
       setUser(data);
       setMyId(myID);
+      setWorkdDone(completedServices);
 
       if (myID === id) {
         router.push("/profile");
@@ -114,13 +117,8 @@ export default function UsersProfile({ id }) {
           <PersonalInfo>
             <div>
               <p>
-                <strong>Works Done:</strong>{" "}
-              </p>
-              <p>
-                <strong>Works Done in Time:</strong>{" "}
-              </p>
-              <p>
-                <strong>Works Done Within Budget:</strong>{" "}
+                <strong>Works Done: </strong>
+                {workdDone}
               </p>
             </div>
             <div>
