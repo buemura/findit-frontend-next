@@ -73,6 +73,31 @@ export class Services {
     }
   }
 
+  static async completeService(
+    user_id: string,
+    service_id: string,
+    token: string
+  ): Promise<Boolean> {
+    try {
+      await api.post(
+        "/api/services/complete",
+        {
+          user_id,
+          service_id,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
   static async deleteService(id: string, token: string) {
     try {
       await api.delete(`/api/services/${id}`, {
