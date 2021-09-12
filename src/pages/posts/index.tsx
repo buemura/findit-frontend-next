@@ -90,6 +90,7 @@ export default function Posts() {
               {categories.map((c) =>
                 c.category === post.category ? (
                   <div
+                    key={c.id}
                     className="category-image"
                     style={{
                       backgroundImage: `url(icons/categories/${formatImageName(
@@ -100,7 +101,7 @@ export default function Posts() {
                     }}
                   ></div>
                 ) : (
-                  <div></div>
+                  <div key={c.id}></div>
                 )
               )}
               <div className="category-container">
@@ -116,7 +117,7 @@ export default function Posts() {
                     <h3>R$ {post.price}</h3>
                     <p>
                       <strong>Posted by: </strong>
-                      {post.user.name}
+                      {post.User.name}
                     </p>
                   </div>
                   <div>

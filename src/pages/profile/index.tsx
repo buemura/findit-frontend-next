@@ -63,7 +63,7 @@ export default function Profile() {
 
       setMyId(id);
       setHasPhoto(false);
-      setUser(data);
+      setUser(data);      
       setWorkdDone(completedServices);
 
       if (portfolioImages.length > 0) {
@@ -142,15 +142,12 @@ export default function Profile() {
 
           <Portfolio>
             <h2>Portfolio</h2>
-            <div>
+            <div className="horizontal-bar">
               {portfolios.map((portfolio) => (
-                /*<img
-                  className="portfolio-image"
-                  key={portfolio._id}
-                  src={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
-                  alt={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
-                />*/
-                <div className="portfolio-container">
+                <div 
+                  key={portfolio.id}
+                  className="portfolio-container"
+                >
                   <div
                     className="portfolio-image"
                     style={{

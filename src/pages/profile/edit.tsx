@@ -117,7 +117,8 @@ export default function Profile() {
       await Portfolios.uploadPortfolioImages(id, portfolioImages, token);
     }
 
-    router.push("/profile/edit", null, { shallow: false });
+    //router.push("/profile/edit", null, { shallow: false });
+    document.location.reload();
   }
 
   function discardChanges(): void {
@@ -206,118 +207,131 @@ export default function Profile() {
 
           {/* all data to change */}
           <div className="data-container">
-            <h2>Basic informations</h2>
-            <div className="name-container divisions">
-              <span>Name</span>
-              <InputText
-                type="text"
-                placeholder={name}
-                defaultValue={name}
-                onChange={(e: { target: { value: string } }) =>
-                  setName(e.target.value)
-                }
-              />
-            </div>
+            <div className="text-container">
+              <div className="basic-informations">
+                <h2>Basic informations</h2>
+                <div className="name-container divisions">
+                  <span>Name</span>
+                  <InputText
+                    type="text"
+                    placeholder={name}
+                    defaultValue={name}
+                    onChange={(e: { target: { value: string } }) =>
+                      setName(e.target.value)
+                    }
+                  />
+                </div>
 
-            <div className="occupation-container divisions">
-              <span>Occupation</span>
-              <InputText
-                type="text"
-                placeholder={occupation}
-                defaultValue={occupation}
-                onChange={(e: { target: { value: string } }) =>
-                  setOccupation(e.target.value)
-                }
-              />
-            </div>
+                <div className="occupation-container divisions">
+                  <span>Occupation</span>
+                  <InputText
+                    type="text"
+                    placeholder={occupation}
+                    defaultValue={occupation}
+                    onChange={(e: { target: { value: string } }) =>
+                      setOccupation(e.target.value)
+                    }
+                  />
+                </div>
 
-            <div className="phone-container divisions">
-              <span>Phone</span>
-              <InputText
-                type="text"
-                placeholder={phone}
-                defaultValue={phone}
-                onChange={(e: { target: { value: string } }) =>
-                  setPhone(e.target.value)
-                }
-              />
-            </div>
+                <div className="phone-container divisions">
+                  <span>Phone</span>
+                  <InputText
+                    type="text"
+                    placeholder={phone}
+                    defaultValue={phone}
+                    onChange={(e: { target: { value: string } }) =>
+                      setPhone(e.target.value)
+                    }
+                  />
+                </div>
 
-            <div className="email-container divisions">
-              <span>E-mail</span>
-              <InputText type="text" value={email} disabled />
-            </div>
+                <div className="email-container divisions">
+                  <span>E-mail</span>
+                  <InputText type="text" value={email} disabled />
+                </div>
 
-            <div className="local-container">
-              <div className="country divisions">
-                <span>Country</span>
-                <SelectStyled
-                  id="country-select"
-                  onChange={onChangeSelectCountry}
-                >
-                  {countries.map(({ name }) =>
-                    name === country ? (
-                      <option key={name.toString()} value={name} selected>
-                        {name}
-                      </option>
-                    ) : (
-                      <option key={name.toString()} value={name}>
-                        {name}
-                      </option>
-                    )
-                  )}
-                </SelectStyled>
-              </div>
+                <div className="local-container">
+                  <div className="country divisions">
+                    <span>Country</span>
+                    <SelectStyled
+                      id="country-select"
+                      onChange={onChangeSelectCountry}
+                    >
+                      {countries.map(({ name }) =>
+                        name === country ? (
+                          <option key={name.toString()} value={name} selected>
+                            {name}
+                          </option>
+                        ) : (
+                          <option key={name.toString()} value={name}>
+                            {name}
+                          </option>
+                        )
+                      )}
+                    </SelectStyled>
+                  </div>
 
-              <div className="state divisions">
-                <span>State</span>
-                <SelectStyled
-                  id="state-select"
-                  default={state}
-                  onChange={onChangeSelectState}
-                >
-                  {hasSelectedCountry ? (
-                    countries[mapIndex].states.map(({ name }) =>
-                      name === state ? (
-                        <option key={name.toString()} value={name} selected>
-                          {name}
-                        </option>
+                  <div className="state divisions">
+                    <span>State</span>
+                    <SelectStyled
+                      id="state-select"
+                      default={state}
+                      onChange={onChangeSelectState}
+                    >
+                      {hasSelectedCountry ? (
+                        countries[mapIndex].states.map(({ name }) =>
+                          name === state ? (
+                            <option key={name.toString()} value={name} selected>
+                              {name}
+                            </option>
+                          ) : (
+                            <option key={name.toString()} value={name}>
+                              {name}
+                            </option>
+                          )
+                        )
                       ) : (
-                        <option key={name.toString()} value={name}>
-                          {name}
-                        </option>
-                      )
-                    )
-                  ) : (
-                    <option value={state}>{state}</option>
-                  )}
-                </SelectStyled>
-              </div>
+                        <option value={state}>{state}</option>
+                      )}
+                    </SelectStyled>
+                  </div>
 
-              <div className="city divisions">
-                <span>City</span>
-                <InputText
+                  <div className="city divisions">
+                    <span>City</span>
+                    <InputText
+                      type="text"
+                      placeholder={city}
+                      defaultValue={city}
+                      onChange={(e: {
+                        target: { value: React.SetStateAction<string> };
+                      }) => setCity(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              
+
+              <div className="about-me">
+                <h2>About Me</h2>
+                <InputTextArea
                   type="text"
-                  placeholder={city}
-                  defaultValue={city}
-                  onChange={(e: {
-                    target: { value: React.SetStateAction<string> };
-                  }) => setCity(e.target.value)}
+                  className="text-area divisions"
+                  placeholder={about_me}
+                  defaultValue={about_me}
+                  onChange={(e: { target: { value: string } }) =>
+                    setAboutMe(e.target.value)
+                  }
                 />
               </div>
-            </div>
-
-            <div className="about-me">
-              <h2>About Me</h2>
-              <InputTextArea
-                type="text"
-                className="text-area divisions"
-                placeholder={about_me}
-                defaultValue={about_me}
-                onChange={(e: { target: { value: string } }) =>
-                  setAboutMe(e.target.value)
-                }
-              />
+              <div className="buttons divisions">
+                <ButtonsStyled className="discart" onClick={discardChanges}>
+                  Cancel
+                </ButtonsStyled>
+                <ButtonsStyled className="save" onClick={updateProfile}>
+                  Save
+                </ButtonsStyled>
+              </div>
             </div>
             <div className="portifolio">
               <h2>Portfolio</h2>
@@ -367,14 +381,6 @@ export default function Profile() {
               </div>
             </div>
 
-            <div className="buttons  divisions">
-              <ButtonsStyled className="discart" onClick={discardChanges}>
-                Cancel
-              </ButtonsStyled>
-              <ButtonsStyled className="save" onClick={updateProfile}>
-                Save
-              </ButtonsStyled>
-            </div>
           </div>
         </MainSection>
       </MainContainer>

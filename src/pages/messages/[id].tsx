@@ -79,7 +79,9 @@ export default function MessagesDetails({ id }) {
   async function getUserName(): Promise<void> {
     const token: string = localStorage.getItem("token");
     const data = await Chats.getChatByID(id, token);
-    const userId = data.sender_id === myId ? data.receiver_id : data.sender_id;
+    const userId = (data[0].sender_id === myId ? data[0].receiver_id : data[0].sender_id);
+
+
 
     setUserID(userId);
 
@@ -124,10 +126,18 @@ export default function MessagesDetails({ id }) {
       <HeaderPage />
       <MainContainer>
         <UserName onClick={() => redirectToUserProfile(userID)}>
-          <img
-            src={`${process.env.BACKEND_API}/api/users/${userID}/profile-image`}
-            alt={userID}
-          />
+          <div
+            style={{
+              backgroundImage: `url(${process.env.BACKEND_API}/api/users/${userID}/profile-image)`,
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              width: "3rem",
+              height: "3rem",
+              borderRadius: "100%",
+              marginRight: "1rem",
+            }}
+          ></div>
           <p>{userName}</p>
         </UserName>
         <MessagesContainer>

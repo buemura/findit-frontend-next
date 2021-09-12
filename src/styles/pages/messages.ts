@@ -10,7 +10,8 @@ export const MainContainer = styled.div`
   width: 100%;
   min-height: calc(100vh - 60px);
   overflow-x: hidden;
-  background-color: #f0f0f0;
+  //background-color: #f0f0f0;
+  background-color: #fff;
 `;
 
 export const Title = styled.div`
@@ -61,9 +62,8 @@ export const UserName = styled.div`
   position: fixed;
   align-items: center;
   width: 60%;
-  margin: 0 0 10px 0;
-  padding: 0px 5px 0px 5px;
   background-color: #ffffff;
+  border-bottom: 3px #f0f0f0 solid;
 
   font-size: x-large;
 
@@ -83,18 +83,18 @@ export const UserName = styled.div`
   }
 
   @media (max-width: 900px) {
-    width: 95%;
+    width: 100%;
   }
 `;
 
 export const MessagesContainer = styled.div`
   width: 60%;
-  float: right;
+  height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
   
-  margin-top: 80px;
+  margin-top: 90px;
   margin-bottom: 80px;
 
   background-color: #ffffff;
@@ -130,6 +130,10 @@ export const MessagesContainer = styled.div`
   .message-date {
     font-size: x-small;
   }
+
+  @media (max-width: 900px) {
+    width: 100%;
+  }
 `;
 
 export const NewMessagesContainer = styled.div`
@@ -156,7 +160,7 @@ export const NewMessagesContainer = styled.div`
   }
 
   .send-button {
-    width: 10%;
+    min-width: 4rem;
     height: 30px;
     border-radius: 10px;
     border: none;
@@ -165,6 +169,10 @@ export const NewMessagesContainer = styled.div`
 
     &:hover {
       cursor: pointer;
-    }
+    }    
+  }
+
+  @media (max-width: 900px) {
+      width: 100%;
   }
 `;

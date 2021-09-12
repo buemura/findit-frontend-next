@@ -68,7 +68,7 @@ export default function PostDetails({ id }) {
     country: "",
     created_at: "",
     updated_at: "",
-    user: {
+    User: {
       id: "",
       name: "",
       email: "",
@@ -92,7 +92,7 @@ export default function PostDetails({ id }) {
     (async () => {
       const postData = await Services.getServiceByID(id);
       const commentsData = await Comments.getAllComments(id);
-      setPost(postData);
+      setPost(postData);      
       setPostedComments(commentsData);
     })();
   }, []);
@@ -144,12 +144,12 @@ export default function PostDetails({ id }) {
             <p>
               <strong
                 onClick={() => {
-                  redirectToUserProfile(post.user.id);
+                  redirectToUserProfile(post.User.id);
                 }}
               >
                 Posted by:{" "}
               </strong>
-              {post.user.name}
+              {post.User.name}
             </p>
           </div>
           <div>
@@ -170,7 +170,7 @@ export default function PostDetails({ id }) {
         {postedComments.map((com) => (
           <CommentsContainer
             key={com.id}
-            onClick={() => redirectToUserProfile(com.user.id)}
+            onClick={() => redirectToUserProfile(com.User.id)}
           >
             {/* <img
               src={`${process.env.BACKEND_API}/api/users/${com.user.id}/profile-image`}
@@ -181,13 +181,13 @@ export default function PostDetails({ id }) {
               style={{
                 backgroundImage:
                   "url(" +
-                  `${process.env.BACKEND_API}/api/users/${com.user.id}/profile-image` +
+                  `${process.env.BACKEND_API}/api/users/${com.User.id}/profile-image` +
                   ")",
               }}
             ></div>
             <div className="container--values">
               <div className="data">
-                <h3>{com.user.name}</h3>
+                <h3>{com.User.name}</h3>
                 <p>{com.comment}</p>
               </div>
               <div className="date">

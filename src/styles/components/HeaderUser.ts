@@ -25,6 +25,7 @@ export const Header = styled.div`
   padding: 10px 30px;
   margin: 0;
   width: 100%;
+  position: relative;
 
   .divLogo {
     display: flex;
@@ -168,7 +169,7 @@ export const Header = styled.div`
     color: white;
     transition: 0.2s;
     box-sizing: border-box;
-    position: relative;
+    //position: relative;
 
     &:hover {
       cursor: pointer;
@@ -251,7 +252,7 @@ export const Header = styled.div`
     position: absolute;
     right: 0;
     bottom: 0;
-    transform: translate(0, calc(100% + 15px));
+    transform: translate(30px, calc(100% + 15px));
     margin: 0;
     padding: 0;
 
@@ -273,7 +274,8 @@ export const Header = styled.div`
 
     li {
       display: flex;
-      justify-content: center;
+      justify-content: left;
+      padding-left: 20px;
       align-items: center;
       width: 100%;
       height: 100%;
@@ -283,6 +285,9 @@ export const Header = styled.div`
   @media (max-width: 1000px) {
     .menu {
       display: flex;
+    }
+    .menu-open {      
+      transform: translate(85px, calc(100% + 15px));
     }
     .menu.active {
       box-shadow: none;
@@ -325,6 +330,7 @@ export const Header = styled.div`
       border: none;
       transition: 0.2s;
       box-sizing: border-box;
+      height: 50%;
 
       span {
         color: #fff !important;
@@ -399,7 +405,6 @@ export const Header = styled.div`
       display: flex;
     }
     .profileLinks {
-      position: relative;
       display: flex;
       flex-direction: column;
       width: 100%;

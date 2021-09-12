@@ -66,6 +66,22 @@ export const MainSection = styled.div`
   .title {
     padding: 40px 0 10px 0;
     color: #eee;
+
+    button {
+      background: #4169E1;
+      color: #fff;
+      padding: .7rem 2rem;
+      margin-top: 1rem;
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: .2s;
+
+      &:hover {
+        background: #2e56d1;
+      }
+    }
   }
 
   .title a {
@@ -137,12 +153,31 @@ export const Portfolio = styled.div`
   width: 60%;
   border-bottom: 1px solid #aaa;
   padding-bottom: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 80px;
+  
+
   h2 {
     margin: 15px;
   }
-  div {
+  
+  .horizontal-bar {
+    width: 100%;
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-x: auto;
+    
+    ::-webkit-scrollbar {
+      width: 0;
+      height: 10px;
+      background: #f5f5f5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #c4c4c4;
+      border-radius: 10px;
+    }
+
     .portfolio-container {
       display: flex;
       flex-direction: row;
@@ -197,11 +232,12 @@ export const Portfolio = styled.div`
       }
 
       &:hover .image-description {
+        z-index: 9999999;
         display: flex;
         animation-name: anm1;
         animation-duration: .6s;
         animation-iteration-count: ease-out;
-        transform: scale(1) translateY(125%);
+        transform: scale(1) translateY(0%);
       }
 
       @keyframes anm1 {
@@ -209,7 +245,7 @@ export const Portfolio = styled.div`
         transform: scale(0) translateY(0%);
         }
         100% {
-        transform: scale(1) translateY(125%);
+        transform: scale(1) translateY(0%);
         }
       }
     }  

@@ -87,10 +87,18 @@ export function HeaderUser() {
                   setHasSelected(!hasSelected);
                   console.log(hasSelected);
                 }}
+                style={{
+                  backgroundImage: `url(${profilePhoto})`,
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                  height: "3rem",
+                  width: "3rem",
+                  borderRadius: "100%",
+                }}
               >
-                <img src={profilePhoto} alt={profilePhoto} />
               </div>
-              <CSSTransition in={hasSelected === true} unmountOnExit>
+              <CSSTransition in={hasSelected === true} timeout={10} unmountOnExit>
                 <div className="menu-open">
                   <ul>
                     <a href="/profile">

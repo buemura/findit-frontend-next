@@ -78,67 +78,171 @@ export const MainSection = styled.div`
     max-width: 15rem;
   }
 
+
+
+
+
+
+
+
+
+
+
+  .portfolio-image {
+    height: 8rem;
+    width: 8rem;
+    border-radius: 10px;
+    margin: 5px;
+    
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .divisions {
+    display: flex;
+    padding: 0 0 0.3rem 0;
+    height: 2.3rem;
+
+    span {
+      width: 5.5rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      margin: 0;
+    }
+  }
+  .local-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .country,
+  .state,
+  .city {
+    width: 100%;
+  }
+  .country,
+  .state {
+    margin-right: 2rem;
+  }
+  .state,
+  .city {
+    span {
+      width: 3rem;
+    }
+  }
+
+  .buttons {
+    margin: 2rem 0 0 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .save {
+    border: 1px #23cf5c solid;
+    background: #23cf5c;
+    color: #fff;
+    &:hover {
+      background: #1fb852;
+    }
+  }
+  .discart {
+    border: 1px #d43844 solid;
+    background: transparent;
+    color: #d43844;
+    &:hover {
+      background: #f0f0f0;
+      border: 1px #bf323d solid;
+      color: #bf323d;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
   .data-container {
     padding: 40px 0 10px 0;
     display: flex;
     flex-direction: column;
     width: 80%;
-  }
 
-  .data-container a {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    transform: translateY(10px);
-    padding: 1rem;
-    text-decoration: none;
-    font-size: 0.8rem;
+    .text-container {
+      padding: .5rem;
+      border: 1px #d7d7d7 solid;
+      border-radius: 5px;
+      margin-bottom: 1rem;
 
-    img {
-      width: 0.8rem;
-      margin-right: 10px;
+      .basic-informations {
+        margin-bottom: 2rem;
+      }
+
+      h2 {        
+        margin: .3rem 0 1.3rem 0;
+      }
+
+      a {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        transform: translateY(10px);
+        padding: 1rem;
+        text-decoration: none;
+        font-size: 0.8rem;
+
+        img {
+          width: 0.8rem;
+          margin-right: 10px;
+        }
+      }
+
+      h3 {
+        text-align: left;
+        margin: 7px 0;
+        font-size: 1.2rem;
+        font-weight: normal;
+      }
+
+      h1 {
+        font-size: 2rem;
+        text-align: left;
+        margin: 7px 0;
+      }
     }
   }
-
-  .data-container h1,
-  .data-container h3 {
-    text-align: left;
-    margin: 7px 0;
-  }
-
-  .data-container h1 {
-    font-size: 2rem;
-  }
-
-  .data-container h3 {
-    font-size: 1.2rem;
-    font-weight: normal;
-  }
-
-  .portifolio-container {
-    display: flex;
-    background: #e4e4e4;
-    border-radius: 5px;
-    flex-direction: row;
-    justify-content: left;
-    align-items: center;
-  }
-  .portifolio-container .portifolio-image {
-    width: 8rem;
-    height: 5rem;
-    margin: 0.3rem 0.5rem;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
+  
+  
 
   .portifolio {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    position: relative;
+    margin-bottom: 5rem;
+    padding: .5rem;
+    border: 1px #d7d7d7 solid;
+    border-radius: 5px;
+
+    a {
+      position: absolute;
+      right: 0;
+      top: 20px;
+      height: fit-content;
+    }
 
     h2 {
       width: 100%;
+      margin: .3rem 0 1.3rem 0;
     }
 
     .portfolio-container {
@@ -222,7 +326,7 @@ export const MainSection = styled.div`
         } 
       } 
     }
-
+    
     .add-portfolio {
       .add-portfolio-button {
         margin: .3rem 0 0 0;
@@ -240,93 +344,7 @@ export const MainSection = styled.div`
           background: #18a045;
         }
       }
-    }    
-  }
-
-  .portfolio-image {
-    height: 8rem;
-    width: 8rem;
-    border-radius: 10px;
-    margin: 5px;
-    
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  .divisions {
-    display: flex;
-    padding: 0 0 0.3rem 0;
-    height: 2.3rem;
-
-    span {
-      width: 5.5rem;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      margin: 0;
-    }
-  }
-  .local-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .country,
-  .state,
-  .city {
-    width: 100%;
-  }
-  .country,
-  .state {
-    margin-right: 2rem;
-  }
-  .state,
-  .city {
-    span {
-      width: 3rem;
-    }
-  }
-
-  .portifolio {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-
-    a {
-      position: absolute;
-      right: 0;
-      top: 20px;
-      height: fit-content;
-    }
-  }
-
-  .buttons {
-    margin: 2rem 0 5rem 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  .save {
-    border: 1px #23cf5c solid;
-    background: #23cf5c;
-    color: #fff;
-    &:hover {
-      background: #1fb852;
-    }
-  }
-  .discart {
-    border: 1px #d43844 solid;
-    background: transparent;
-    color: #d43844;
-    &:hover {
-      background: #f0f0f0;
-      border: 1px #bf323d solid;
-      color: #bf323d;
-    }
+    }        
   }
 
   @media (max-width: 950px) {

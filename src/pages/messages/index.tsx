@@ -80,10 +80,18 @@ export default function Messages() {
               key={chat.id}
               onClick={() => redirectToConversation(chat.id)}
             >
-              <img
-                src={`${process.env.BACKEND_API}/api/users/${chat.userInfo.id}/profile-image`}
-                alt={chat.userInfo.id}
-              />
+              <div
+                style={{
+                  backgroundImage: `url(${process.env.BACKEND_API}/api/users/${chat.userInfo.id}/profile-image)`,
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                  width: "6rem",
+                  height: "6rem",
+                  borderRadius: "100%",
+                  marginRight: "2rem",
+                }}
+              ></div>
               <div>
                 <h2>{chat.userInfo.name}</h2>
                 <p>{lastMessage(chat.id)}</p>
