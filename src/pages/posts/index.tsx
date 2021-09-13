@@ -117,7 +117,7 @@ export default function Posts() {
                     <h3>R$ {post.price}</h3>
                     <p>
                       <strong>Posted by: </strong>
-                      {post.User.name}
+                      {post.user.name}
                     </p>
                   </div>
                   <div>

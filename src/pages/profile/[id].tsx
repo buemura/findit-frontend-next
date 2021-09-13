@@ -79,7 +79,7 @@ export default function UsersProfile({ id }) {
       }
 
       if (portfolioImages.length > 0) {
-        setPortfolios(portfolioImages[0].userPortfolios);
+        setPortfolios(portfolioImages);
       }
 
       if (data.user_photo) {
@@ -93,7 +93,6 @@ export default function UsersProfile({ id }) {
 
   function sendMessage(): void {
     const token = localStorage.getItem("token");
-
     Chats.createChatRoom(myId, id, token);
   }
 
@@ -146,8 +145,8 @@ export default function UsersProfile({ id }) {
               {portfolios.map((portfolio) => (
                 <img
                   className="portfolio-image"
-                  src={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio._id}`}
-                  alt={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio._id}`}
+                  src={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio.id}`}
+                  alt={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio.id}`}
                 />
               ))}
             </div>
