@@ -43,7 +43,7 @@ export class Users {
   static async getUserCompletedServices(id: string) {
     try {
       const { data } = await api.get(
-        `/api/users/${id}/completed-services/count`
+        `/api/services/user/${id}/completed-services/count`
       );
       return data;
     } catch (error) {
