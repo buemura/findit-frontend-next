@@ -14,7 +14,6 @@ import {
 import { FormatDate } from "../../utils/formatDate";
 import { Chats } from "../../api/chats";
 import { Users } from "../../api/users";
-import { scrypt } from "crypto";
 
 interface IMessage {
   id: string;
@@ -56,7 +55,7 @@ export default function MessagesDetails({ id }) {
     const intervalId = setInterval(() => {
       setState((state) => ({ data: state.data, error: false, loading: true }));
       api
-        .get(`/api/chat/messages/${id}`, {
+        .get(`/api/chats/messages/${id}`, {
           headers: {
             authorization: token,
           },
@@ -79,9 +78,7 @@ export default function MessagesDetails({ id }) {
   async function getUserName(): Promise<void> {
     const token: string = localStorage.getItem("token");
     const data = await Chats.getChatByID(id, token);
-    const userId = (data[0].sender_id === myId ? data[0].receiver_id : data[0].sender_id);
-
-
+    const userId = data.sender_id === myId ? data.receiver_id : data.sender_id;
 
     setUserID(userId);
 

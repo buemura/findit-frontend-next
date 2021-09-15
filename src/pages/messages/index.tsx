@@ -34,12 +34,14 @@ export default function Messages() {
     setMyId(id);
 
     api
-      .get(`/api/chatsByUser/${id}`, {
+      .get(`/api/chats/chatsByUser/${id}`, {
         headers: {
           authorization: token,
         },
       })
       .then(({ data }) => {
+        console.log(data);
+
         setChatRoom(data);
       })
       .catch((err) => {
@@ -51,7 +53,7 @@ export default function Messages() {
     const token: string = localStorage.getItem("token");
     let message: string = "Last Message";
     api
-      .get(`/api/chat/messages/${chatId}`, {
+      .get(`/api/chats/messages/${chatId}`, {
         headers: {
           authorization: token,
         },

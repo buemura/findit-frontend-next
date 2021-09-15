@@ -91,9 +91,9 @@ export default function UsersProfile({ id }) {
     })();
   }, []);
 
-  function sendMessage(): void {
+  async function sendMessage(): Promise<void> {
     const token = localStorage.getItem("token");
-    Chats.createChatRoom(myId, id, token);
+    await Chats.createChatRoom(myId, id, token);
   }
 
   return (

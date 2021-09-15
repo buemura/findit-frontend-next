@@ -75,6 +75,8 @@ export class Chats {
         }
       );
 
+      console.log(data);
+
       router.push(`/messages/${data.chat_id}`);
     } catch (error) {
       console.log(error);
