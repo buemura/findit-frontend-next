@@ -27,6 +27,15 @@ export class Services {
     }
   }
 
+  static async getServiceByUserID(id: string) {
+    try {
+      const { data } = await api.get(`/api/services/user/${id}`);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   static async getServicesCount() {
     try {
       const { data } = await api.get("/api/services/all/count");

@@ -17,7 +17,7 @@ export function HeaderUser() {
       const id: string = Authentication.checkUserSession("");
       const data = await Users.getUserProfilePhoto(id);
 
-      if (data.hasPhoto === false) {
+      if (data.hasPhoto === false || data.hasPhoto !== undefined) {        
         setProfilePhoto("/icons/user-icon.png");
         return;
       }
@@ -80,7 +80,7 @@ export function HeaderUser() {
                   </div>
                 </a>
               </Link>
-
+              
               <div
                 className="profile"
                 onClick={() => {

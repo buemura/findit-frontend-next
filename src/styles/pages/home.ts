@@ -16,7 +16,7 @@ export const CategoryList = styled.ul`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
   height: 160px;
   padding: 15px;
@@ -31,6 +31,9 @@ export const CategoryList = styled.ul`
   ::-webkit-scrollbar-thumb {
     background: #c4c4c4;
     border-radius: 10px;
+  }
+  @media (max-width: 1490px) {
+    justify-content: flex-start;
   }
   @media (max-width: 1250px) {
     justify-content: flex-start;

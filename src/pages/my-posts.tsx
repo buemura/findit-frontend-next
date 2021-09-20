@@ -1,37 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { HeaderPage } from "../../components/HeaderPage";
-import { BodyStyled } from "../../styles/components/middleSection";
-import { MainContainer, Filters, Feed, Title } from "../../styles/pages/posts";
-import { FormatDate } from "../../utils/formatDate";
-import { Services } from "../../api/services";
-import { Categories } from "../../api/categories";
+import { HeaderPage } from "../components/HeaderPage";
+import { BodyStyled } from "../styles/components/middleSection";
+import { MainContainer, Filters, Feed, Title } from "../styles/pages/posts";
+import { FormatDate } from "../utils/formatDate";
+import { Services } from "../api/services";
+import { Categories } from "../api/categories";
+import { Authentication } from "../api/authentication";
 
 export default function Posts() {
   const router = useRouter();
+  const [myId, setMyId] = useState<string>("");
 
   const [posts, setPosts] = useState([]);
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
   const [filter, setFilter] = useState(false);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     (async () => {
-      const data = await Services.getServices(
-        title,
-        category,
-        city,
-        state,
-        country
-      );
+      const id: string = Authentication.checkUserSession("");
+      setMyId(id);
+      const data = await Services.getServiceByUserID(id);
       const allCategories = await Categories.getAllCategories();
       setCategories(allCategories);
       setPosts(data);
       setFilter(false);
+      console.log(data);
+      
     })();
   }, [filter]);
 
@@ -43,44 +38,7 @@ export default function Posts() {
     <BodyStyled>
       <HeaderPage />
       <MainContainer>
-        <Filters>
-          <input
-            type="text"
-            placeholder="Title"
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Category"
-            onChange={(e) => {
-              setCategory(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="City"
-            onChange={(e) => {
-              setCity(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="State"
-            onChange={(e) => {
-              setState(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Country"
-            onChange={(e) => {
-              setCountry(e.target.value);
-            }}
-          />
-          <button onClick={() => setFilter(true)}>Apply Filter</button>
-        </Filters>
+        <div style={{width:"100%", marginTop:"35px"}}></div>
         {posts.length != 0 ? (
           posts.map((post) => (
             <Feed
