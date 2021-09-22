@@ -6,13 +6,28 @@ import { MainContainer, Filters, Feed, Title } from "../../styles/pages/posts";
 import { FormatDate } from "../../utils/formatDate";
 import { Services } from "../../api/services";
 import { Categories } from "../../api/categories";
+import { GetServerSideProps } from "next";
 
-export default function Posts() {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  query,
+  res,
+}) => {
+  if (query.Category) {
+    let { Category } = query;    
+    return {    
+      props: { Category },
+    };
+  }
+  return {props: {Category:""}};
+};
+
+export default function Posts({Category}) {
   const router = useRouter();
 
   const [posts, setPosts] = useState([]);
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(Category);
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
