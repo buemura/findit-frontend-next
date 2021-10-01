@@ -32,7 +32,9 @@ export default function Profile() {
   const [user_photo, setUserPhoto] = useState<string>("");
   const [portfolios, setPortfolios] = useState([]);
 
-  const [selectedFile, setSelectedFile] = useState<File>(null);
+  const [selectedProfilePhoto, setSelectedProfilePhoto] = useState<File>(null);
+  const [selectedPortfolioPhoto, setSelectedPortfolioPhoto] =
+    useState<File>(null);
   const [hasSelectedCountry, setHasSelectedCountry] = useState<boolean>(false);
   const [mapIndex, setMapIndex] = useState<number>(0);
 
@@ -45,12 +47,6 @@ export default function Profile() {
   const divStyleHasNoPhoto = {
     backgroundImage: "url(" + hasNoPhoto + ")",
   };
-
-  let portifolioImageList = [
-    "https://www.webnaveia.com.br/wp-content/uploads/2019/10/Como-Criar-um-Site-de-Empregos.png",
-    "https://lh3.googleusercontent.com/ho4N9JX2-O8IpBfs5lgVnzUagL1AXTpyG3QT-X3pSoOv0u35egobcOGbldO1LQWCrh6K0QN8BEUP8Y4TXTR1IafZBKlmCcervIDE=w960",
-    "https://img.ibxk.com.br/2015/06/29/29190710950506.jpg",
-  ];
 
   useEffect(() => {
     (async () => {
@@ -70,7 +66,7 @@ export default function Profile() {
       setAboutMe(data.about_me);
 
       if (portfolioImages.length > 0) {
-        setPortfolios(portfolioImages[0].userPortfolios);
+        setPortfolios(portfolioImages);
       }
 
       if (data.user_photo) {
@@ -83,16 +79,19 @@ export default function Profile() {
   }, []);
 
   // Update profile by sending a PUT request do backend API.
-  function updateProfile(): void {
+  async function updateProfile(): Promise<void> {
     const id: string = Authentication.checkUserSession("");
     const token: string = localStorage.getItem("token");
 
     // Update User Photo
-    const data = new FormData();
-    data.append("file", selectedFile);
+    if (selectedProfilePhoto) {
+      const profilePhoto = new FormData();
+      profilePhoto.append("file", selectedProfilePhoto);
 
-    Users.updateProfilePhoto(id, data, token);
-    Users.updateUser(
+      await Users.updateProfilePhoto(id, profilePhoto, token);
+    }
+
+    await Users.updateUser(
       id,
       name,
       email,
@@ -108,14 +107,48 @@ export default function Profile() {
     router.push("/profile", null, { shallow: false });
   }
 
+  async function uploadPortfolio(value): Promise<void> {
+    const id: string = Authentication.checkUserSession("");
+    const token: string = localStorage.getItem("token");
+
+    if (value) {
+      const portfolioImages = new FormData();
+      portfolioImages.append("file", value);
+
+      await Portfolios.uploadPortfolioImages(id, portfolioImages, token);
+    }
+
+    //router.push("/profile/edit", null, { shallow: false });
+    document.location.reload();
+  }
+
+  async function deletePortfolio(image_id: string): Promise<void> {
+    const id: string = Authentication.checkUserSession("");
+    const token: string = localStorage.getItem("token");
+
+    await Portfolios.deletePortfolioImages(id, image_id, token);
+
+    document.location.reload();
+  }
+
   function discardChanges(): void {
     history.back();
   }
 
-  function selectPhoto(): void {
-    var input = document.getElementById("photo-input") as HTMLInputElement;
+  function selectPhoto(elementInputId: string, elementOutputId: string): void {
+    var input = document.getElementById(elementInputId) as HTMLInputElement;
 
-    const fileName = document.getElementById("photo-output");
+    const fileName = document.getElementById(elementOutputId);
+    fileName.textContent = input.value.split("\\").reverse()[0];
+  }
+
+  function selectPortfolio(
+    elementInputId: string,
+    elementOutputId: string
+  ): void {
+    var input = document.getElementById(elementInputId) as HTMLInputElement;
+
+    const fileName = document.getElementById(elementOutputId);
     fileName.textContent = input.value.split("\\").reverse()[0];
   }
 
@@ -155,8 +188,8 @@ export default function Profile() {
                     id="photo-input"
                     className="photo-input"
                     onChange={(e) => {
-                      selectPhoto();
-                      setSelectedFile(e.target.files[0]);
+                      selectPhoto("photo-input", "photo-output");
+                      setSelectedProfilePhoto(e.target.files[0]);
                     }}
                   />
                   <span id="photo-output"></span>
@@ -172,8 +205,8 @@ export default function Profile() {
                     id="photo-input"
                     className="photo-input"
                     onChange={(e) => {
-                      selectPhoto();
-                      setSelectedFile(e.target.files[0]);
+                      selectPhoto("photo-input", "photo-output");
+                      setSelectedProfilePhoto(e.target.files[0]);
                     }}
                   />
                   <span id="photo-output"></span>
@@ -184,152 +217,194 @@ export default function Profile() {
 
           {/* all data to change */}
           <div className="data-container">
-            <h2>Basic informations</h2>
-            <div className="name-container divisions">
-              <span>Name</span>
-              <InputText
-                type="text"
-                placeholder={name}
-                defaultValue={name}
-                onChange={(e: { target: { value: string } }) =>
-                  setName(e.target.value)
-                }
-              />
-            </div>
+            <div className="text-container">
+              <div className="basic-informations">
+                <h2>Basic informations</h2>
+                <div className="name-container divisions">
+                  <span>Name</span>
+                  <InputText
+                    type="text"
+                    placeholder={name}
+                    defaultValue={name}
+                    onChange={(e: { target: { value: string } }) =>
+                      setName(e.target.value)
+                    }
+                  />
+                </div>
 
-            <div className="occupation-container divisions">
-              <span>Occupation</span>
-              <InputText
-                type="text"
-                placeholder={occupation}
-                defaultValue={occupation}
-                onChange={(e: { target: { value: string } }) =>
-                  setOccupation(e.target.value)
-                }
-              />
-            </div>
+                <div className="occupation-container divisions">
+                  <span>Occupation</span>
+                  <InputText
+                    type="text"
+                    placeholder={occupation}
+                    defaultValue={occupation}
+                    onChange={(e: { target: { value: string } }) =>
+                      setOccupation(e.target.value)
+                    }
+                  />
+                </div>
 
-            <div className="phone-container divisions">
-              <span>Phone</span>
-              <InputText
-                type="text"
-                placeholder={phone}
-                defaultValue={phone}
-                onChange={(e: { target: { value: string } }) =>
-                  setPhone(e.target.value)
-                }
-              />
-            </div>
+                <div className="phone-container divisions">
+                  <span>Phone</span>
+                  <InputText
+                    type="text"
+                    placeholder={phone}
+                    defaultValue={phone}
+                    onChange={(e: { target: { value: string } }) =>
+                      setPhone(e.target.value)
+                    }
+                  />
+                </div>
 
-            <div className="email-container divisions">
-              <span>E-mail</span>
-              <InputText type="text" value={email} disabled />
-            </div>
+                <div className="email-container divisions">
+                  <span>E-mail</span>
+                  <InputText type="text" value={email} disabled />
+                </div>
 
-            <div className="local-container">
-              <div className="country divisions">
-                <span>Country</span>
-                <SelectStyled
-                  id="country-select"
-                  onChange={onChangeSelectCountry}
-                >
-                  {countries.map(({ name }) =>
-                    name === country ? (
-                      <option key={name.toString()} value={name} selected>
-                        {name}
-                      </option>
-                    ) : (
-                      <option key={name.toString()} value={name}>
-                        {name}
-                      </option>
-                    )
-                  )}
-                </SelectStyled>
-              </div>
+                <div className="local-container">
+                  <div className="country divisions">
+                    <span>Country</span>
+                    <SelectStyled
+                      id="country-select"
+                      onChange={onChangeSelectCountry}
+                    >
+                      {countries.map(({ name }) =>
+                        name === country ? (
+                          <option key={name.toString()} value={name} selected>
+                            {name}
+                          </option>
+                        ) : (
+                          <option key={name.toString()} value={name}>
+                            {name}
+                          </option>
+                        )
+                      )}
+                    </SelectStyled>
+                  </div>
 
-              <div className="state divisions">
-                <span>State</span>
-                <SelectStyled
-                  id="state-select"
-                  default={state}
-                  onChange={onChangeSelectState}
-                >
-                  {hasSelectedCountry ? (
-                    countries[mapIndex].states.map(({ name }) =>
-                      name === state ? (
-                        <option key={name.toString()} value={name} selected>
-                          {name}
-                        </option>
+                  <div className="state divisions">
+                    <span>State</span>
+                    <SelectStyled
+                      id="state-select"
+                      default={state}
+                      onChange={onChangeSelectState}
+                    >
+                      {hasSelectedCountry ? (
+                        countries[mapIndex].states.map(({ name }) =>
+                          name === state ? (
+                            <option key={name.toString()} value={name} selected>
+                              {name}
+                            </option>
+                          ) : (
+                            <option key={name.toString()} value={name}>
+                              {name}
+                            </option>
+                          )
+                        )
                       ) : (
-                        <option key={name.toString()} value={name}>
-                          {name}
-                        </option>
-                      )
-                    )
-                  ) : (
-                    <option value={state}>{state}</option>
-                  )}
-                </SelectStyled>
+                        <option value={state}>{state}</option>
+                      )}
+                    </SelectStyled>
+                  </div>
+
+                  <div className="city divisions">
+                    <span>City</span>
+                    <InputText
+                      type="text"
+                      placeholder={city}
+                      defaultValue={city}
+                      onChange={(e: {
+                        target: { value: React.SetStateAction<string> };
+                      }) => setCity(e.target.value)}
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="city divisions">
-                <span>City</span>
-                <InputText
+              <div className="about-me">
+                <h2>About Me</h2>
+                <InputTextArea
                   type="text"
-                  placeholder={city}
-                  defaultValue={city}
-                  onChange={(e: {
-                    target: { value: React.SetStateAction<string> };
-                  }) => setCity(e.target.value)}
+                  className="text-area divisions"
+                  placeholder={about_me}
+                  defaultValue={about_me}
+                  onChange={(e: { target: { value: string } }) =>
+                    setAboutMe(e.target.value)
+                  }
                 />
               </div>
-            </div>
-
-            <div className="about-me">
-              <h2>About Me</h2>
-              <InputTextArea
-                type="text"
-                className="text-area divisions"
-                placeholder={about_me}
-                defaultValue={about_me}
-                onChange={(e: { target: { value: string } }) =>
-                  setAboutMe(e.target.value)
-                }
-              />
+              <div className="buttons divisions">
+                <ButtonsStyled className="discart" onClick={discardChanges}>
+                  Cancel
+                </ButtonsStyled>
+                <ButtonsStyled className="save" onClick={updateProfile}>
+                  Save
+                </ButtonsStyled>
+              </div>
             </div>
             <div className="portifolio">
               <h2>Portfolio</h2>
-              <div className="input-photo-container">
-                <label htmlFor="photo-input">Upload Portfolio</label>
-                <input
-                  type="file"
-                  id="photo-input"
-                  className="photo-input"
-                  onChange={(e) => {
-                    selectPhoto();
-                    setSelectedFile(e.target.files[0]);
-                  }}
-                />
-                <span id="photo-output"></span>
-              </div>
-              <div className="portifolio-container">
+              <div className="portfolio-container" id="portfolio-container">
                 {portfolios.map((portfolio) => (
-                  <img
-                    className="portfolio-image"
-                    src={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
-                    alt={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
-                  />
+                  <div className="portfolio-map" key={portfolio.id}>
+                    <div
+                      className="portfolio-image"
+                      style={{
+                        backgroundImage: `url(${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio.id})`,
+                      }}
+                    ></div>
+                    <div className="portfolio-input-container">
+                      <input
+                        type="text"
+                        className={`portfolio-description`}
+                        id={`span-${portfolio.id}`}
+                        placeholder={portfolio.id}
+                      />
+                      <label
+                        htmlFor={`portfolio-input-${portfolio.id}`}
+                        className={`portfolio-edit label-${portfolio.id}`}
+                      >
+                        Edit
+                      </label>
+                      <input
+                        type="file"
+                        id={`portfolio-input-${portfolio.id}`}
+                        className={`portfolio-input input-${portfolio.id}`}
+                        onChange={(e) => {
+                          // aqui deve ser adicionado o código para atualizar ou remover e atualizar em seguida a imagem do portfólio
+                          //selectPortfolio(`portfolio-input-${portfolio._id}`, `span-${portfolio._id}`);
+                          //setSelectedPortfolioPhoto(e.target.files[0]);
+                          console.log("Edita imagem");
+                        }}
+                      />
+                      <span
+                        className="portfolio-remove"
+                        onClick={() => {
+                          deletePortfolio(portfolio.id);
+                        }}
+                      >
+                        Remove
+                      </span>
+                    </div>
+                  </div>
                 ))}
               </div>
-            </div>
-
-            <div className="buttons  divisions">
-              <ButtonsStyled className="discart" onClick={discardChanges}>
-                Cancel
-              </ButtonsStyled>
-              <ButtonsStyled className="save" onClick={updateProfile}>
-                Save
-              </ButtonsStyled>
+              <div className="add-portfolio">
+                <label
+                  htmlFor="add-portfolio-input"
+                  className="add-portfolio-button"
+                >
+                  Insert
+                </label>
+                <input
+                  type="file"
+                  id="add-portfolio-input"
+                  className="portfolio-input"
+                  onChange={(e) => {
+                    uploadPortfolio(e.target.files[0]);
+                  }}
+                />
+              </div>
             </div>
           </div>
         </MainSection>

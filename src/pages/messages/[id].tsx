@@ -20,8 +20,8 @@ interface IMessage {
   chat_id: string;
   sender_id: string;
   content: string;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({
@@ -50,13 +50,12 @@ export default function MessagesDetails({ id }) {
     const token: string = localStorage.getItem("token");
     const authenticatedID: string = Authentication.checkUserSession("");
     setMyId(authenticatedID);
-
     getUserName();
 
     const intervalId = setInterval(() => {
       setState((state) => ({ data: state.data, error: false, loading: true }));
       api
-        .get(`/api/chat/messages/${id}`, {
+        .get(`/api/chats/messages/${id}`, {
           headers: {
             authorization: token,
           },
@@ -78,23 +77,38 @@ export default function MessagesDetails({ id }) {
 
   async function getUserName(): Promise<void> {
     const token: string = localStorage.getItem("token");
-    const data = await Chats.getChatByID(id, token, myId);
+    const data = await Chats.getChatByID(id, token);
+    const userId = data.sender_id === myId ? data.receiver_id : data.sender_id;
 
-    if (data.sender_id === myId) {
-      setUserID(data.receiver_id);
-    } else {
-      setUserID(data.sender_id);
-    }
+    setUserID(userId);
 
-    const user = await Users.getUserByID(userID);
+    const user = await Users.getUserByID(userId);
     setUserName(user.name);
   }
 
   async function sendMessage(): Promise<void> {
-    const token: string = localStorage.getItem("token");
-    await Chats.sendMessage(id, myId, newMessage, token);
-    setNewMessage("");
+    if (newMessage.replaceAll(" ", "") !== "") {
+      const token: string = localStorage.getItem("token");
+      await Chats.sendMessage(id, myId, newMessage, token);
+      setNewMessage("");
+    } else {
+      setNewMessage("");
+      console.log("Blank message to send!");
+    }
   }
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      console.log("Enter key pressed!");
+      sendMessage();
+      handleLastMessage();
+    }
+  };
+
+  const handleLastMessage = () => {
+    var heightPage = document.body.scrollHeight;
+    window.scrollTo(0, heightPage);
+  };
 
   function redirectToUserProfile(userId: string): void {
     if (myId === userId) {
@@ -109,10 +123,18 @@ export default function MessagesDetails({ id }) {
       <HeaderPage />
       <MainContainer>
         <UserName onClick={() => redirectToUserProfile(userID)}>
-          <img
-            src={`${process.env.BACKEND_API}/api/users/${userID}/profile-image`}
-            alt={userID}
-          />
+          <div
+            style={{
+              backgroundImage: `url(${process.env.BACKEND_API}/api/users/${userID}/profile-image)`,
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              width: "3rem",
+              height: "3rem",
+              borderRadius: "100%",
+              marginRight: "1rem",
+            }}
+          ></div>
           <p>{userName}</p>
         </UserName>
         <MessagesContainer>
@@ -121,14 +143,14 @@ export default function MessagesDetails({ id }) {
               <div key={message.id} className="iam-sender">
                 <p className="message">{message.content}</p>
                 <p className="message-date">
-                  {FormatDate.calculateDate(message.createdAt)}
+                  {FormatDate.calculateDate(message.created_at)}
                 </p>
               </div>
             ) : (
               <div key={message.id} className="iamnot-sender">
                 <p className="message">{message.content}</p>
                 <p className="message-date">
-                  {FormatDate.calculateDate(message.createdAt)}
+                  {FormatDate.calculateDate(message.created_at)}
                 </p>
               </div>
             )
@@ -137,11 +159,17 @@ export default function MessagesDetails({ id }) {
         <NewMessagesContainer>
           <input
             className="message-input"
+            id="message-input"
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
-          <button className="send-button" onClick={sendMessage}>
+          <button
+            className="send-button"
+            id="send-button"
+            onClick={sendMessage}
+          >
             Send
           </button>
         </NewMessagesContainer>

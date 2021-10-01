@@ -1,4 +1,3 @@
-import api from "../../api/baseURL";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Authentication } from "../../api/authentication";
@@ -42,6 +41,7 @@ export default function Profile() {
     about_me: "",
     user_photo: "",
   });
+  const [workdDone, setWorkdDone] = useState(0);
   const [portfolios, setPortfolios] = useState([]);
 
   const hasNoPhoto = "/icons/user-icon.png";
@@ -58,14 +58,16 @@ export default function Profile() {
     (async () => {
       const id: string = Authentication.checkUserSession("");
       const data = await Users.getUserByID(id);
+      const completedServices = await Users.getUserCompletedServices(id);
       const portfolioImages = await Portfolios.getUserPortfolios(id);
 
       setMyId(id);
       setHasPhoto(false);
       setUser(data);
+      setWorkdDone(completedServices);
 
       if (portfolioImages.length > 0) {
-        setPortfolios(portfolioImages[0].userPortfolios);
+        setPortfolios(portfolioImages);
       }
 
       if (data.user_photo) {
@@ -76,6 +78,20 @@ export default function Profile() {
       }
     })();
   }, []);
+
+  const setImageDescription = (alt) => {
+    var my_p = document.getElementById(
+      "image-description"
+    ) as HTMLParagraphElement;
+    return (my_p.innerHTML = alt);
+  };
+
+  const cleanImageDescription = (alt) => {
+    var my_p = document.getElementById(
+      "image-description"
+    ) as HTMLParagraphElement;
+    return (my_p.innerHTML = "");
+  };
 
   return (
     <BodyStyled>
@@ -101,13 +117,8 @@ export default function Profile() {
           <PersonalInfo>
             <div>
               <p>
-                <strong>Works Done:</strong>{" "}
-              </p>
-              <p>
-                <strong>Works Done in Time:</strong>{" "}
-              </p>
-              <p>
-                <strong>Works Done Within Budget:</strong>{" "}
+                <strong>Works Done: </strong>
+                {workdDone}
               </p>
             </div>
             <div>
@@ -131,13 +142,17 @@ export default function Profile() {
 
           <Portfolio>
             <h2>Portfolio</h2>
-            <div>
+            <div className="horizontal-bar">
               {portfolios.map((portfolio) => (
-                <img
-                  className="portfolio-image"
-                  src={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
-                  alt={`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio._id}`}
-                />
+                <div key={portfolio.id} className="portfolio-container">
+                  <div
+                    className="portfolio-image"
+                    style={{
+                      backgroundImage: `url(${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio.id})`,
+                    }}
+                  ></div>
+                  <p className="image-description">{`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio.id}`}</p>
+                </div>
               ))}
             </div>
           </Portfolio>

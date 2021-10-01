@@ -12,7 +12,7 @@ export class Portfolios {
 
   static async uploadPortfolioImages(
     id: string,
-    files: Array<FormData>,
+    files: FormData,
     token: string
   ) {
     try {
@@ -23,6 +23,22 @@ export class Portfolios {
       });
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  static async deletePortfolioImages(
+    id: string,
+    image_id: string,
+    token: string
+  ) {
+    try {
+      await api.delete(`/api/users/${id}/portfolios/${image_id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
+    } catch (error) {
+      console.log(error.message);
     }
   }
 }

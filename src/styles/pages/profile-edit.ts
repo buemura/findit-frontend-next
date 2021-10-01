@@ -78,66 +78,22 @@ export const MainSection = styled.div`
     max-width: 15rem;
   }
 
-  .data-container {
-    padding: 40px 0 10px 0;
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-  }
 
-  .data-container a {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    transform: translateY(10px);
-    padding: 1rem;
-    text-decoration: none;
-    font-size: 0.8rem;
 
-    img {
-      width: 0.8rem;
-      margin-right: 10px;
-    }
-  }
 
-  .data-container h1,
-  .data-container h3 {
-    text-align: left;
-    margin: 7px 0;
-  }
 
-  .data-container h1 {
-    font-size: 2rem;
-  }
 
-  .data-container h3 {
-    font-size: 1.2rem;
-    font-weight: normal;
-  }
 
-  .portifolio-container {
-    display: flex;
-    background: #e4e4e4;
-    border-radius: 5px;
-    flex-direction: row;
-    justify-content: left;
-    align-items: center;
-  }
-  .portifolio-container .portifolio-image {
-    width: 8rem;
-    height: 5rem;
-    margin: 0.3rem 0.5rem;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
+
+
+
 
   .portfolio-image {
     height: 8rem;
     width: 8rem;
     border-radius: 10px;
     margin: 5px;
-
+    
     &:hover {
       cursor: pointer;
     }
@@ -179,21 +135,8 @@ export const MainSection = styled.div`
     }
   }
 
-  .portifolio {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-
-    a {
-      position: absolute;
-      right: 0;
-      top: 20px;
-      height: fit-content;
-    }
-  }
-
   .buttons {
-    margin: 2rem 0 5rem 0;
+    margin: 2rem 0 0 0;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -216,6 +159,192 @@ export const MainSection = styled.div`
       border: 1px #bf323d solid;
       color: #bf323d;
     }
+  }
+
+
+
+
+
+
+
+
+
+
+
+  .data-container {
+    padding: 40px 0 10px 0;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+
+    .text-container {
+      padding: .5rem;
+      border: 1px #d7d7d7 solid;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+
+      .basic-informations {
+        margin-bottom: 2rem;
+      }
+
+      h2 {        
+        margin: .3rem 0 1.3rem 0;
+      }
+
+      a {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        transform: translateY(10px);
+        padding: 1rem;
+        text-decoration: none;
+        font-size: 0.8rem;
+
+        img {
+          width: 0.8rem;
+          margin-right: 10px;
+        }
+      }
+
+      h3 {
+        text-align: left;
+        margin: 7px 0;
+        font-size: 1.2rem;
+        font-weight: normal;
+      }
+
+      h1 {
+        font-size: 2rem;
+        text-align: left;
+        margin: 7px 0;
+      }
+    }
+  }
+  
+  
+
+  .portifolio {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: relative;
+    margin-bottom: 5rem;
+    padding: .5rem;
+    border: 1px #d7d7d7 solid;
+    border-radius: 5px;
+
+    a {
+      position: absolute;
+      right: 0;
+      top: 20px;
+      height: fit-content;
+    }
+
+    h2 {
+      width: 100%;
+      margin: .3rem 0 1.3rem 0;
+    }
+
+    .portfolio-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      .portfolio-map {
+        display: flex;
+        margin: .3rem 0 0 0;
+
+
+        .portfolio-image {
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center;
+          margin: 0;
+          padding: 0;
+          border-radius: .1rem 0 0 .1rem;
+          height: 3rem;
+          cursor: default;
+        }
+
+        .portfolio-input-container {
+          display: flex;
+          flex: 1;
+          align-items: center;
+          justify-content: space-between;
+
+          .portfolio-description {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 1.2rem 0 1.2rem;
+            background: #EEEEEE;
+            outline: none;
+            border: none;
+          }
+
+          .portfolio-edit {
+            display: flex;
+            width: 7rem;
+            height: 100%;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            margin: 0;
+            border-radius: 0 .1rem .1rem 0;
+            background: #4169E1;
+
+            &:hover {
+              background: #3a5dc4;
+            }
+          }
+
+          .portfolio-remove {
+            display: flex;
+            width: 7rem;
+            height: 100%;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            margin: 0;
+            border-radius: 0 .1rem .1rem 0;
+            background: #D43844;
+            color: #fff;
+            cursor: pointer;
+
+            &:hover {
+              background: #cc3741;
+            }
+          }
+
+          .portfolio-input {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            border-radius: 0;
+          } 
+        } 
+      } 
+    }
+    
+    .add-portfolio {
+      .add-portfolio-button {
+        margin: .3rem 0 0 0;
+        display: flex;
+        color: #fff;
+        background: #1FB852;
+        width: 7rem;
+        height: 3rem;
+        border-radius: .1rem;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;      
+
+        &:hover {
+          background: #18a045;
+        }
+      }
+    }        
   }
 
   @media (max-width: 950px) {
@@ -278,4 +407,8 @@ export const ButtonsStyled = styled.button`
   outline: none;
   border: none;
   margin: 0 0.5rem;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

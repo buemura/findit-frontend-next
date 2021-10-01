@@ -50,6 +50,7 @@ export default function UsersProfile({ id }) {
     about_me: "",
     user_photo: "",
   });
+  const [workdDone, setWorkdDone] = useState(0);
   const [portfolios, setPortfolios] = useState([]);
 
   const hasNoPhoto = "/icons/user-icon.png";
@@ -66,17 +67,19 @@ export default function UsersProfile({ id }) {
     (async () => {
       const myID = Authentication.checkUserSession("");
       const data = await Users.getUserByID(id);
+      const completedServices = await Users.getUserCompletedServices(id);
       const portfolioImages = await Portfolios.getUserPortfolios(id);
 
       setUser(data);
       setMyId(myID);
+      setWorkdDone(completedServices);
 
       if (myID === id) {
         router.push("/profile");
       }
 
       if (portfolioImages.length > 0) {
-        setPortfolios(portfolioImages[0].userPortfolios);
+        setPortfolios(portfolioImages);
       }
 
       if (data.user_photo) {
@@ -88,10 +91,9 @@ export default function UsersProfile({ id }) {
     })();
   }, []);
 
-  function sendMessage(): void {
+  async function sendMessage(): Promise<void> {
     const token = localStorage.getItem("token");
-
-    Chats.createChatRoom(myId, id, token);
+    await Chats.createChatRoom(myId, id, token);
   }
 
   return (
@@ -114,13 +116,8 @@ export default function UsersProfile({ id }) {
           <PersonalInfo>
             <div>
               <p>
-                <strong>Works Done:</strong>{" "}
-              </p>
-              <p>
-                <strong>Works Done in Time:</strong>{" "}
-              </p>
-              <p>
-                <strong>Works Done Within Budget:</strong>{" "}
+                <strong>Works Done: </strong>
+                {workdDone}
               </p>
             </div>
             <div>
@@ -148,8 +145,8 @@ export default function UsersProfile({ id }) {
               {portfolios.map((portfolio) => (
                 <img
                   className="portfolio-image"
-                  src={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio._id}`}
-                  alt={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio._id}`}
+                  src={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio.id}`}
+                  alt={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio.id}`}
                 />
               ))}
             </div>

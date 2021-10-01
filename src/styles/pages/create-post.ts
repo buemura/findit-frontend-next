@@ -3,14 +3,14 @@ import styled from "styled-components";
 export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   margin: 60px 0 0 0;
   padding: 40px 0 10px 0;
   width: 100%;
   min-height: calc(100vh - 60px);
   overflow-x: hidden;
-  background-color: #fff;  
+  background-color: #fff;
 
   .container {
     width: 80%;
@@ -18,10 +18,10 @@ export const MainContainer = styled.div`
     flex-direction: row;
     justify-content: left;
     align-items: center;
-    padding: 0 0 .3rem 0;
+    padding: 0 0 0.3rem 0;
     height: 2.3rem;
 
-    span {      
+    span {
       width: 8rem;
       height: 100%;
       display: flex;
@@ -37,13 +37,17 @@ export const MainContainer = styled.div`
       outline: none;
       background: #eee;
       border: none;
-      padding-left: .5rem;      
+      padding-left: 0.5rem;
+    }
+
+    select {
+      cursor: pointer;
     }
 
     textarea {
       flex: 1;
       min-height: 5rem !important;
-      padding: .5rem !important;
+      padding: 0.5rem !important;
       line-break: auto;
       border-radius: 5px;
       outline: none;
@@ -58,7 +62,6 @@ export const MainContainer = styled.div`
   }
 
   .location {
-
     div {
       flex: 1;
       height: 100%;
@@ -66,32 +69,17 @@ export const MainContainer = styled.div`
 
       input,
       select {
-        margin-right: .5rem;
+        margin-right: 0.5rem;
+      }
+
+      select {
+        &:hover {
+          cursor: pointer;
+        }
       }
 
       input:last-child {
         margin-right: 0;
-      }
-
-    }
-  }
-
-  @media (max-width: 850px) {
-    .location {
-      height: 6.9rem;
-
-      div {
-        flex-direction: column;
-        padding: 0 0 .3rem 0;
-
-        input,
-        select {
-          margin: 0 0 .3rem 0;
-        }
-
-        &:last-child {
-          margin: 0;
-        }
       }
     }
   }
@@ -111,33 +99,56 @@ export const MainContainer = styled.div`
       height: 2.3rem;
       width: 10rem;
       text-transform: uppercase;
-      letter-spacing: .1rem;
+      letter-spacing: 0.1rem;
       font-weight: bold;
-      font-size: .9rem;
+      font-size: 0.9rem;
       border-radius: 5px;
       outline: none;
       border: none;
-      margin: 0 .5rem;
+      margin: 0 0.5rem;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
 
     .save {
-      border: 1px #23CF5C solid;
-      background: #23CF5C;
+      border: 1px #23cf5c solid;
+      background: #23cf5c;
       color: #fff;
       &:hover {
         background: #1fb852;
       }
     }
     .discart {
-      border: 1px #D43844 solid;
+      border: 1px #d43844 solid;
       background: transparent;
-      color: #D43844;
+      color: #d43844;
       &:hover {
         background: #f0f0f0;
         border: 1px #bf323d solid;
         color: #bf323d;
       }
-    }  
+    }
+  }
+
+  @media (max-width: 850px) {
+    .location {
+      height: 6.9rem;
+
+      div {
+        flex-direction: column;
+        padding: 0 0 0.3rem 0;
+
+        input,
+        select {
+          margin: 0 0 0.3rem 0;
+        }
+
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
   }
 `;
-

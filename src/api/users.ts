@@ -31,6 +31,26 @@ export class Users {
     }
   }
 
+  static async getUserProfilePhoto(id: string) {
+    try {
+      const { data } = await api.get(`/api/users/${id}/profile-image`);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async getUserCompletedServices(id: string) {
+    try {
+      const { data } = await api.get(
+        `/api/services/user/${id}/completed-services/count`
+      );
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   static async updateUser(
     id: string,
     name: string,

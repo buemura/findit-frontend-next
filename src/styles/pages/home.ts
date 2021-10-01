@@ -32,6 +32,9 @@ export const CategoryList = styled.ul`
     background: #c4c4c4;
     border-radius: 10px;
   }
+  @media (max-width: 1490px) {
+    justify-content: flex-start;
+  }
   @media (max-width: 1250px) {
     justify-content: flex-start;
   }

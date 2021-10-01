@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   margin: 60px 0 0 0;
   padding: 0;
@@ -66,6 +66,22 @@ export const MainSection = styled.div`
   .title {
     padding: 40px 0 10px 0;
     color: #eee;
+
+    button {
+      background: #4169E1;
+      color: #fff;
+      padding: .7rem 2rem;
+      margin-top: 1rem;
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: .2s;
+
+      &:hover {
+        background: #2e56d1;
+      }
+    }
   }
 
   .title a {
@@ -137,42 +153,101 @@ export const Portfolio = styled.div`
   width: 60%;
   border-bottom: 1px solid #aaa;
   padding-bottom: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 80px;
+  
+
   h2 {
     margin: 15px;
   }
-  div {
+  
+  .horizontal-bar {
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
-    margin: 0 10px 0 10px;
-
-    .div-img-portifolio {
-      height: 80px;
-      width: 80px;
-      background-position: center;
-      background-size: cover;
+    justify-content: flex-start;
+    overflow-x: auto;
+    
+    ::-webkit-scrollbar {
+      width: 0;
+      height: 10px;
+      background: #f5f5f5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #c4c4c4;
+      border-radius: 10px;
     }
 
-    .div-img-portifolio.d01 {
-      background-image: url("assets/linux.jpg");
-    }
-    .div-img-portifolio.d02 {
-      background-image: url("assets/unix.jpg");
-    }
-  }
+    .portfolio-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin: 0 10px 0 10px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
 
-  .portfolio-image {
-    height: 8rem;
-    width: 8rem;
-    border-radius: 10px;
-    margin: 5px;
-    transition: 0.2s;
+      .div-img-portifolio {
+        height: 80px;
+        width: 80px;
+        background-position: center;
+        background-size: cover;
+      }
 
-    &:hover {
-      transform: scale(1.1);
-      cursor: pointer;
-    }
+      .div-img-portifolio.d01 {
+        background-image: url("assets/linux.jpg");
+      }
+      .div-img-portifolio.d02 {
+        background-image: url("assets/unix.jpg");
+      }
+
+      .image-description {
+        display: none;
+        transition: .2s;
+        position: absolute;
+        text-align: center;
+        background: #232329;
+        transform: scale(.1);
+        padding: 1rem;
+        margin: 0;
+        color: #fff;
+        border-radius: 5px;
+      }
+
+      .portfolio-image {
+        height: 8rem;
+        width: 8rem;
+        border-radius: 10px;
+        margin: 5px;
+        transition: 0.2s;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+
+        &:hover {
+          transform: scale(1.05);
+          cursor: pointer;
+        }
+      }
+
+      &:hover .image-description {
+        z-index: 9999999;
+        display: flex;
+        animation-name: anm1;
+        animation-duration: .6s;
+        animation-iteration-count: ease-out;
+        transform: scale(1) translateY(0%);
+      }
+
+      @keyframes anm1 {
+        0% {
+        transform: scale(0) translateY(0%);
+        }
+        100% {
+        transform: scale(1) translateY(0%);
+        }
+      }
+    }  
   }
 `;

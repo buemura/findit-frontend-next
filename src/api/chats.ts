@@ -16,14 +16,15 @@ interface IChatRooms {
 }
 
 export class Chats {
-  static async getChatByID(id: string, token: string, myId: string) {
+  static async getChatByID(id: string, token: string) {
     try {
-      const { data } = await api.get(`/api/chatsById/${id}`, {
+      const { data } = await api.get(`/api/chats/chatsById/${id}`, {
         headers: {
           authorization: token,
         },
       });
-      return data[0];
+
+      return data;
     } catch (error) {
       console.log(error);
     }
@@ -31,7 +32,7 @@ export class Chats {
 
   static async getChatByUserID(id: string, token: string) {
     try {
-      const { data } = await api.get(`/api/chatsByUser/${id}`, {
+      const { data } = await api.get(`/api/chats/chatsByUser/${id}`, {
         headers: {
           authorization: token,
         },
@@ -44,7 +45,7 @@ export class Chats {
 
   static async getChatMessages(id: string, token: string) {
     try {
-      const { data } = await api.get(`/api/chat/messages/${id}`, {
+      const { data } = await api.get(`/api/chats/messages/${id}`, {
         headers: {
           authorization: token,
         },
@@ -62,7 +63,7 @@ export class Chats {
   ): Promise<void> {
     try {
       const { data } = await api.post(
-        `/api/chat/create-chat`,
+        `/api/chats/create-chat`,
         {
           sender_id: myId,
           receiver_id: id,
@@ -73,6 +74,8 @@ export class Chats {
           },
         }
       );
+
+      console.log(data);
 
       router.push(`/messages/${data.chat_id}`);
     } catch (error) {
@@ -88,7 +91,7 @@ export class Chats {
   ) {
     try {
       await api.post(
-        `/api/chat/send-message/${id}`,
+        `/api/chats/send-message/${id}`,
         {
           sender_id,
           content,

@@ -1,4 +1,3 @@
-import api from "../api/baseURL";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { HeaderPage } from "../components/HeaderPage";
@@ -13,6 +12,7 @@ import { Authentication } from "../api/authentication";
 import { Users } from "../api/users";
 import { Services } from "../api/services";
 import { Categories } from "../api/categories";
+import router from "next/router";
 
 export default function HomePage() {
   const [usersQuantity, setUsersQuantity] = useState<number>(0);
@@ -38,6 +38,10 @@ export default function HomePage() {
     return category.replace(/ /g, "-").replace("&", "e").toLowerCase();
   }
 
+  function redirectToPosts(category: string) {
+    router.push(`/posts?Category=${category.replaceAll("&", "e")}`);
+  }
+
   return (
     <BodyStyled>
       <HeaderPage />
@@ -45,10 +49,13 @@ export default function HomePage() {
         <CategoryList>
           {categories.length > 0 ? (
             categories.map((c) => (
-              <ListItem key={c._id}>
+              <ListItem key={c.category}>
                 <img
                   src={`/icons/categories/${formatImageName(c.category)}.png`}
                   alt={c.category}
+                  onClick={() => {
+                    redirectToPosts(c.category);
+                  }}
                 />
                 <p>{c.category}</p>
               </ListItem>

@@ -38,8 +38,9 @@ interface ServiceType {
   city: string;
   state: string;
   country: string;
-  createdAt: string;
-  User?: UserType;
+  created_at: string;
+  updated_at: string;
+  user?: UserType;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({
@@ -65,8 +66,9 @@ export default function PostDetails({ id }) {
     city: "",
     state: "",
     country: "",
-    createdAt: "",
-    User: {
+    created_at: "",
+    updated_at: "",
+    user: {
       id: "",
       name: "",
       email: "",
@@ -78,9 +80,9 @@ export default function PostDetails({ id }) {
       occupation: "",
       about_me: "",
       email_verified: "",
-      createdAt: "",
-      updatedAt: "",
-      deletedAt: "",
+      created_at: "",
+      updated_at: "",
+      deleted_at: "",
     },
   });
   const [comment, setComment] = useState<string>("");
@@ -142,16 +144,16 @@ export default function PostDetails({ id }) {
             <p>
               <strong
                 onClick={() => {
-                  redirectToUserProfile(post.User.id);
+                  redirectToUserProfile(post.user.id);
                 }}
               >
                 Posted by:{" "}
               </strong>
-              {post.User.name}
+              {post.user.name}
             </p>
           </div>
           <div>
-            <p>{FormatDate.calculateDate(post.createdAt)}</p>
+            <p>{FormatDate.calculateDate(post.created_at)}</p>
           </div>
         </Post>
         <PostComments>
@@ -168,22 +170,24 @@ export default function PostDetails({ id }) {
         {postedComments.map((com) => (
           <CommentsContainer
             key={com.id}
-            onClick={() => redirectToUserProfile(com.User.id)}
+            onClick={() => redirectToUserProfile(com.user.id)}
           >
             {/* <img
-              src={`${process.env.BACKEND_API}/api/users/${com.User.id}/profile-image`}
+              src={`${process.env.BACKEND_API}/api/users/${com.user.id}/profile-image`}
               alt=""
             /> */}
-            <div className="image" 
-              style={
-                {
-                  backgroundImage: "url(" + `${process.env.BACKEND_API}/api/users/${com.User.id}/profile-image` + ")",
-                }
-              }>
-            </div>
+            <div
+              className="image"
+              style={{
+                backgroundImage:
+                  "url(" +
+                  `${process.env.BACKEND_API}/api/users/${com.user.id}/profile-image` +
+                  ")",
+              }}
+            ></div>
             <div className="container--values">
               <div className="data">
-                <h3>{com.User.name}</h3>
+                <h3>{com.user.name}</h3>
                 <p>{com.comment}</p>
               </div>
               <div className="date">

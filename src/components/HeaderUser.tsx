@@ -2,11 +2,30 @@ import { Container, Header } from "../styles/components/HeaderUser";
 import Switch from "./Switch";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { CSSTransition } from "react-transition-group";
 import { Authentication } from "../api/authentication";
+import { Users } from "../api/users";
 
 export function HeaderUser() {
   const [hasNotification, setHasNotification] = useState<number>(0);
+  const [hasSelected, setHasSelected] = useState<boolean>(false);
+  const [profilePhoto, setProfilePhoto] = useState<string>("");
+
+  useEffect(() => {
+    (async () => {
+      const id: string = Authentication.checkUserSession("");
+      const data = await Users.getUserProfilePhoto(id);
+
+      if (data.hasPhoto === false || data.hasPhoto !== undefined) {
+        setProfilePhoto("/icons/user-icon.png");
+        return;
+      }
+      setProfilePhoto(
+        `${process.env.BACKEND_API}/api/users/${id}/profile-image`
+      );
+    })();
+  }, []);
 
   return (
     <Container>
@@ -61,15 +80,42 @@ export function HeaderUser() {
                   </div>
                 </a>
               </Link>
-              <a
+
+              <div
                 className="profile"
-                onClick={() => Authentication.checkUserSession("profile")}
+                onClick={() => {
+                  setHasSelected(!hasSelected);
+                  console.log(hasSelected);
+                }}
+                style={{
+                  backgroundImage: `url(${profilePhoto})`,
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                  height: "3rem",
+                  width: "3rem",
+                  borderRadius: "100%",
+                }}
+              ></div>
+              <CSSTransition
+                in={hasSelected === true}
+                timeout={10}
+                unmountOnExit
               >
-                Profile
-              </a>
-              <a className="user-logout" onClick={Authentication.logOut}>
-                Logout
-              </a>
+                <div className="menu-open">
+                  <ul>
+                    <a href="/profile">
+                      <li>My Profile</li>
+                    </a>
+                    <a href="/posts/my-posts">
+                      <li>My Services</li>
+                    </a>
+                    <a href="" onClick={Authentication.logOut}>
+                      <li>Logout</li>
+                    </a>
+                  </ul>
+                </div>
+              </CSSTransition>
             </div>
           </div>
 

@@ -19,8 +19,8 @@ interface IChatRooms {
   id: string;
   sender_id: string;
   receiver_id: string;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
   userInfo: IUserInfo;
 }
 
@@ -34,12 +34,14 @@ export default function Messages() {
     setMyId(id);
 
     api
-      .get(`/api/chatsByUser/${id}`, {
+      .get(`/api/chats/chatsByUser/${id}`, {
         headers: {
           authorization: token,
         },
       })
       .then(({ data }) => {
+        console.log(data);
+
         setChatRoom(data);
       })
       .catch((err) => {
@@ -51,7 +53,7 @@ export default function Messages() {
     const token: string = localStorage.getItem("token");
     let message: string = "Last Message";
     api
-      .get(`/api/chat/messages/${chatId}`, {
+      .get(`/api/chats/messages/${chatId}`, {
         headers: {
           authorization: token,
         },
@@ -80,10 +82,18 @@ export default function Messages() {
               key={chat.id}
               onClick={() => redirectToConversation(chat.id)}
             >
-              <img
-                src={`${process.env.BACKEND_API}/api/users/${chat.userInfo.id}/profile-image`}
-                alt={chat.userInfo.id}
-              />
+              <div
+                style={{
+                  backgroundImage: `url(${process.env.BACKEND_API}/api/users/${chat.userInfo.id}/profile-image)`,
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                  width: "6rem",
+                  height: "6rem",
+                  borderRadius: "100%",
+                  marginRight: "2rem",
+                }}
+              ></div>
               <div>
                 <h2>{chat.userInfo.name}</h2>
                 <p>{lastMessage(chat.id)}</p>

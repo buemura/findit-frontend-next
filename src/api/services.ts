@@ -2,6 +2,7 @@ import api from "./baseURL";
 
 export class Services {
   static async getServices(
+    title?: string,
     category?: string,
     city?: string,
     state?: string,
@@ -9,7 +10,7 @@ export class Services {
   ) {
     try {
       const { data } = await api.get(
-        `/api/services?category=${category}&city=${city}&state=${state}&country=${country}`
+        `/api/services?title=${title}&category=${category}&city=${city}&state=${state}&country=${country}`
       );
       return data;
     } catch (error) {
@@ -20,6 +21,15 @@ export class Services {
   static async getServiceByID(id: string) {
     try {
       const { data } = await api.get(`/api/services/${id}`);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async getServiceByUserID(id: string) {
+    try {
+      const { data } = await api.get(`/api/services/user/${id}`);
       return data;
     } catch (error) {
       console.log(error);
@@ -69,6 +79,79 @@ export class Services {
     } catch (error) {
       console.log(error);
       return false;
+    }
+  }
+
+  static async updateService(
+    id: string,
+    title: string,
+    category: string,
+    description: string,
+    price: string,
+    city: string,
+    state: string,
+    country: string,
+    token: string
+  ): Promise<Boolean> {
+    try {
+      await api.put(
+        `/api/services/${id}`,
+        {
+          title,
+          category,
+          description,
+          price,
+          city,
+          state,
+          country,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  static async completeService(
+    user_id: string,
+    service_id: string,
+    token: string
+  ): Promise<Boolean> {
+    try {
+      await api.post(
+        "/api/services/complete",
+        {
+          user_id,
+          service_id,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  static async deleteService(id: string, token: string) {
+    try {
+      await api.delete(`/api/services/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
+    } catch (error) {
+      console.log(error);
     }
   }
 }

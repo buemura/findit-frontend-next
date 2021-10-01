@@ -20,6 +20,7 @@ export class Comments {
       await api.post(
         `/api/comments/post-comment/${id}`,
         {
+          service_id: id,
           sender_id,
           comment,
         },
@@ -29,6 +30,18 @@ export class Comments {
           },
         }
       );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async deleteComment(id: string, token: string) {
+    try {
+      await api.delete(`/api/comments/delete-comment/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
     } catch (error) {
       console.log(error);
     }

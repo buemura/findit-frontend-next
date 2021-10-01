@@ -1,17 +1,58 @@
 import React, { useEffect, useState } from "react";
-import { HeaderPage } from "../../components/HeaderPage";
-import { BodyStyled } from "../../styles/components/middleSection";
-import { MainContainer } from "../../styles/pages/create-post";
-import { Modal } from "../../components/modal";
+import { HeaderPage } from "../../../components/HeaderPage";
+import { BodyStyled } from "../../../styles/components/middleSection";
+import { MainContainer } from "../../../styles/pages/create-post";
+import { Modal } from "../../../components/modal";
 
-import { Authentication } from "../../api/authentication";
-import countries from "../../utils/countries.json";
+import { Authentication } from "../../../api/authentication";
+import countries from "../../../utils/countries.json";
 import { useRouter } from "next/router";
-import { InputText, SelectStyled } from "../../styles/pages/profile-edit";
-import { Services } from "../../api/services";
-import { Categories } from "../../api/categories";
+import { InputText, SelectStyled } from "../../../styles/pages/profile-edit";
+import { Services } from "../../../api/services";
+import { Categories } from "../../../api/categories";
+import { GetServerSideProps } from "next";
 
-export default function Posts() {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  res,
+}) => {
+  const { id } = params;
+  return {
+    props: { id },
+  };
+};
+
+export default function Posts({ id }) {
+  const [post, setPost] = useState({
+    id: "",
+    user_id: "",
+    title: "",
+    category: "",
+    description: "",
+    price: "",
+    city: "",
+    state: "",
+    country: "",
+    created_at: "",
+    updated_at: "",
+    user: {
+      id: "",
+      name: "",
+      email: "",
+      user_photo: "",
+      city: "",
+      state: "",
+      country: "",
+      phone: "",
+      occupation: "",
+      about_me: "",
+      email_verified: "",
+      created_at: "",
+      updated_at: "",
+      deleted_at: "",
+    },
+  });
+
   const [title, setTitle] = useState<string>("");
   const [categories, setCategories] = useState([]);
   const [description, setDescription] = useState<string>("");
@@ -30,14 +71,21 @@ export default function Posts() {
 
   useEffect(() => {
     (async () => {
+      const postData = await Services.getServiceByID(id);
       const allCategories = await Categories.getAllCategories();
+      setPost(postData);
+      setTitle(post.title);
+      setDescription(post.description);
+      setPrice(post.price);
+      setCity(post.city);
+      setState(post.state);
+      setCountry(post.country);
       setCategories(allCategories);
     })();
   }, []);
 
-  async function postService() {
+  async function updateService(service_id: string) {
     const token: string = localStorage.getItem("token");
-    const id = Authentication.checkUserSession("");
 
     let option_value = document.getElementById(
       "select--category"
@@ -47,8 +95,8 @@ export default function Posts() {
     let category = text;
     console.log(category);
 
-    const result = await Services.createService(
-      id,
+    const result = await Services.updateService(
+      service_id,
       title,
       category,
       description,
@@ -109,15 +157,17 @@ export default function Posts() {
           <input
             type="text"
             name="title"
-            placeholder="Web Site Development"
-            onChange={(e) => setTitle(e.target.value)}
+            defaultValue={post.title}
+            onChange={(e: { target: { value: string } }) =>
+              setTitle(e.target.value)
+            }
           />
         </div>
         <div className="category container">
           <span>Category* </span>
           <select name="category" id="select--category">
             {categories.map((c) => (
-              <option value={c.category} key={c.category}>
+              <option value={c.category} key={c.category} selected>
                 {c.category}
               </option>
             ))}
@@ -127,8 +177,11 @@ export default function Posts() {
           <span>Description* </span>
           <textarea
             name="service-description"
-            placeholder="I need a web site development for my company"
-            onChange={(e) => setDescription(e.target.value)}
+            placeholder={post.description}
+            defaultValue={post.description}
+            onChange={(e: { target: { value: string } }) =>
+              setDescription(e.target.value)
+            }
           />
         </div>
         <div className="price container">
@@ -136,8 +189,11 @@ export default function Posts() {
           <input
             type="number"
             name="service-price"
-            placeholder="R$ 500,00"
-            onChange={(e) => setPrice(e.target.value)}
+            placeholder={price}
+            defaultValue={price}
+            onChange={(e: { target: { value: string } }) =>
+              setPrice(e.target.value)
+            }
           />
         </div>
         <div className="location container">
@@ -204,8 +260,13 @@ export default function Posts() {
           <button className="discart" onClick={() => router.push("/home")}>
             Cancel
           </button>
-          <button className="save" onClick={postService}>
-            Post Service
+          <button
+            className="save"
+            onClick={() => {
+              updateService(post.id);
+            }}
+          >
+            Save
           </button>
         </div>
       </MainContainer>
