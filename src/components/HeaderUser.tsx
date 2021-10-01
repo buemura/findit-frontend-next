@@ -17,7 +17,7 @@ export function HeaderUser() {
       const id: string = Authentication.checkUserSession("");
       const data = await Users.getUserProfilePhoto(id);
 
-      if (data.hasPhoto === false || data.hasPhoto !== undefined) {        
+      if (data.hasPhoto === false || data.hasPhoto !== undefined) {
         setProfilePhoto("/icons/user-icon.png");
         return;
       }
@@ -80,7 +80,7 @@ export function HeaderUser() {
                   </div>
                 </a>
               </Link>
-              
+
               <div
                 className="profile"
                 onClick={() => {
@@ -96,15 +96,18 @@ export function HeaderUser() {
                   width: "3rem",
                   borderRadius: "100%",
                 }}
+              ></div>
+              <CSSTransition
+                in={hasSelected === true}
+                timeout={10}
+                unmountOnExit
               >
-              </div>
-              <CSSTransition in={hasSelected === true} timeout={10} unmountOnExit>
                 <div className="menu-open">
                   <ul>
                     <a href="/profile">
                       <li>My Profile</li>
                     </a>
-                    <a href="/my-posts">
+                    <a href="/posts/my-posts">
                       <li>My Services</li>
                     </a>
                     <a href="" onClick={Authentication.logOut}>

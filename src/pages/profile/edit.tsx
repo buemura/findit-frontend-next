@@ -107,7 +107,7 @@ export default function Profile() {
     router.push("/profile", null, { shallow: false });
   }
 
-  async function testUpdatePortfolio(value): Promise<void> {
+  async function uploadPortfolio(value): Promise<void> {
     const id: string = Authentication.checkUserSession("");
     const token: string = localStorage.getItem("token");
 
@@ -119,6 +119,15 @@ export default function Profile() {
     }
 
     //router.push("/profile/edit", null, { shallow: false });
+    document.location.reload();
+  }
+
+  async function deletePortfolio(image_id: string): Promise<void> {
+    const id: string = Authentication.checkUserSession("");
+    const token: string = localStorage.getItem("token");
+
+    await Portfolios.deletePortfolioImages(id, image_id, token);
+
     document.location.reload();
   }
 
@@ -337,7 +346,7 @@ export default function Profile() {
               <h2>Portfolio</h2>
               <div className="portfolio-container" id="portfolio-container">
                 {portfolios.map((portfolio) => (
-                  <div className="portfolio-map" key={portfolio._id}>
+                  <div className="portfolio-map" key={portfolio.id}>
                     <div
                       className="portfolio-image"
                       style={{
@@ -371,8 +380,7 @@ export default function Profile() {
                       <span
                         className="portfolio-remove"
                         onClick={() => {
-                          //Função para remover imagem do portfolio
-                          console.log("Remove imagem");
+                          deletePortfolio(portfolio.id);
                         }}
                       >
                         Remove
@@ -393,7 +401,7 @@ export default function Profile() {
                   id="add-portfolio-input"
                   className="portfolio-input"
                   onChange={(e) => {
-                    testUpdatePortfolio(e.target.files[0]);
+                    uploadPortfolio(e.target.files[0]);
                   }}
                 />
               </div>

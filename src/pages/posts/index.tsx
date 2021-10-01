@@ -8,21 +8,17 @@ import { Services } from "../../api/services";
 import { Categories } from "../../api/categories";
 import { GetServerSideProps } from "next";
 
-export const getServerSideProps: GetServerSideProps = async ({
-  params,
-  query,
-  res,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   if (query.Category) {
-    let { Category } = query;    
-    return {    
+    let { Category } = query;
+    return {
       props: { Category },
     };
   }
-  return {props: {Category:""}};
+  return { props: { Category: "" } };
 };
 
-export default function Posts({Category}) {
+export default function Posts({ Category }) {
   const router = useRouter();
 
   const [posts, setPosts] = useState([]);
@@ -132,7 +128,7 @@ export default function Posts({Category}) {
                     <h3>R$ {post.price}</h3>
                     <p>
                       <strong>Posted by: </strong>
-                      {post.User.name}
+                      {post.user.name}
                     </p>
                   </div>
                   <div>

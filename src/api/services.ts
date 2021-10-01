@@ -82,6 +82,42 @@ export class Services {
     }
   }
 
+  static async updateService(
+    id: string,
+    title: string,
+    category: string,
+    description: string,
+    price: string,
+    city: string,
+    state: string,
+    country: string,
+    token: string
+  ): Promise<Boolean> {
+    try {
+      await api.put(
+        `/api/services/${id}`,
+        {
+          title,
+          category,
+          description,
+          price,
+          city,
+          state,
+          country,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
   static async completeService(
     user_id: string,
     service_id: string,

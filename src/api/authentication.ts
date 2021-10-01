@@ -23,7 +23,7 @@ export class Authentication {
         password,
       });
 
-      if (data.auth) {
+      if (data.status === 200) {
         return data.token;
       }
       return;
