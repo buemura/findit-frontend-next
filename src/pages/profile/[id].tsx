@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { Users } from "../../api/users";
 import { Chats } from "../../api/chats";
 import { Portfolios } from "../../api/portfolio";
+import { IUserData } from "../../config/interfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { id } = params;

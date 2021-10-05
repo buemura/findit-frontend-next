@@ -9,6 +9,7 @@ import {
   ChatContainer,
   Title,
 } from "../../styles/pages/messages";
+import { IChatRoomsData } from "../../config/interfaces";
 
 export default function Messages() {
   const [myId, setMyId] = useState<string>("");

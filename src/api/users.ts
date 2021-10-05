@@ -1,3 +1,4 @@
+import { IUserData } from "../config/interfaces";
 import api from "./baseURL";
 
 export class Users {

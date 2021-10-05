@@ -1,4 +1,4 @@
-interface IUserData {
+export interface IUserData {
   id?: string;
   name: string;
   email: string;
@@ -15,7 +15,7 @@ interface IUserData {
   deleted_at?: string;
 }
 
-interface IServiceData {
+export interface IServiceData {
   id: string;
   user_id: string;
   title: string;
@@ -30,12 +30,12 @@ interface IServiceData {
   user: IUserData;
 }
 
-interface IUserInfo {
+export interface IUserInfo {
   id: string;
   name: string;
 }
 
-interface IChatRoomsData {
+export interface IChatRoomsData {
   id: string;
   sender_id: string;
   receiver_id: string;
@@ -44,7 +44,7 @@ interface IChatRoomsData {
   userInfo: IUserInfo;
 }
 
-interface IMessageData {
+export interface IMessageData {
   id: string;
   chat_id: string;
   sender_id: string;

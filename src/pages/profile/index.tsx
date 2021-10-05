@@ -13,6 +13,7 @@ import {
   AboutMe,
   Portfolio,
 } from "../../styles/pages/profile";
+import { IUserData } from "../../config/interfaces";
 
 export default function Profile() {
   const [myId, setMyId] = useState<string>("");

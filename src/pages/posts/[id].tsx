@@ -14,6 +14,7 @@ import { Authentication } from "../../api/authentication";
 import { Comments } from "../../api/comments";
 import { Services } from "../../api/services";
 import { url } from "inspector";
+import { IServiceData } from "../../config/interfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({
   params,

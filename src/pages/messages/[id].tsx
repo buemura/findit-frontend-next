@@ -14,6 +14,7 @@ import {
 import { FormatDate } from "../../utils/formatDate";
 import { Chats } from "../../api/chats";
 import { Users } from "../../api/users";
+import { IMessageData } from "../../config/interfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({
   params,
