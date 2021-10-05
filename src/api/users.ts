@@ -1,19 +1,8 @@
+import { IUserData } from "../config/interfaces";
 import api from "./baseURL";
 
-interface UserType {
-  name: string;
-  email: string;
-  city: string;
-  state: string;
-  country: string;
-  phone: string;
-  occupation: string;
-  about_me: string;
-  user_photo: string;
-}
-
 export class Users {
-  static async getUserByID(id: string): Promise<UserType> {
+  static async getUserByID(id: string): Promise<IUserData> {
     try {
       const { data } = await api.get(`/api/users/${id}`);
       return data;

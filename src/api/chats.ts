@@ -1,20 +1,6 @@
 import api from "./baseURL";
 import router from "next/router";
 
-interface IUserInfo {
-  id: string;
-  name: string;
-}
-
-interface IChatRooms {
-  id: string;
-  sender_id: string;
-  receiver_id: string;
-  createdAt: string;
-  updatedAt: string;
-  userInfo: IUserInfo;
-}
-
 export class Chats {
   static async getChatByID(id: string, token: string) {
     try {

@@ -13,24 +13,13 @@ import {
   AboutMe,
   Portfolio,
 } from "../../styles/pages/profile";
-
-interface UserType {
-  name: string;
-  email: string;
-  city: string;
-  state: string;
-  country: string;
-  phone: string;
-  occupation: string;
-  about_me: string;
-  user_photo: string;
-}
+import { IUserData } from "../../config/interfaces";
 
 export default function Profile() {
   const [myId, setMyId] = useState<string>("");
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [profilePhoto, setProfilePhoto] = useState<string>("");
-  const [user, setUser] = useState<UserType>({
+  const [user, setUser] = useState<IUserData>({
     name: "",
     email: "",
     city: "",

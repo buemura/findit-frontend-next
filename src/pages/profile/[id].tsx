@@ -14,18 +14,7 @@ import { useRouter } from "next/router";
 import { Users } from "../../api/users";
 import { Chats } from "../../api/chats";
 import { Portfolios } from "../../api/portfolio";
-
-interface UserType {
-  name: string;
-  email: string;
-  city: string;
-  state: string;
-  country: string;
-  phone: string;
-  occupation: string;
-  about_me: string;
-  user_photo: string;
-}
+import { IUserData } from "../../config/interfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { id } = params;
@@ -39,7 +28,7 @@ export default function UsersProfile({ id }) {
   const [myId, setMyId] = useState<string>("");
   const [hasPhoto, setHasPhoto] = useState<boolean>(false);
   const [profilePhoto, setProfilePhoto] = useState<string>("");
-  const [user, setUser] = useState<UserType>({
+  const [user, setUser] = useState<IUserData>({
     name: "",
     email: "",
     city: "",

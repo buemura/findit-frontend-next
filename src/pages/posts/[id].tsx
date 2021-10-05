@@ -14,34 +14,7 @@ import { Authentication } from "../../api/authentication";
 import { Comments } from "../../api/comments";
 import { Services } from "../../api/services";
 import { url } from "inspector";
-
-interface UserType {
-  id: string;
-  name: string;
-  email: string;
-  city: string;
-  state: string;
-  country: string;
-  phone: string;
-  occupation: string;
-  about_me: string;
-  user_photo: string;
-}
-
-interface ServiceType {
-  id: string;
-  user_id: string;
-  title: string;
-  category: string;
-  description: string;
-  price: string;
-  city: string;
-  state: string;
-  country: string;
-  created_at: string;
-  updated_at: string;
-  user?: UserType;
-}
+import { IServiceData } from "../../config/interfaces";
 
 export const getServerSideProps: GetServerSideProps = async ({
   params,
@@ -56,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 export default function PostDetails({ id }) {
   const router = useRouter();
 
-  const [post, setPost] = useState({
+  const [post, setPost] = useState<IServiceData>({
     id: "",
     user_id: "",
     title: "",
