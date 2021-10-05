@@ -10,23 +10,9 @@ import {
   Title,
 } from "../../styles/pages/messages";
 
-interface IUserInfo {
-  id: string;
-  name: string;
-}
-
-interface IChatRooms {
-  id: string;
-  sender_id: string;
-  receiver_id: string;
-  created_at: string;
-  updated_at: string;
-  userInfo: IUserInfo;
-}
-
 export default function Messages() {
   const [myId, setMyId] = useState<string>("");
-  const [chatRoom, setChatRoom] = useState<Array<IChatRooms>>([]);
+  const [chatRoom, setChatRoom] = useState<Array<IChatRoomsData>>([]);
 
   useEffect(() => {
     const id: string = Authentication.checkUserSession("");

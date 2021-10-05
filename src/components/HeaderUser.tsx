@@ -17,7 +17,10 @@ export function HeaderUser() {
       const id: string = Authentication.checkUserSession("");
       const data = await Users.getUserProfilePhoto(id);
 
-      if (data.hasPhoto === false || data.hasPhoto !== undefined) {
+      if (
+        data != null &&
+        (data.hasPhoto === false || data.hasPhoto !== undefined)
+      ) {
         setProfilePhoto("/icons/user-icon.png");
         return;
       }

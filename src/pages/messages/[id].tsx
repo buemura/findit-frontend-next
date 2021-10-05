@@ -15,15 +15,6 @@ import { FormatDate } from "../../utils/formatDate";
 import { Chats } from "../../api/chats";
 import { Users } from "../../api/users";
 
-interface IMessage {
-  id: string;
-  chat_id: string;
-  sender_id: string;
-  content: string;
-  created_at: string;
-  updated_at: string;
-}
-
 export const getServerSideProps: GetServerSideProps = async ({
   params,
   res,
@@ -43,7 +34,7 @@ export default function MessagesDetails({ id }) {
   });
   const [userID, setUserID] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
-  const [messages, setMessages] = useState<Array<IMessage>>([]);
+  const [messages, setMessages] = useState<Array<IMessageData>>([]);
   const [newMessage, setNewMessage] = useState<string>("");
 
   useEffect(() => {
