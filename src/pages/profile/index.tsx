@@ -4,6 +4,8 @@ import { Authentication } from "../../api/authentication";
 import { Users } from "../../api/users";
 import { Portfolios } from "../../api/portfolio";
 
+import { CSSTransition } from "react-transition-group";
+
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
 import {
@@ -32,6 +34,7 @@ export default function Profile() {
   });
   const [workdDone, setWorkdDone] = useState(0);
   const [portfolios, setPortfolios] = useState([]);
+  const [showMore, setShowMore] = useState(false);
 
   const hasNoPhoto = "/icons/user-icon.png";
 
@@ -140,7 +143,38 @@ export default function Profile() {
                       backgroundImage: `url(${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio.id})`,
                     }}
                   ></div>
-                  <p className="image-description">{`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio.id}`}</p>
+                  <p className="image-description"
+                    onClick={() => { setShowMore(true); console.log(showMore);}}
+                  >{
+                    "Clique para ver mais!"
+                    //`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio.id}`
+                    }
+                  </p>     
+                  
+                  <CSSTransition
+                    in={showMore === true}
+                    timeout={10}
+                    unmountOnExit
+                  >
+                    <div 
+                      className={`show-more ${portfolio.id}`}
+                    >
+                      <p 
+                        className="close-btn"
+                        onClick={() => {setShowMore(false)}}>X</p>
+                      <div
+                        className="show-portfolio-image"
+                        style={{
+                          backgroundImage: `url(${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio.id})`,
+                        }}
+                      ></div>
+                      <p className="show-image-description">
+                        {
+                          `${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio.id}`
+                        }
+                      </p>
+                    </div> 
+                  </CSSTransition>
                 </div>
               ))}
             </div>
