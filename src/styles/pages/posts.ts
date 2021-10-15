@@ -2,24 +2,49 @@ import styled from "styled-components";
 
 export const MainContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  /* flex-direction: column; */
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
   margin: 60px 0 0 0;
   padding: 0 0 60px 0;
   width: 100%;
   min-height: calc(100vh - 60px);
   overflow-x: hidden;
   background-color: #f0f0f0;
+  
+  @media (max-width: 650px) {
+    flex-direction: column;
+    padding-top: 0;
+  }
 `;
 
-export const Filters = styled.div`
+export const ContainerFilters = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  align-items: flex-end;
+  flex-direction: column;
+  width: calc(100% - 15rem);
+  margin-top: .8rem;
+  
+  @media (max-width: 650px) {
+    width: 100%;
+  }
+`
+
+export const Filters = styled.div`
+  position: fixed;
+  top: 60px;
+  left: 0;
+  background: #fff;
+  display: flex;
+  /* flex-direction: row; */
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  width: 80%;
-  margin: 20px 0;
+  height: 100%; 
+  width: 15rem;
+  margin: 0;
+  padding: 1.8rem 0.6rem;
 
   input {
     margin: 0.1rem 0;
@@ -39,41 +64,38 @@ export const Filters = styled.div`
   button {
     margin: 0.8rem 0;
     background-color: #4169e1;
-    color: #ffffff;
+    color: #fff;
+    font-weight: bold;
 
     border: none;
     border-radius: 5px;
 
     height: 30px;
-    min-width: 100px;
+    width: 100%;
 
     &:hover {
       cursor: pointer;
-      background-color: #a1d5ff;
-      color: #000000;
-    }
-  }
-
-  @media (max-width: 1020px) {
-    width: 95%;
-
-    input {
-      width: 95%;
+      background-color: #F7226A;
+      color: #fff;
+      font-weight: bold;
     }
   }
 
   @media (max-width: 650px) {
-    margin-top: calc(60px + 20px);
+    //margin-top: calc(30px);
     flex-direction: column;
-    width: 95%;
+    width: 96%;
+    margin: 0 2% 3rem 2%;
+    height: fit-content;
+    position: relative;
   }
 `;
 
 export const Feed = styled.div`
   display: flex;
   align-items: center;
-  width: 70%;
-  margin: 0.3rem 0 0 0;
+  width: 96%;
+  margin: 0.3rem 2% 0 2%;
   padding: 0.6rem 2rem;
   background-color: #ffffff;
   border-radius: 3px;
@@ -110,6 +132,14 @@ export const Feed = styled.div`
         padding: 0;
       }
 
+      .div-city {
+        width: 180%;
+      }
+
+      .div-date {
+        width: fit-content;
+      }
+
       div {
         display: flex;
         flex-direction: column;
@@ -131,8 +161,22 @@ export const Feed = styled.div`
     background: #f8f8f8;
   }
 
-  @media (max-width: 900px) {
-    width: 95%;
+  @media (max-width: 960px) {
+    .category-container {
+
+      div {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .div-city {
+          width: 100%;
+        }
+
+        .div-date {
+          width: 100%;
+        }
+      }
+    }
   }
 `;
 

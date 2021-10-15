@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { HeaderPage } from "../../components/HeaderPage";
 import { BodyStyled } from "../../styles/components/middleSection";
-import { MainContainer, Filters, Feed, Title } from "../../styles/pages/posts";
+import { MainContainer, ContainerFilters, Filters, Feed, Title } from "../../styles/pages/posts";
 import { FormatDate } from "../../utils/formatDate";
 import { Services } from "../../api/services";
 import { Categories } from "../../api/categories";
@@ -92,57 +92,59 @@ export default function Posts({ Category }) {
           />
           <button onClick={() => setFilter(true)}>Apply Filter</button>
         </Filters>
-        {posts.length != 0 ? (
-          posts.map((post) => (
-            <Feed
-              key={post.id}
-              onClick={() => router.push(`/posts/${post.id}`)}
-            >
-              {categories.map((c) =>
-                c.category === post.category ? (
-                  <div
-                    key={c.id}
-                    className="category-image"
-                    style={{
-                      backgroundImage: `url(icons/categories/${formatImageName(
-                        c.category
-                      )}.png)`,
-                      backgroundRepeat: "no-repeat",
-                      backgroundSize: "cover",
-                    }}
-                  ></div>
-                ) : (
-                  <div key={c.id}></div>
-                )
-              )}
-              <div className="category-container">
-                <h2>{post.title}</h2>
-                <div>
+        <ContainerFilters>
+          {posts.length != 0 ? (
+            posts.map((post) => (
+              <Feed
+                key={post.id}
+                onClick={() => router.push(`/posts/${post.id}`)}
+              >
+                {categories.map((c) =>
+                  c.category === post.category ? (
+                    <div
+                      key={c.id}
+                      className="category-image"
+                      style={{
+                        backgroundImage: `url(icons/categories/${formatImageName(
+                          c.category
+                        )}.png)`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
+                      }}
+                    ></div>
+                  ) : (
+                    <div key={c.id}></div>
+                  )
+                )}
+                <div className="category-container">
+                  <h2>{post.title}</h2>
                   <div>
-                    <h3>Category: {post.category}</h3>
-                    <p>
-                      {post.city}, {post.state} - {post.country}
-                    </p>
-                  </div>
-                  <div>
-                    <h3>R$ {post.price}</h3>
-                    <p>
-                      <strong>Posted by: </strong>
-                      {post.user.name}
-                    </p>
-                  </div>
-                  <div>
-                    <p>{FormatDate.calculateDate(post.created_at)}</p>
+                    <div className="div-city">
+                      <h3>Category: {post.category}</h3>
+                      <p>
+                        {post.city}, {post.state} - {post.country}
+                      </p>
+                    </div>
+                    <div>
+                      <h3>R$ {post.price}</h3>
+                      <p>
+                        <strong>Posted by: </strong>
+                        {post.user.name}
+                      </p>
+                    </div>
+                    <div className="div-date">
+                      <p>{FormatDate.calculateDate(post.created_at)}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Feed>
-          ))
-        ) : (
-          <Title>
-            <h1>No service posted yet</h1>
-          </Title>
-        )}
+              </Feed>
+            ))
+          ) : (
+            <Title>
+              <h1>No service posted yet</h1>
+            </Title>
+          )}
+        </ContainerFilters>
       </MainContainer>
     </BodyStyled>
   );
