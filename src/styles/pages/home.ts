@@ -23,6 +23,7 @@ export const CategoryList = styled.ul`
   margin: 0;
   background-color: #fff;
   overflow-x: auto;
+  user-select: none;
   ::-webkit-scrollbar {
     width: 0;
     height: 10px;
@@ -98,12 +99,14 @@ export const MainSection = styled.div`
 
   .button-information {
     width: auto;
+    user-select: none;
   }
 
   .buttons-container {
     display: flex;
     justify-content: space-around;
     padding: 45px 20px 20px 20px;
+    user-select: none;
   
     button {
       width: 250px;

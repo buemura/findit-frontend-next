@@ -26,6 +26,7 @@ export const Header = styled.div`
   margin: 0;
   width: 100%;
   position: relative;
+  user-select: none;
 
   .divLogo {
     display: flex;
@@ -244,6 +245,7 @@ export const Header = styled.div`
         transform: translate(0, 60px);
         margin: 0;
         padding: 10px 15px;
+        user-select: none;
 
         ul {
           padding: 0;
@@ -522,7 +524,7 @@ export const Header = styled.div`
         }
         
         .menu-open {      
-          transform: translate(0, 0);
+          transform: translate(0, 100%);
           height: calc(((100vh - 60px) / 5));
           right: 0;
           width: 35%;
