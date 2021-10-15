@@ -49,7 +49,7 @@ export default function Posts() {
     <BodyStyled>
       <HeaderPage />
       <MainContainer>
-        <div style={{ width: "100%", marginTop: "35px" }}>
+        <div style={{ width: "100%", marginTop: "35px" }} className="h1-page">
           <h1>My posts</h1>
         </div>
         {posts.length != 0 ? (

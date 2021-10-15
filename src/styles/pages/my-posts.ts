@@ -12,9 +12,25 @@ export const MainContainer = styled.div`
   overflow-x: hidden;
   background-color: #f0f0f0;
   
+  .h1-page {
+    margin-top: 0 !important;
+    padding: 2rem 2rem 1rem 2rem;
+    background: #FFFFFF;
+
+    h1 {
+      margin: 0;
+    }
+  }
+  
   @media (max-width: 650px) {
     flex-direction: column;
     padding-top: 0;
+    
+    .h1-page {
+      margin-top: 0 !important;
+      padding: 5rem 2rem 1rem 2rem;
+      background: #FFFFFF;
+    }
   }
 `;
 
@@ -110,6 +126,7 @@ export const Feed = styled.div`
 
   .category-container {
     margin-left: 1.3rem;
+    margin-right: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

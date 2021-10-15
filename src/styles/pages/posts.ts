@@ -106,6 +106,7 @@ export const Feed = styled.div`
     filter: gray;
     filter: grayscale(1);
     -webkit-filter: grayscale(1) opacity(0.4);
+    transition: .2s;
   }
 
   .category-container {
@@ -159,6 +160,11 @@ export const Feed = styled.div`
   &:hover {
     cursor: pointer;
     background: #f8f8f8;
+    
+    .category-image {
+      filter: grayscale(0%);
+      -webkit-filter: grayscale(0%) opacity(1) !important;
+    }
   }
 
   @media (max-width: 960px) {
