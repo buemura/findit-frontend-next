@@ -16,7 +16,7 @@ export default function Contact() {
       <ImageContainer>
         <Div>
           <div className="container-image">
-            <img src="icons/background-contact.png" alt="Background" />
+            <div style={{backgroundImage: 'url("icons/background-contact.png")'}} />
           </div>
           <div className="container">
             <form action="/" method="get" id="contact-form">

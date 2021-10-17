@@ -11,6 +11,10 @@ export const MainContainer = styled.div`
   min-height: calc(100vh - 60px);
   overflow-x: hidden;
   background-color: #fff;
+  
+  @media (max-width: 650px) {    
+    margin: 100px 0 0 0;
+  }
 `;
 
 export const MainSection = styled.div`
@@ -42,6 +46,11 @@ export const MainSection = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    
+    @media (max-width: 650px) {   
+    width: 8rem;
+    height: 8rem;
+    }
   }
 
   .photo-black-transparence {
@@ -118,13 +127,23 @@ export const MainSection = styled.div`
 
 export const PersonalInfo = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 60%;
+  width: 85%;
   border-bottom: 1px solid #aaa;
   div {
     margin: 0 10px 0 10px;
+    width: 100%;
+
+    * {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 650px) {   
+    width: 100%;
   }
 `;
 
@@ -133,7 +152,7 @@ export const AboutMe = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60%;
+  width: 85%;
   border-bottom: 1px solid #aaa;
   h2,
   p {
@@ -143,6 +162,10 @@ export const AboutMe = styled.div`
     width: 80%;
     height: 100px;
   }
+
+  @media (max-width: 650px) {   
+    width: 100%;
+  }
 `;
 
 export const Portfolio = styled.div`
@@ -150,7 +173,7 @@ export const Portfolio = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60%;
+  width: 85%;
   border-bottom: 1px solid #aaa;
   padding-bottom: 20px;
   margin-bottom: 80px;
@@ -301,5 +324,13 @@ export const Portfolio = styled.div`
         }
       }
     }  
+  }
+
+  @media (max-width: 650px) {   
+    width: 100%;
+
+    .horizontal-bar {
+      width: 90%;
+    }
   }
 `;

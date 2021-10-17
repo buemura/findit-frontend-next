@@ -175,7 +175,7 @@ export const MainSection = styled.div`
     padding: 40px 0 10px 0;
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 95%;
 
     .text-container {
       padding: .5rem;
@@ -263,6 +263,7 @@ export const MainSection = styled.div`
           padding: 0;
           border-radius: .1rem 0 0 .1rem;
           height: 3rem;
+          min-width: 3rem;
           cursor: default;
         }
 
@@ -296,6 +297,11 @@ export const MainSection = styled.div`
 
             &:hover {
               background: #3a5dc4;
+            }           
+  
+            @media (max-width: 650px) {    
+              width: 3rem;
+              font-size: .7rem;
             }
           }
 
@@ -314,6 +320,11 @@ export const MainSection = styled.div`
 
             &:hover {
               background: #cc3741;
+            }
+  
+            @media (max-width: 650px) {    
+              width: 3rem;
+              font-size: .7rem;
             }
           }
 

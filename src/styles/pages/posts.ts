@@ -21,7 +21,7 @@ export const MainContainer = styled.div`
 
 export const ContainerFilters = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   flex-direction: column;
   width: calc(100% - 15rem);
   margin-top: .8rem;
@@ -50,6 +50,8 @@ export const Filters = styled.div`
     margin: 0.1rem 0;
     padding: 0 0 0 0.8rem;
     width: 100%;
+
+    outline: none;
 
     border: 0.2px solid #b8b8b8;
     border-radius: 5px;
@@ -135,10 +137,13 @@ export const Feed = styled.div`
 
       .div-city {
         width: 180%;
+        margin-right: 30px;
       }
 
       .div-date {
         width: fit-content;
+        white-space: nowrap;
+        margin-left: 30px;
       }
 
       div {
@@ -176,6 +181,7 @@ export const Feed = styled.div`
 
         .div-city {
           width: 100%;
+          margin-right: 0;
         }
 
         .div-date {

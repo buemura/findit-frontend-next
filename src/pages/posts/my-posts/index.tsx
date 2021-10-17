@@ -75,7 +75,7 @@ export default function Posts() {
               <div className="category-container">
                 <h2>{post.title}</h2>
                 <div>
-                  <div>
+                  <div className="div-city">
                     <h3>Category: {post.category}</h3>
                     <p>
                       {post.city}, {post.state} - {post.country}
@@ -88,7 +88,7 @@ export default function Posts() {
                       {post.user.name}
                     </p>
                   </div>
-                  <div>
+                  <div className="div-date">
                     <p>{FormatDate.calculateDate(post.created_at)}</p>
                   </div>
 

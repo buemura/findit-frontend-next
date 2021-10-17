@@ -151,10 +151,13 @@ export const Feed = styled.div`
 
       .div-city {
         width: 180%;
+        margin-right: 1rem;
       }
 
       .div-date {
         width: fit-content;
+        min-width: 6rem;
+        margin-left: 1rem;
       }
 
       div {
@@ -172,16 +175,18 @@ export const Feed = styled.div`
         flex-direction: column;
         justify-content: space-around;
         position: absolute;
-        top: 0;
+        top: 50%;
+        transform: translateY(-50%);
         right: 0;
         width: 5rem;
-        height: 100%;
+        height: auto;
         padding: 1rem 1rem 1rem 0;
         margin: 0;
 
         button {
           width: 100%;
           height: fit-content;
+          margin: .3rem 0;
           /* font-size: .7rem; */
           padding: .3rem 0 .3rem 0;
           font-size: 0px;
@@ -247,10 +252,12 @@ export const Feed = styled.div`
 
         .div-city {
           width: 100%;
+          margin-right: 0;
         }
 
         .div-date {
           width: 100%;
+          margin-left: 0;
         }
       }
     }
