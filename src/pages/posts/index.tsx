@@ -21,14 +21,15 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 export default function Posts({ Category }) {
   const router = useRouter();
 
-  const [posts, setPosts] = useState([]);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState(Category);
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
   const [filter, setFilter] = useState(false);
+  const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [mySpan, setMySpan] = useState("show");
 
   useEffect(() => {
     (async () => {
@@ -39,12 +40,32 @@ export default function Posts({ Category }) {
         state,
         country
       );
+      
       const allCategories = await Categories.getAllCategories();
+      setFilter(false);
       setCategories(allCategories);
       setPosts(data);
-      setFilter(false);
+      console.log(categories);
+      console.log(posts);
     })();
   }, [filter]);
+
+  useEffect(() => {
+    console.log(categories);
+    console.log(posts);
+  }, [posts]);
+
+  function getSelectOption() {
+    let option_value = document.getElementById("select--category") as HTMLSelectElement;
+    let text: string = option_value.options[option_value.selectedIndex].text;
+    setCategory(text);
+    if (text === "") {
+      setMySpan("show");
+    } else {
+      setMySpan("not-show")
+    }
+    console.log(category);    
+  }
 
   function formatImageName(category: string): string {
     return category.replace(/ /g, "-").replace("&", "e").toLowerCase();
@@ -62,13 +83,17 @@ export default function Posts({ Category }) {
               setTitle(e.target.value);
             }}
           />
-          <input
-            type="text"
-            placeholder="Category"
-            onChange={(e) => {
-              setCategory(e.target.value);
-            }}
-          />
+          <div className="div-select">
+            <span className={mySpan}>Category</span>
+            <select name="category" id="select--category" onChange={() => { getSelectOption(); }}>
+              <option value=""></option>
+              {categories.map((c) => (
+                <option value={c.category} key={c.category}>
+                  {c.category}
+                </option>
+              ))}
+            </select>
+          </div>
           <input
             type="text"
             placeholder="City"

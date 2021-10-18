@@ -46,10 +46,11 @@ export const Filters = styled.div`
   margin: 0;
   padding: 1.8rem 0.6rem;
 
-  input {
+  input, select {
     margin: 0.1rem 0;
     padding: 0 0 0 0.8rem;
     width: 100%;
+    font-size: 13px;
 
     outline: none;
 
@@ -61,6 +62,25 @@ export const Filters = styled.div`
     &:focus {
       border: 1px solid #4169e1;
     }
+  }
+
+  .div-select {
+    position: relative;
+    width: 100%;
+  }
+
+  .show {
+    user-select: none;
+    font-size: 13px;
+    position: absolute;
+    top: 50%;
+    left: 6%;
+    transform: translateY(-50%);
+    color: #797575;
+  }
+
+  .not-show {
+    display: none;
   }
 
   button {
@@ -144,6 +164,8 @@ export const Feed = styled.div`
         width: fit-content;
         white-space: nowrap;
         margin-left: 30px;
+        min-width: 80px;
+        font-size: 13px;
       }
 
       div {
