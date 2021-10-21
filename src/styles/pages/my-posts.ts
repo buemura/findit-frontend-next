@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: flex-start;
   margin: 60px 0 0 0;
   padding: 0 0 60px 0;
@@ -11,25 +11,25 @@ export const MainContainer = styled.div`
   min-height: calc(100vh - 60px);
   overflow-x: hidden;
   background-color: #f0f0f0;
-  
+
   .h1-page {
     margin-top: 0 !important;
     padding: 2rem 2rem 1rem 2rem;
-    background: #FFFFFF;
+    background: #ffffff;
 
     h1 {
       margin: 0;
     }
   }
-  
+
   @media (max-width: 650px) {
     flex-direction: column;
     padding-top: 0;
-    
+
     .h1-page {
       margin-top: 0 !important;
       padding: 5rem 2rem 1rem 2rem;
-      background: #FFFFFF;
+      background: #ffffff;
     }
   }
 `;
@@ -39,12 +39,12 @@ export const ContainerFilters = styled.div`
   align-items: flex-end;
   flex-direction: column;
   width: calc(100% - 15rem);
-  margin-top: .8rem;
-  
+  margin-top: 0.8rem;
+
   @media (max-width: 650px) {
     width: 100%;
   }
-`
+`;
 
 export const Filters = styled.div`
   position: fixed;
@@ -56,7 +56,7 @@ export const Filters = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  height: 100%; 
+  height: 100%;
   width: 15rem;
   margin: 0;
   padding: 1.8rem 0.6rem;
@@ -90,7 +90,7 @@ export const Filters = styled.div`
 
     &:hover {
       cursor: pointer;
-      background-color: #F7226A;
+      background-color: #f7226a;
       color: #fff;
       font-weight: bold;
     }
@@ -121,7 +121,7 @@ export const Feed = styled.div`
     width: 3.5rem;
     filter: grayscale(1);
     -webkit-filter: grayscale(1) opacity(0.4);
-    transition: .3s;
+    transition: 0.3s;
   }
 
   .category-container {
@@ -186,9 +186,9 @@ export const Feed = styled.div`
         button {
           width: 100%;
           height: fit-content;
-          margin: .3rem 0;
+          margin: 0.3rem 0;
           /* font-size: .7rem; */
-          padding: .3rem 0 .3rem 0;
+          padding: 0.3rem 0 0.3rem 0;
           font-size: 0px;
           text-align: right;
           background: transparent;
@@ -199,16 +199,18 @@ export const Feed = styled.div`
           align-items: flex-end;
           justify-content: right;
           cursor: pointer;
-          transition: .3s;
+          transition: 0.3s;
 
-          .div-icon-show, .div-icon-edit, .div-icon-remove {
-            transition: .3s;
+          .div-icon-show,
+          .div-icon-edit,
+          .div-icon-remove {
+            transition: 0.3s;
             width: 1rem;
             height: 1rem;
-            margin-left: .3rem;
+            margin-left: 0.3rem;
             filter: gray;
             filter: grayscale(1);
-            -webkit-filter: grayscale(1) opacity(.4);
+            -webkit-filter: grayscale(1) opacity(0.4);
           }
         }
       }
@@ -228,15 +230,16 @@ export const Feed = styled.div`
     }
 
     .buttons {
-
       button {
-        font-size: .7rem !important;
+        font-size: 0.7rem !important;
       }
 
-      .div-icon-show, .div-icon-edit, .div-icon-remove {
+      .div-icon-show,
+      .div-icon-edit,
+      .div-icon-remove {
         width: 1rem;
         height: 1rem;
-        margin-left: .3rem;
+        margin-left: 0.3rem;
         filter: grayscale(0%);
         -webkit-filter: grayscale(0%) opacity(1) !important;
       }
@@ -245,7 +248,6 @@ export const Feed = styled.div`
 
   @media (max-width: 960px) {
     .category-container {
-
       div {
         flex-direction: column;
         align-items: flex-start;

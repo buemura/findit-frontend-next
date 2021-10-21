@@ -143,25 +143,33 @@ export default function Profile() {
                       backgroundImage: `url(${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio.id})`,
                     }}
                   ></div>
-                  <p className="image-description"
-                    onClick={() => { setShowMore(true); console.log(showMore);}}
-                  >{
-                    "Clique para ver mais!"
-                    //`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio.id}`
+                  <p
+                    className="image-description"
+                    onClick={() => {
+                      setShowMore(true);
+                      console.log(showMore);
+                    }}
+                  >
+                    {
+                      "Clique para ver mais!"
+                      //`${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio.id}`
                     }
-                  </p>     
-                  
+                  </p>
+
                   <CSSTransition
                     in={showMore === true}
                     timeout={10}
                     unmountOnExit
                   >
-                    <div 
-                      className={`show-more ${portfolio.id}`}
-                    >
-                      <p 
+                    <div className={`show-more ${portfolio.id}`}>
+                      <p
                         className="close-btn"
-                        onClick={() => {setShowMore(false)}}>X</p>
+                        onClick={() => {
+                          setShowMore(false);
+                        }}
+                      >
+                        X
+                      </p>
                       <div
                         className="show-portfolio-image"
                         style={{
@@ -171,9 +179,10 @@ export default function Profile() {
                       <p className="show-image-description">
                         {
                           `${process.env.BACKEND_API}/api/users/${myId}/portfolios-image/${portfolio.id}`
+                          // ${portfolio.photoDescription}
                         }
                       </p>
-                    </div> 
+                    </div>
                   </CSSTransition>
                 </div>
               ))}

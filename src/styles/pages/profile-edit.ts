@@ -78,22 +78,12 @@ export const MainSection = styled.div`
     max-width: 15rem;
   }
 
-
-
-
-
-
-
-
-
-
-
   .portfolio-image {
     height: 8rem;
     width: 8rem;
     border-radius: 10px;
     margin: 5px;
-    
+
     &:hover {
       cursor: pointer;
     }
@@ -161,16 +151,6 @@ export const MainSection = styled.div`
     }
   }
 
-
-
-
-
-
-
-
-
-
-
   .data-container {
     padding: 40px 0 10px 0;
     display: flex;
@@ -178,7 +158,7 @@ export const MainSection = styled.div`
     width: 95%;
 
     .text-container {
-      padding: .5rem;
+      padding: 0.5rem;
       border: 1px #d7d7d7 solid;
       border-radius: 5px;
       margin-bottom: 1rem;
@@ -187,8 +167,8 @@ export const MainSection = styled.div`
         margin-bottom: 2rem;
       }
 
-      h2 {        
-        margin: .3rem 0 1.3rem 0;
+      h2 {
+        margin: 0.3rem 0 1.3rem 0;
       }
 
       a {
@@ -220,8 +200,6 @@ export const MainSection = styled.div`
       }
     }
   }
-  
-  
 
   .portifolio {
     display: flex;
@@ -229,7 +207,7 @@ export const MainSection = styled.div`
     align-items: flex-end;
     position: relative;
     margin-bottom: 5rem;
-    padding: .5rem;
+    padding: 0.5rem;
     border: 1px #d7d7d7 solid;
     border-radius: 5px;
 
@@ -242,7 +220,7 @@ export const MainSection = styled.div`
 
     h2 {
       width: 100%;
-      margin: .3rem 0 1.3rem 0;
+      margin: 0.3rem 0 1.3rem 0;
     }
 
     .portfolio-container {
@@ -252,8 +230,7 @@ export const MainSection = styled.div`
 
       .portfolio-map {
         display: flex;
-        margin: .3rem 0 0 0;
-
+        margin: 0.3rem 0 0 0;
 
         .portfolio-image {
           background-size: cover;
@@ -261,7 +238,7 @@ export const MainSection = styled.div`
           background-position: center;
           margin: 0;
           padding: 0;
-          border-radius: .1rem 0 0 .1rem;
+          border-radius: 0.1rem 0 0 0.1rem;
           height: 3rem;
           min-width: 3rem;
           cursor: default;
@@ -279,7 +256,7 @@ export const MainSection = styled.div`
             display: flex;
             align-items: center;
             padding: 0 1.2rem 0 1.2rem;
-            background: #EEEEEE;
+            background: #eeeeee;
             outline: none;
             border: none;
           }
@@ -292,16 +269,17 @@ export const MainSection = styled.div`
             text-align: center;
             align-items: center;
             margin: 0;
-            border-radius: 0 .1rem .1rem 0;
-            background: #4169E1;
+            border-radius: 0 0.1rem 0.1rem 0;
+            background: #4169e1;
+            color: #fff;
 
             &:hover {
               background: #3a5dc4;
-            }           
-  
-            @media (max-width: 650px) {    
+            }
+
+            @media (max-width: 650px) {
               width: 3rem;
-              font-size: .7rem;
+              font-size: 0.7rem;
             }
           }
 
@@ -313,18 +291,18 @@ export const MainSection = styled.div`
             text-align: center;
             align-items: center;
             margin: 0;
-            border-radius: 0 .1rem .1rem 0;
-            background: #D43844;
+            border-radius: 0 0.1rem 0.1rem 0;
+            background: #d43844;
             color: #fff;
             cursor: pointer;
 
             &:hover {
               background: #cc3741;
             }
-  
-            @media (max-width: 650px) {    
+
+            @media (max-width: 650px) {
               width: 3rem;
-              font-size: .7rem;
+              font-size: 0.7rem;
             }
           }
 
@@ -333,29 +311,29 @@ export const MainSection = styled.div`
             margin: 0;
             padding: 0;
             border-radius: 0;
-          } 
-        } 
-      } 
+          }
+        }
+      }
     }
-    
+
     .add-portfolio {
       .add-portfolio-button {
-        margin: .3rem 0 0 0;
+        margin: 0.3rem 0 0 0;
         display: flex;
         color: #fff;
-        background: #1FB852;
+        background: #1fb852;
         width: 7rem;
         height: 3rem;
-        border-radius: .1rem;
+        border-radius: 0.1rem;
         align-items: center;
         justify-content: center;
-        cursor: pointer;      
+        cursor: pointer;
 
         &:hover {
           background: #18a045;
         }
       }
-    }        
+    }
   }
 
   @media (max-width: 950px) {
