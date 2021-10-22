@@ -10,13 +10,13 @@ export const ImageContainer = styled.div`
   min-height: calc(100vh - 60px);
   margin-top: 60px;
   padding: 0;
-  width: 70%;
+  width: 100%;
   background: #fff;
   @media (max-width: 1000px) {
-    width: 80%;
+    width: 100%;
   }
   @media (max-width: 800px) {
-    width: 90%;
+    width: 100%;
   }
   @media (max-width: 650px) {
     margin-top: 100px;
@@ -32,9 +32,13 @@ export const Div = styled.div`
   flex-direction: column;
   .container-image {
     width: 100%;
-    margin-bottom: 50px;
-    img {
+    margin-bottom: 15px;
+    div {
       width: 100%;
+      height: 5rem;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
     }
     @media (max-width: 650px) {
       margin-bottom: 15px;
@@ -125,8 +129,8 @@ export const Div = styled.div`
       .media-container {
         a {
           img {
-            width: 50px;
-            height: 50px;
+            width: 25px;
+            height: 25px;
             margin: 5px 10px;
           }
         }

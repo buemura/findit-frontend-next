@@ -11,6 +11,10 @@ export const MainContainer = styled.div`
   min-height: calc(100vh - 60px);
   overflow-x: hidden;
   background-color: #fff;
+  
+  @media (max-width: 650px) {    
+    margin: 100px 0 0 0;
+  }
 `;
 
 export const MainSection = styled.div`
@@ -42,6 +46,11 @@ export const MainSection = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    
+    @media (max-width: 650px) {   
+    width: 8rem;
+    height: 8rem;
+    }
   }
 
   .photo-black-transparence {
@@ -118,13 +127,23 @@ export const MainSection = styled.div`
 
 export const PersonalInfo = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 60%;
+  width: 85%;
   border-bottom: 1px solid #aaa;
   div {
     margin: 0 10px 0 10px;
+    width: 100%;
+
+    * {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 650px) {   
+    width: 100%;
   }
 `;
 
@@ -133,7 +152,7 @@ export const AboutMe = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60%;
+  width: 85%;
   border-bottom: 1px solid #aaa;
   h2,
   p {
@@ -143,6 +162,10 @@ export const AboutMe = styled.div`
     width: 80%;
     height: 100px;
   }
+
+  @media (max-width: 650px) {   
+    width: 100%;
+  }
 `;
 
 export const Portfolio = styled.div`
@@ -150,7 +173,7 @@ export const Portfolio = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60%;
+  width: 85%;
   border-bottom: 1px solid #aaa;
   padding-bottom: 20px;
   margin-bottom: 80px;
@@ -188,6 +211,55 @@ export const Portfolio = styled.div`
       display: flex;
       flex-direction: column;
 
+
+      .show-more {
+        z-index: 9999999999;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        border: 1px solid #c4c4c4;
+        padding: 4rem 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 70%;
+
+        .close-btn {
+          color: #fff;
+          font-weight: bold;
+          background: #ff0000;
+          position: absolute;
+          top: 0;
+          right: 0;
+          margin: .3rem;
+          padding: 0;
+          width: 2rem;
+          height: 2rem;
+          font-size: 1.6rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 2px;
+
+        }
+
+        .show-portfolio-image {
+          width: 100%;
+          height: 90%;
+          background-position: center;
+          background-size: contain;
+          background-repeat: no-repeat;
+        }
+        
+        .show-image-description {
+          align-items: center;
+          margin-bottom: 0;
+          font-size: 12px;
+        }
+      }
+
       .div-img-portifolio {
         height: 80px;
         width: 80px;
@@ -198,21 +270,22 @@ export const Portfolio = styled.div`
       .div-img-portifolio.d01 {
         background-image: url("assets/linux.jpg");
       }
+
       .div-img-portifolio.d02 {
         background-image: url("assets/unix.jpg");
       }
 
       .image-description {
         display: none;
+        width: 95%;
+        height: 95%;
+        border-radius: 10px;
+        margin: 5px;
         transition: .2s;
         position: absolute;
         text-align: center;
-        background: #232329;
-        transform: scale(.1);
-        padding: 1rem;
-        margin: 0;
+        background: rgba(35, 35, 41, .8);
         color: #fff;
-        border-radius: 5px;
       }
 
       .portfolio-image {
@@ -226,7 +299,6 @@ export const Portfolio = styled.div`
         background-position: center;
 
         &:hover {
-          transform: scale(1.05);
           cursor: pointer;
         }
       }
@@ -235,9 +307,12 @@ export const Portfolio = styled.div`
         z-index: 9999999;
         display: flex;
         animation-name: anm1;
-        animation-duration: .6s;
+        animation-duration: .3s;
         animation-iteration-count: ease-out;
-        transform: scale(1) translateY(0%);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       @keyframes anm1 {
@@ -249,5 +324,13 @@ export const Portfolio = styled.div`
         }
       }
     }  
+  }
+
+  @media (max-width: 650px) {   
+    width: 100%;
+
+    .horizontal-bar {
+      width: 90%;
+    }
   }
 `;

@@ -9,7 +9,7 @@ export function HeaderDefault() {
       <Header>
         <div className="divLogo">
           <Link href="/home" passHref>
-            <a>
+            <a className="notranslate">
               <img src="/icons/logo.png" alt="Logo" />
               Find It
             </a>

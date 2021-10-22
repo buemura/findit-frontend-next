@@ -7,11 +7,12 @@ import {
   Filters,
   Feed,
   Title,
-} from "../../../styles/pages/posts";
+} from "../../../styles/pages/my-posts";
 import { FormatDate } from "../../../utils/formatDate";
 import { Services } from "../../../api/services";
 import { Categories } from "../../../api/categories";
 import { Authentication } from "../../../api/authentication";
+import { url } from "inspector";
 
 export default function Posts() {
   const router = useRouter();
@@ -48,7 +49,7 @@ export default function Posts() {
     <BodyStyled>
       <HeaderPage />
       <MainContainer>
-        <div style={{ width: "100%", marginTop: "35px" }}>
+        <div style={{ width: "100%", marginTop: "35px" }} className="h1-page">
           <h1>My posts</h1>
         </div>
         {posts.length != 0 ? (
@@ -60,7 +61,7 @@ export default function Posts() {
                     key={c.id}
                     className="category-image"
                     style={{
-                      backgroundImage: `url(icons/categories/${formatImageName(
+                      backgroundImage: `url(/icons/categories/${formatImageName(
                         c.category
                       )}.png)`,
                       backgroundRepeat: "no-repeat",
@@ -74,7 +75,7 @@ export default function Posts() {
               <div className="category-container">
                 <h2>{post.title}</h2>
                 <div>
-                  <div>
+                  <div className="div-city">
                     <h3>Category: {post.category}</h3>
                     <p>
                       {post.city}, {post.state} - {post.country}
@@ -87,24 +88,25 @@ export default function Posts() {
                       {post.user.name}
                     </p>
                   </div>
-                  <div>
+                  <div className="div-date">
                     <p>{FormatDate.calculateDate(post.created_at)}</p>
                   </div>
-                  <button onClick={() => router.push(`/posts/${post.id}`)}>
-                    Show
-                  </button>
-                  <button
-                    onClick={() => router.push(`/posts/my-posts/${post.id}`)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => {
-                      deleteService(post.id);
-                    }}
-                  >
-                    Remove
-                  </button>
+
+                  <div className="buttons">
+                    <button onClick={() => router.push(`/posts/${post.id}`)}>
+                      Show
+                      <img className="div-icon-show" src="/icons/file.png"/>
+                    </button>
+                    <button onClick={() => router.push(`/posts/my-posts/${post.id}`)}>
+                      Edit
+                      <img className="div-icon-edit" src="/icons/pencil.png"/>
+                    </button>
+                    <button onClick={() => {deleteService(post.id);}}>
+                      Remove
+                      <img className="div-icon-remove" src="/icons/trash-bin.png"/>
+                    </button>
+                  </div>
+
                 </div>
               </div>
             </Feed>

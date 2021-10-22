@@ -31,6 +31,7 @@ export default function Profile() {
   const [about_me, setAboutMe] = useState<string>("");
   const [user_photo, setUserPhoto] = useState<string>("");
   const [portfolios, setPortfolios] = useState([]);
+  const [portfolioDescription, setPortfolioDescription] = useState("");
 
   const [selectedProfilePhoto, setSelectedProfilePhoto] = useState<File>(null);
   const [selectedPortfolioPhoto, setSelectedPortfolioPhoto] =
@@ -119,6 +120,22 @@ export default function Profile() {
     }
 
     //router.push("/profile/edit", null, { shallow: false });
+    document.location.reload();
+  }
+
+  async function updatePortfolio(image_id: string): Promise<void> {
+    const id: string = Authentication.checkUserSession("");
+    const token: string = localStorage.getItem("token");
+
+    console.log(portfolioDescription);
+
+    await Portfolios.editPortfolioDescription(
+      id,
+      image_id,
+      portfolioDescription,
+      token
+    );
+
     document.location.reload();
   }
 
@@ -358,25 +375,19 @@ export default function Profile() {
                         type="text"
                         className={`portfolio-description`}
                         id={`span-${portfolio.id}`}
-                        placeholder={portfolio.id}
+                        defaultValue={portfolio.photoDescription}
+                        onChange={(e: { target: { value: string } }) =>
+                          setPortfolioDescription(e.target.value)
+                        }
                       />
-                      <label
-                        htmlFor={`portfolio-input-${portfolio.id}`}
-                        className={`portfolio-edit label-${portfolio.id}`}
+                      <span
+                        className="portfolio-edit"
+                        onClick={() => {
+                          updatePortfolio(portfolio.id);
+                        }}
                       >
                         Edit
-                      </label>
-                      <input
-                        type="file"
-                        id={`portfolio-input-${portfolio.id}`}
-                        className={`portfolio-input input-${portfolio.id}`}
-                        onChange={(e) => {
-                          // aqui deve ser adicionado o código para atualizar ou remover e atualizar em seguida a imagem do portfólio
-                          //selectPortfolio(`portfolio-input-${portfolio._id}`, `span-${portfolio._id}`);
-                          //setSelectedPortfolioPhoto(e.target.files[0]);
-                          console.log("Edita imagem");
-                        }}
-                      />
+                      </span>
                       <span
                         className="portfolio-remove"
                         onClick={() => {

@@ -47,7 +47,7 @@ export const MainContainer = styled.div`
     textarea {
       flex: 1;
       min-height: 5rem !important;
-      padding: 0.5rem !important;
+      padding-left: 0.5rem !important;
       line-break: auto;
       border-radius: 5px;
       outline: none;
@@ -62,25 +62,40 @@ export const MainContainer = styled.div`
   }
 
   .location {
+    height: auto;
+
     div {
       flex: 1;
-      height: 100%;
+      height: auto;
       display: flex;
-
-      input,
-      select {
-        margin-right: 0.5rem;
-      }
-
-      select {
-        &:hover {
-          cursor: pointer;
+      flex-direction: column;
+      height: calc(2.3rem * 3);
+      
+      .country, .state, .city {        
+        display: flex;
+        flex-direction: row;
+        padding: 0 0 0.3rem 0;
+        
+        input,
+        select {
+          width: 80%;
+          padding-left: 0.5rem;
         }
-      }
 
-      input:last-child {
-        margin-right: 0;
-      }
+        select option * {
+          padding: 10px;
+        }
+
+        select {
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        input:last-child {
+          margin-right: 0;
+        }
+      }      
     }
   }
 
@@ -150,5 +165,9 @@ export const MainContainer = styled.div`
         }
       }
     }
+  }
+
+  @media (max-width: 650px) {    
+    margin: 110px 0 0 0;
   }
 `;

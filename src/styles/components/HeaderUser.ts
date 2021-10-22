@@ -26,6 +26,7 @@ export const Header = styled.div`
   margin: 0;
   width: 100%;
   position: relative;
+  user-select: none;
 
   .divLogo {
     display: flex;
@@ -236,14 +237,15 @@ export const Header = styled.div`
       }
 
       .menu-open {
-        width: 100%;
+        width: 130px;
         background: #7f7f7f;
-        position: absolute;
+        position: fixed;
         right: 0;
-        bottom: 0;
-        transform: translate(30px, calc(100% + 15px));
+        top: 0;
+        transform: translate(0, 60px);
         margin: 0;
-        padding: 0;
+        padding: 10px 15px;
+        user-select: none;
 
         ul {
           padding: 0;
@@ -253,14 +255,10 @@ export const Header = styled.div`
         a {
           width: 100%;
           color: #fff;
-          padding: 0.6rem 0;
+          padding: 0;
           margin: 0;
           border-radius: 0px;
           text-decoration: none;
-
-          &:hover {
-            background: #777;
-          }
         }
 
         li {
@@ -268,9 +266,15 @@ export const Header = styled.div`
           justify-content: left;
           padding-left: 20px;
           align-items: center;
+          font-size: 12px;
           width: 100%;
           height: 100%;
           list-style: none;
+          padding: 5px 6px;
+
+          &:hover {
+            background: #6f6f6f;
+          }
         }
       }  
     }
@@ -520,7 +524,7 @@ export const Header = styled.div`
         }
         
         .menu-open {      
-          transform: translate(0, 0);
+          transform: translate(0, 100%);
           height: calc(((100vh - 60px) / 5));
           right: 0;
           width: 35%;
@@ -537,6 +541,7 @@ export const Header = styled.div`
       }      
     }
   }
+  
   @media (max-width: 650px) {
     .notification {
       background: transparent !important;

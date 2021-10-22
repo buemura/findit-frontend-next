@@ -26,6 +26,27 @@ export class Portfolios {
     }
   }
 
+  static async editPortfolioDescription(
+    id: string,
+    image_id: string,
+    description: string,
+    token: string
+  ) {
+    try {
+      await api.put(
+        `/api/users/${id}/portfolios/${image_id}`,
+        { description: description },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   static async deletePortfolioImages(
     id: string,
     image_id: string,

@@ -2,9 +2,8 @@ import styled from "styled-components";
 
 export const MainContainer = styled.div`
   display: flex;
-  /* flex-direction: column; */
-  flex-direction: row;
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: flex-start;
   margin: 60px 0 0 0;
   padding: 0 0 60px 0;
@@ -12,24 +11,40 @@ export const MainContainer = styled.div`
   min-height: calc(100vh - 60px);
   overflow-x: hidden;
   background-color: #f0f0f0;
-  
+
+  .h1-page {
+    margin-top: 0 !important;
+    padding: 2rem 2rem 1rem 2rem;
+    background: #ffffff;
+
+    h1 {
+      margin: 0;
+    }
+  }
+
   @media (max-width: 650px) {
     flex-direction: column;
     padding-top: 0;
+
+    .h1-page {
+      margin-top: 0 !important;
+      padding: 5rem 2rem 1rem 2rem;
+      background: #ffffff;
+    }
   }
 `;
 
 export const ContainerFilters = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   flex-direction: column;
   width: calc(100% - 15rem);
-  margin-top: .8rem;
-  
+  margin-top: 0.8rem;
+
   @media (max-width: 650px) {
     width: 100%;
   }
-`
+`;
 
 export const Filters = styled.div`
   position: fixed;
@@ -41,18 +56,15 @@ export const Filters = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  height: 100%; 
+  height: 100%;
   width: 15rem;
   margin: 0;
   padding: 1.8rem 0.6rem;
 
-  input, select {
+  input {
     margin: 0.1rem 0;
     padding: 0 0 0 0.8rem;
     width: 100%;
-    font-size: 13px;
-
-    outline: none;
 
     border: 0.2px solid #b8b8b8;
     border-radius: 5px;
@@ -62,25 +74,6 @@ export const Filters = styled.div`
     &:focus {
       border: 1px solid #4169e1;
     }
-  }
-
-  .div-select {
-    position: relative;
-    width: 100%;
-  }
-
-  .show {
-    user-select: none;
-    font-size: 13px;
-    position: absolute;
-    top: 50%;
-    left: 6%;
-    transform: translateY(-50%);
-    color: #797575;
-  }
-
-  .not-show {
-    display: none;
   }
 
   button {
@@ -97,7 +90,7 @@ export const Filters = styled.div`
 
     &:hover {
       cursor: pointer;
-      background-color: #F7226A;
+      background-color: #f7226a;
       color: #fff;
       font-weight: bold;
     }
@@ -121,18 +114,19 @@ export const Feed = styled.div`
   padding: 0.6rem 2rem;
   background-color: #ffffff;
   border-radius: 3px;
+  position: relative;
 
   .category-image {
     height: 3.5rem;
     width: 3.5rem;
-    filter: gray;
     filter: grayscale(1);
     -webkit-filter: grayscale(1) opacity(0.4);
-    transition: .2s;
+    transition: 0.3s;
   }
 
   .category-container {
     margin-left: 1.3rem;
+    margin-right: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -157,15 +151,13 @@ export const Feed = styled.div`
 
       .div-city {
         width: 180%;
-        margin-right: 30px;
+        margin-right: 1rem;
       }
 
       .div-date {
         width: fit-content;
-        white-space: nowrap;
-        margin-left: 30px;
-        min-width: 80px;
-        font-size: 13px;
+        min-width: 6rem;
+        margin-left: 1rem;
       }
 
       div {
@@ -177,6 +169,51 @@ export const Feed = styled.div`
       h3 {
         margin: 0.3rem 0;
       }
+
+      .buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0;
+        width: 5rem;
+        height: auto;
+        padding: 1rem 1rem 1rem 0;
+        margin: 0;
+
+        button {
+          width: 100%;
+          height: fit-content;
+          margin: 0.3rem 0;
+          /* font-size: .7rem; */
+          padding: 0.3rem 0 0.3rem 0;
+          font-size: 0px;
+          text-align: right;
+          background: transparent;
+          outline: none;
+          border: none;
+          display: flex;
+          flex-direction: row;
+          align-items: flex-end;
+          justify-content: right;
+          cursor: pointer;
+          transition: 0.3s;
+
+          .div-icon-show,
+          .div-icon-edit,
+          .div-icon-remove {
+            transition: 0.3s;
+            width: 1rem;
+            height: 1rem;
+            margin-left: 0.3rem;
+            filter: gray;
+            filter: grayscale(1);
+            -webkit-filter: grayscale(1) opacity(0.4);
+          }
+        }
+      }
     }
 
     div:last-child {
@@ -185,18 +222,32 @@ export const Feed = styled.div`
   }
 
   &:hover {
-    cursor: pointer;
     background: #f8f8f8;
-    
+
     .category-image {
       filter: grayscale(0%);
       -webkit-filter: grayscale(0%) opacity(1) !important;
+    }
+
+    .buttons {
+      button {
+        font-size: 0.7rem !important;
+      }
+
+      .div-icon-show,
+      .div-icon-edit,
+      .div-icon-remove {
+        width: 1rem;
+        height: 1rem;
+        margin-left: 0.3rem;
+        filter: grayscale(0%);
+        -webkit-filter: grayscale(0%) opacity(1) !important;
+      }
     }
   }
 
   @media (max-width: 960px) {
     .category-container {
-
       div {
         flex-direction: column;
         align-items: flex-start;
@@ -208,6 +259,7 @@ export const Feed = styled.div`
 
         .div-date {
           width: 100%;
+          margin-left: 0;
         }
       }
     }

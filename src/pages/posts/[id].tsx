@@ -6,7 +6,7 @@ import {
   MainContainer,
   Post,
   PostComments,
-} from "../../styles/pages/posts";
+} from "../../styles/pages/posts-message";
 import { GetServerSideProps } from "next";
 import { FormatDate } from "../../utils/formatDate";
 import { useRouter } from "next/router";
@@ -112,7 +112,7 @@ export default function PostDetails({ id }) {
               {post.city}, {post.state} - {post.country}
             </p>
           </div>
-          <div>
+          <div className="div-price">
             <h3>R$ {post.price}</h3>
             <p>
               <strong
@@ -125,7 +125,7 @@ export default function PostDetails({ id }) {
               {post.user.name}
             </p>
           </div>
-          <div>
+          <div className="div-date">
             <p>{FormatDate.calculateDate(post.created_at)}</p>
           </div>
         </Post>
