@@ -22,6 +22,8 @@ export default function Posts() {
   const [filter, setFilter] = useState(false);
   const [categories, setCategories] = useState([]);
 
+  const [view, setView] = useState("all");
+
   useEffect(() => {
     (async () => {
       const id: string = Authentication.checkUserSession("");
@@ -45,77 +47,104 @@ export default function Posts() {
     document.location.reload();
   }
 
+  function allPosts() {
+    return (
+      posts.length != 0 ? (
+        posts.map((post) => (
+          <Feed key={post.id}>
+            {categories.map((c) =>
+              c.category === post.category ? (
+                <div
+                  key={c.id}
+                  className="category-image"
+                  style={{
+                    backgroundImage: `url(/icons/categories/${formatImageName(
+                      c.category
+                    )}.png)`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                  }}
+                ></div>
+              ) : (
+                <div key={c.id}></div>
+              )
+            )}
+            <div className="category-container">
+              <h2>{post.title}</h2>
+              <div>
+                <div className="div-city">
+                  <h3>Category: {post.category}</h3>
+                  <p>
+                    {post.city}, {post.state} - {post.country}
+                  </p>
+                </div>
+                <div>
+                  <h3>R$ {post.price}</h3>
+                  <p>
+                    <strong>Posted by: </strong>
+                    {post.user.name}
+                  </p>
+                </div>
+                <div className="div-date">
+                  <p>{FormatDate.calculateDate(post.created_at)}</p>
+                </div>
+
+                <div className="buttons">
+                  <button onClick={() => router.push(`/posts/${post.id}`)}>
+                    Show
+                    <img className="div-icon-show" src="/icons/file.png" />
+                  </button>
+                  <button onClick={() => router.push(`/posts/my-posts/${post.id}`)}>
+                    Edit
+                    <img className="div-icon-edit" src="/icons/pencil.png" />
+                  </button>
+                  <button onClick={() => { deleteService(post.id); }}>
+                    Remove
+                    <img className="div-icon-remove" src="/icons/trash-bin.png" />
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </Feed>
+        ))
+      ) : (
+        <Title>
+          <h1>No service posted yet</h1>
+        </Title>
+      )
+    )
+  }
+
+  function activePosts() {
+
+  }
+
+  function disabledPosts() {
+
+  }
+
   return (
     <BodyStyled>
       <HeaderPage />
       <MainContainer>
         <div style={{ width: "100%", marginTop: "35px" }} className="h1-page">
           <h1>My posts</h1>
+          <div className="change--view">
+            <div className={view === "all" ? "options checked" : "options"} id="opt1" onClick={() => { setView("all"); }} >All</div>
+            <div className={view === "active" ? "options checked" : "options"} id="opt2" onClick={() => { setView("active"); }} >Active</div>
+            <div className={view === "disabled" ? "options checked" : "options"} id="opt3" onClick={() => { setView("disabled"); }} >Disabled</div>
+          </div>
         </div>
-        {posts.length != 0 ? (
-          posts.map((post) => (
-            <Feed key={post.id}>
-              {categories.map((c) =>
-                c.category === post.category ? (
-                  <div
-                    key={c.id}
-                    className="category-image"
-                    style={{
-                      backgroundImage: `url(/icons/categories/${formatImageName(
-                        c.category
-                      )}.png)`,
-                      backgroundRepeat: "no-repeat",
-                      backgroundSize: "cover",
-                    }}
-                  ></div>
-                ) : (
-                  <div key={c.id}></div>
-                )
-              )}
-              <div className="category-container">
-                <h2>{post.title}</h2>
-                <div>
-                  <div className="div-city">
-                    <h3>Category: {post.category}</h3>
-                    <p>
-                      {post.city}, {post.state} - {post.country}
-                    </p>
-                  </div>
-                  <div>
-                    <h3>R$ {post.price}</h3>
-                    <p>
-                      <strong>Posted by: </strong>
-                      {post.user.name}
-                    </p>
-                  </div>
-                  <div className="div-date">
-                    <p>{FormatDate.calculateDate(post.created_at)}</p>
-                  </div>
-
-                  <div className="buttons">
-                    <button onClick={() => router.push(`/posts/${post.id}`)}>
-                      Show
-                      <img className="div-icon-show" src="/icons/file.png"/>
-                    </button>
-                    <button onClick={() => router.push(`/posts/my-posts/${post.id}`)}>
-                      Edit
-                      <img className="div-icon-edit" src="/icons/pencil.png"/>
-                    </button>
-                    <button onClick={() => {deleteService(post.id);}}>
-                      Remove
-                      <img className="div-icon-remove" src="/icons/trash-bin.png"/>
-                    </button>
-                  </div>
-
-                </div>
-              </div>
-            </Feed>
-          ))
-        ) : (
-          <Title>
-            <h1>No service posted yet</h1>
-          </Title>
-        )}
+        {
+          view === "active" ?
+            activePosts()
+            :
+            view === "disabled" ?
+              disabledPosts()
+              :
+              allPosts()
+        }
       </MainContainer>
     </BodyStyled>
   );
