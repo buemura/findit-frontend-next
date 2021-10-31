@@ -237,7 +237,7 @@ export const Header = styled.div`
       }
 
       .menu-open {
-        width: 130px;
+        width: 100px;
         background: #7f7f7f;
         position: fixed;
         right: 0;
@@ -263,7 +263,7 @@ export const Header = styled.div`
 
         li {
           display: flex;
-          justify-content: left;
+          justify-content: center;
           padding-left: 20px;
           align-items: center;
           font-size: 12px;
@@ -438,7 +438,7 @@ export const Header = styled.div`
       top: 0;
       left: 0;
       width: 100%;
-      height: calc((100vh - 60px));
+      height: calc((100vh - 58px));
       transform: translate(100%, 60px);
 
       &.active {
@@ -534,8 +534,7 @@ export const Header = styled.div`
             height: 100%;
             flex-direction: column;
             justify-content: space-around;
-            align-items: flex-start;
-            
+            align-items: flex-start;          
           }
         }
       }      

@@ -108,10 +108,13 @@ export function HeaderUser() {
                 <div className="menu-open">
                   <ul>
                     <a href="/profile">
-                      <li>My Profile</li>
+                      <li>Profile</li>
                     </a>
                     <a href="/posts/my-posts">
-                      <li>My Services</li>
+                      <li>Services</li>
+                    </a>
+                    <a href="/posts/my-favorites">
+                      <li>Favorites</li>
                     </a>
                     <a href="" onClick={Authentication.logOut}>
                       <li>Logout</li>

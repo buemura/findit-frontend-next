@@ -35,6 +35,7 @@ export default function Profile() {
   const [workdDone, setWorkdDone] = useState(0);
   const [portfolios, setPortfolios] = useState([]);
   const [showMore, setShowMore] = useState(false);
+  const [imageId, setImageId] = useState("");
 
   const hasNoPhoto = "/icons/user-icon.png";
 
@@ -147,6 +148,7 @@ export default function Profile() {
                     className="image-description"
                     onClick={() => {
                       setShowMore(true);
+                      setImageId(portfolio.id);
                       console.log(showMore);
                     }}
                   >
@@ -157,7 +159,7 @@ export default function Profile() {
                   </p>
 
                   <CSSTransition
-                    in={showMore === true}
+                    in={showMore === true && portfolio.id === imageId}
                     timeout={10}
                     unmountOnExit
                   >
@@ -166,6 +168,7 @@ export default function Profile() {
                         className="close-btn"
                         onClick={() => {
                           setShowMore(false);
+                          setImageId("");
                         }}
                       >
                         X
