@@ -11,6 +11,7 @@ import { InputText, SelectStyled } from "../../../styles/pages/profile-edit";
 import { Services } from "../../../api/services";
 import { Categories } from "../../../api/categories";
 import { GetServerSideProps } from "next";
+import { url } from "inspector";
 
 export const getServerSideProps: GetServerSideProps = async ({
   params,
@@ -66,6 +67,8 @@ export default function Posts({ id }) {
 
   const [hasSelectedCountry, setHasSelectedCountry] = useState<boolean>(false);
   const [mapIndex, setMapIndex] = useState<number>(0);
+
+  const [starValue, setStarValue] = useState(0);
 
   const router = useRouter();
 
@@ -138,6 +141,36 @@ export default function Posts({ id }) {
     setState(value);
   }
 
+  function drawStars(value) {
+    if (value === 0) {
+
+    } else if (value === .5) {
+
+    } else if (value ===   1) {
+
+    } else if (value === 1.5) {
+
+    } else if (value ===   2) {
+
+    } else if (value === 2.5) {
+
+    } else if (value ===   3) {
+
+    } else if (value === 3.5) {
+
+    } else if (value ===   4) {
+
+    } else if (value === 4.5) {
+
+    } else if (value ===   5) {
+
+    }
+  }
+
+  function avaliation(value) {
+    console.log(value);    
+  }
+
   return (
     <BodyStyled>
       {isModalVisible ? (
@@ -163,6 +196,7 @@ export default function Posts({ id }) {
             }
           />
         </div>
+
         <div className="category container">
           <span>Category* </span>
           <select name="category" id="select--category">
@@ -173,6 +207,7 @@ export default function Posts({ id }) {
             ))}
           </select>
         </div>
+
         <div className="description container">
           <span>Description* </span>
           <textarea
@@ -184,6 +219,7 @@ export default function Posts({ id }) {
             }
           />
         </div>
+
         <div className="price container">
           <span>Price* </span>
           <input
@@ -196,6 +232,7 @@ export default function Posts({ id }) {
             }
           />
         </div>
+
         <div className="location container">
           <div>
             <div className="country divisions">
@@ -256,6 +293,53 @@ export default function Posts({ id }) {
             </div>
           </div>
         </div>
+
+        <div className="conclusion container">
+
+          <div className="conclusion--status">
+            <span>Status</span>
+            <input type="checkbox" name="status" id="status" />
+          </div>       
+
+        </div>
+
+        <div className="avaliation container">
+          <span>Contractor</span>
+          <div className="select-div">
+            <select name="contractors" id="select--contractors" className="select--contractors">
+              {categories.map((c) => (
+                <option value={c.category} key={c.category} selected>
+                  {c.category}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="stars">              
+            <div className="star v05" style={starValue >=  .5 ? {filter: "grayscale(0)", WebkitFilter: "grayscale(0) opacity(1)", backgroundImage: "url('/icons/star.png')",} : {filter: "grayscale(0)", WebkitFilter: "grayscale(1) opacity(1)", backgroundImage: "url('/icons/star.png')",}} onMouseLeave={() => { setStarValue(0); }} onMouseOver={() => { setStarValue( .5); }} onClick={() => { avaliation( .5); }} ></div>
+            <div className="star v10" style={starValue >=   1 ? {filter: "grayscale(0)", WebkitFilter: "grayscale(0) opacity(1)", backgroundImage: "url('/icons/star.png')",} : {filter: "grayscale(0)", WebkitFilter: "grayscale(1) opacity(1)", backgroundImage: "url('/icons/star.png')",}} onMouseLeave={() => { setStarValue(0); }} onMouseOver={() => { setStarValue(  1); }} onClick={() => { avaliation(  1); }} ></div>                    
+            <div className="star v15" style={starValue >= 1.5 ? {filter: "grayscale(0)", WebkitFilter: "grayscale(0) opacity(1)", backgroundImage: "url('/icons/star.png')",} : {filter: "grayscale(0)", WebkitFilter: "grayscale(1) opacity(1)", backgroundImage: "url('/icons/star.png')",}} onMouseLeave={() => { setStarValue(0); }} onMouseOver={() => { setStarValue(1.5); }} onClick={() => { avaliation(1.5); }} ></div>
+            <div className="star v20" style={starValue >=   2 ? {filter: "grayscale(0)", WebkitFilter: "grayscale(0) opacity(1)", backgroundImage: "url('/icons/star.png')",} : {filter: "grayscale(0)", WebkitFilter: "grayscale(1) opacity(1)", backgroundImage: "url('/icons/star.png')",}} onMouseLeave={() => { setStarValue(0); }} onMouseOver={() => { setStarValue(  2); }} onClick={() => { avaliation(  2); }} ></div>                    
+            <div className="star v25" style={starValue >= 2.5 ? {filter: "grayscale(0)", WebkitFilter: "grayscale(0) opacity(1)", backgroundImage: "url('/icons/star.png')",} : {filter: "grayscale(0)", WebkitFilter: "grayscale(1) opacity(1)", backgroundImage: "url('/icons/star.png')",}} onMouseLeave={() => { setStarValue(0); }} onMouseOver={() => { setStarValue(2.5); }} onClick={() => { avaliation(2.5); }} ></div>
+            <div className="star v30" style={starValue >=   3 ? {filter: "grayscale(0)", WebkitFilter: "grayscale(0) opacity(1)", backgroundImage: "url('/icons/star.png')",} : {filter: "grayscale(0)", WebkitFilter: "grayscale(1) opacity(1)", backgroundImage: "url('/icons/star.png')",}} onMouseLeave={() => { setStarValue(0); }} onMouseOver={() => { setStarValue(  3); }} onClick={() => { avaliation(  3); }} ></div>                    
+            <div className="star v35" style={starValue >= 3.5 ? {filter: "grayscale(0)", WebkitFilter: "grayscale(0) opacity(1)", backgroundImage: "url('/icons/star.png')",} : {filter: "grayscale(0)", WebkitFilter: "grayscale(1) opacity(1)", backgroundImage: "url('/icons/star.png')",}} onMouseLeave={() => { setStarValue(0); }} onMouseOver={() => { setStarValue(3.5); }} onClick={() => { avaliation(3.5); }} ></div>
+            <div className="star v40" style={starValue >=   4 ? {filter: "grayscale(0)", WebkitFilter: "grayscale(0) opacity(1)", backgroundImage: "url('/icons/star.png')",} : {filter: "grayscale(0)", WebkitFilter: "grayscale(1) opacity(1)", backgroundImage: "url('/icons/star.png')",}} onMouseLeave={() => { setStarValue(0); }} onMouseOver={() => { setStarValue(  4); }} onClick={() => { avaliation(  4); }} ></div>                    
+            <div className="star v45" style={starValue >= 4.5 ? {filter: "grayscale(0)", WebkitFilter: "grayscale(0) opacity(1)", backgroundImage: "url('/icons/star.png')",} : {filter: "grayscale(0)", WebkitFilter: "grayscale(1) opacity(1)", backgroundImage: "url('/icons/star.png')",}} onMouseLeave={() => { setStarValue(0); }} onMouseOver={() => { setStarValue(4.5); }} onClick={() => { avaliation(4.5); }} ></div>
+            <div className="star v50" style={starValue >=   5 ? {filter: "grayscale(0)", WebkitFilter: "grayscale(0) opacity(1)", backgroundImage: "url('/icons/star.png')",} : {filter: "grayscale(0)", WebkitFilter: "grayscale(1) opacity(1)", backgroundImage: "url('/icons/star.png')",}} onMouseLeave={() => { setStarValue(0); }} onMouseOver={() => { setStarValue(  5); }} onClick={() => { avaliation(  5); }} ></div>                    
+          </div>
+          {/* <div className="stars">              
+            <div className="star v05" style={{backgroundImage: "url('/icons/star.png')"}} onMouseLeave={() => { drawStars(0); }} onMouseOver={() => { drawStars( .5); }} onClick={() => { avaliation( .5); }}></div>
+            <div className="star v10" style={{backgroundImage: "url('/icons/star.png')"}} onMouseLeave={() => { drawStars(0); }} onMouseOver={() => { drawStars(  1); }} onClick={() => { avaliation(  1); }}></div>                    
+            <div className="star v15" style={{backgroundImage: "url('/icons/star.png')"}} onMouseLeave={() => { drawStars(0); }} onMouseOver={() => { drawStars(1.5); }} onClick={() => { avaliation(1.5); }}></div>
+            <div className="star v20" style={{backgroundImage: "url('/icons/star.png')"}} onMouseLeave={() => { drawStars(0); }} onMouseOver={() => { drawStars(  2); }} onClick={() => { avaliation(  2); }}></div>                    
+            <div className="star v25" style={{backgroundImage: "url('/icons/star.png')"}} onMouseLeave={() => { drawStars(0); }} onMouseOver={() => { drawStars(2.5); }} onClick={() => { avaliation(2.5); }}></div>
+            <div className="star v30" style={{backgroundImage: "url('/icons/star.png')"}} onMouseLeave={() => { drawStars(0); }} onMouseOver={() => { drawStars(  3); }} onClick={() => { avaliation(  3); }}></div>                    
+            <div className="star v35" style={{backgroundImage: "url('/icons/star.png')"}} onMouseLeave={() => { drawStars(0); }} onMouseOver={() => { drawStars(3.5); }} onClick={() => { avaliation(3.5); }}></div>
+            <div className="star v40" style={{backgroundImage: "url('/icons/star.png')"}} onMouseLeave={() => { drawStars(0); }} onMouseOver={() => { drawStars(  4); }} onClick={() => { avaliation(  4); }}></div>                    
+            <div className="star v45" style={{backgroundImage: "url('/icons/star.png')"}} onMouseLeave={() => { drawStars(0); }} onMouseOver={() => { drawStars(4.5); }} onClick={() => { avaliation(4.5); }}></div>
+            <div className="star v50" style={{backgroundImage: "url('/icons/star.png')"}} onMouseLeave={() => { drawStars(0); }} onMouseOver={() => { drawStars(  5); }} onClick={() => { avaliation(  5); }}></div>                    
+          </div> */}
+        </div>     
+
         <div className="buttons  divisions">
           <button className="discart" onClick={() => router.push("/home")}>
             Cancel

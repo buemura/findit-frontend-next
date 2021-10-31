@@ -133,14 +133,14 @@ export default function Posts() {
           <div className="change--view">
             <div className={view === "all" ? "options checked" : "options"} id="opt1" onClick={() => { setView("all"); }} >All</div>
             <div className={view === "active" ? "options checked" : "options"} id="opt2" onClick={() => { setView("active"); }} >Active</div>
-            <div className={view === "disabled" ? "options checked" : "options"} id="opt3" onClick={() => { setView("disabled"); }} >Disabled</div>
+            <div className={view === "inative" ? "options checked" : "options"} id="opt3" onClick={() => { setView("inative"); }} >Inative</div>
           </div>
         </div>
         {
           view === "active" ?
             activePosts()
             :
-            view === "disabled" ?
+            view === "inative" ?
               disabledPosts()
               :
               allPosts()
