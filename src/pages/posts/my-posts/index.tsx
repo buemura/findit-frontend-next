@@ -2,38 +2,48 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { HeaderPage } from "../../../components/HeaderPage";
 import { BodyStyled } from "../../../styles/components/middleSection";
-import {
-  MainContainer,
-  Filters,
-  Feed,
-  Title,
-} from "../../../styles/pages/my-posts";
+import { MainContainer, Feed, Title } from "../../../styles/pages/my-posts";
 import { FormatDate } from "../../../utils/formatDate";
 import { Services } from "../../../api/services";
 import { Categories } from "../../../api/categories";
 import { Authentication } from "../../../api/authentication";
-import { url } from "inspector";
 
 export default function Posts() {
   const router = useRouter();
-  const [myId, setMyId] = useState<string>("");
-
   const [posts, setPosts] = useState([]);
-  const [filter, setFilter] = useState(false);
   const [categories, setCategories] = useState([]);
+
+  const [view, setView] = useState("all");
 
   useEffect(() => {
     (async () => {
       const id: string = Authentication.checkUserSession("");
-      setMyId(id);
-      const data = await Services.getServiceByUserID(id);
       const allCategories = await Categories.getAllCategories();
       setCategories(allCategories);
-      setPosts(data);
-      setFilter(false);
-      console.log(data);
+
+      let data: any;
+
+      switch (view) {
+        case "all":
+          data = await Services.getAllServicesByUserID(id);
+          setPosts(data);
+          break;
+
+        case "active":
+          data = await Services.getActiveServicesByUserID(id);
+          setPosts(data);
+          break;
+
+        case "inactive":
+          data = await Services.getInactiveServicesByUserID(id);
+          setPosts(data);
+          break;
+
+        default:
+          break;
+      }
     })();
-  }, [filter]);
+  }, [view]);
 
   function formatImageName(category: string): string {
     return category.replace(/ /g, "-").replace("&", "e").toLowerCase();
@@ -51,9 +61,38 @@ export default function Posts() {
       <MainContainer>
         <div style={{ width: "100%", marginTop: "35px" }} className="h1-page">
           <h1>My posts</h1>
+          <div className="change--view">
+            <div
+              className={view === "all" ? "options checked" : "options"}
+              id="opt1"
+              onClick={() => {
+                setView("all");
+              }}
+            >
+              All
+            </div>
+            <div
+              className={view === "active" ? "options checked" : "options"}
+              id="opt2"
+              onClick={() => {
+                setView("active");
+              }}
+            >
+              Active
+            </div>
+            <div
+              className={view === "inactive" ? "options checked" : "options"}
+              id="opt3"
+              onClick={() => {
+                setView("inactive");
+              }}
+            >
+              Inactive
+            </div>
+          </div>
         </div>
-        {posts.length != 0 ? (
-          posts.map((post) => (
+        {posts?.length != 0 ? (
+          posts?.map((post) => (
             <Feed key={post.id}>
               {categories.map((c) =>
                 c.category === post.category ? (
@@ -95,18 +134,26 @@ export default function Posts() {
                   <div className="buttons">
                     <button onClick={() => router.push(`/posts/${post.id}`)}>
                       Show
-                      <img className="div-icon-show" src="/icons/file.png"/>
+                      <img className="div-icon-show" src="/icons/file.png" />
                     </button>
-                    <button onClick={() => router.push(`/posts/my-posts/${post.id}`)}>
+                    <button
+                      onClick={() => router.push(`/posts/my-posts/${post.id}`)}
+                    >
                       Edit
-                      <img className="div-icon-edit" src="/icons/pencil.png"/>
+                      <img className="div-icon-edit" src="/icons/pencil.png" />
                     </button>
-                    <button onClick={() => {deleteService(post.id);}}>
+                    <button
+                      onClick={() => {
+                        deleteService(post.id);
+                      }}
+                    >
                       Remove
-                      <img className="div-icon-remove" src="/icons/trash-bin.png"/>
+                      <img
+                        className="div-icon-remove"
+                        src="/icons/trash-bin.png"
+                      />
                     </button>
                   </div>
-
                 </div>
               </div>
             </Feed>

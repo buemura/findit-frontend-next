@@ -99,6 +99,72 @@ export const MainContainer = styled.div`
     }
   }
 
+  .conclusion {
+    display: flex;
+
+    .conclusion--status {
+      display: flex;
+      align-items: center;
+
+      input {
+        height: 1.4rem;
+        width: 1.4rem;
+      }
+    }
+  }
+
+  .avaliation {
+    display: flex;
+
+    .select-div {
+      flex: 1;
+      height: 100%;
+      margin-right: 1rem;
+
+      select {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .stars {
+      display: flex;
+      height: 100%;
+      width: calc(0.8rem * 10);
+
+      .star {       
+          cursor: pointer;
+          height: 1.6rem;
+          width: 0.8rem;
+          background-size: cover;
+          background-repeat: no-repeat;        
+          filter: grayscale(1);
+          -webkit-filter: grayscale(1) opacity(1);
+          
+          &:hover {
+            filter: grayscale(0);
+            -webkit-filter: grayscale(0) opacity(1);
+          }
+      }
+
+      .star.v05,
+      .star.v15,
+      .star.v25,
+      .star.v35,
+      .star.v45 {
+        background-position: left;
+      }
+      
+      .star.v10,
+      .star.v20,
+      .star.v30,
+      .star.v40,
+      .star.v50 {
+        background-position: right;
+      }
+    }
+  }
+
   .buttons {
     margin: 2rem 0 5rem 0;
     width: 100%;

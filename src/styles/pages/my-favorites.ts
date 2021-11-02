@@ -28,7 +28,7 @@ export const MainContainer = styled.div`
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      width: 16rem;
+      width: 11rem;
 
       .options {
         position: relative;

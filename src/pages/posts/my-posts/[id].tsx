@@ -11,6 +11,8 @@ import { InputText, SelectStyled } from "../../../styles/pages/profile-edit";
 import { Services } from "../../../api/services";
 import { Categories } from "../../../api/categories";
 import { GetServerSideProps } from "next";
+import { Comments } from "../../../api/comments";
+import { Feedback } from "../../../api/feedback";
 
 export const getServerSideProps: GetServerSideProps = async ({
   params,
@@ -67,12 +69,21 @@ export default function Posts({ id }) {
   const [hasSelectedCountry, setHasSelectedCountry] = useState<boolean>(false);
   const [mapIndex, setMapIndex] = useState<number>(0);
 
+  const [comments, setComments] = useState([]);
+
+  const [completed, setCompleted] = useState(false);
+  const [completedBy, setCompletedBy] = useState("");
+  const [starValue, setStarValue] = useState(0);
+  const [evaluationValue, setEvaluationValue] = useState(0);
+
   const router = useRouter();
 
   useEffect(() => {
     (async () => {
       const postData = await Services.getServiceByID(id);
       const allCategories = await Categories.getAllCategories();
+      const allComments = await Comments.getAllComments(id);
+
       setPost(postData);
       setTitle(post.title);
       setDescription(post.description);
@@ -81,10 +92,12 @@ export default function Posts({ id }) {
       setState(post.state);
       setCountry(post.country);
       setCategories(allCategories);
+      setComments(allComments);
     })();
   }, []);
 
   async function updateService(service_id: string) {
+    const id: string = Authentication.checkUserSession("");
     const token: string = localStorage.getItem("token");
 
     let option_value = document.getElementById(
@@ -97,6 +110,7 @@ export default function Posts({ id }) {
 
     const result = await Services.updateService(
       service_id,
+      completed,
       title,
       category,
       description,
@@ -106,6 +120,16 @@ export default function Posts({ id }) {
       country,
       token
     );
+
+    if (completed) {
+      const comment = comments.filter(
+        (comment) => comment.user.name == completedBy
+      );
+      const user_id = comment[0]?.user.id;
+
+      await Services.completeService(user_id, service_id, token);
+      await Feedback.postFeedback(user_id, id, String(evaluationValue), token);
+    }
 
     if (result === true) {
       setIsModalPositive(true);
@@ -138,6 +162,10 @@ export default function Posts({ id }) {
     setState(value);
   }
 
+  function avaliation(value) {
+    setEvaluationValue(value);
+  }
+
   return (
     <BodyStyled>
       {isModalVisible ? (
@@ -163,6 +191,7 @@ export default function Posts({ id }) {
             }
           />
         </div>
+
         <div className="category container">
           <span>Category* </span>
           <select name="category" id="select--category">
@@ -173,6 +202,7 @@ export default function Posts({ id }) {
             ))}
           </select>
         </div>
+
         <div className="description container">
           <span>Description* </span>
           <textarea
@@ -184,6 +214,7 @@ export default function Posts({ id }) {
             }
           />
         </div>
+
         <div className="price container">
           <span>Price* </span>
           <input
@@ -196,6 +227,7 @@ export default function Posts({ id }) {
             }
           />
         </div>
+
         <div className="location container">
           <div>
             <div className="country divisions">
@@ -256,6 +288,306 @@ export default function Posts({ id }) {
             </div>
           </div>
         </div>
+
+        <div className="conclusion container">
+          <div className="conclusion--status">
+            <span>Completed ?</span>
+            <input
+              type="checkbox"
+              name="status"
+              id="status"
+              onChange={() => {
+                setCompleted(true);
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="avaliation container">
+          <span>Completed by</span>
+          <div className="select-div">
+            <select
+              name="contractors"
+              id="select--contractors"
+              className="select--contractors"
+              onChange={(event) => {
+                setCompletedBy(event.target.value);
+              }}
+            >
+              <option disabled selected value={""}>
+                {" "}
+                -- Select an Option --{" "}
+              </option>
+              {comments.map((comment) => (
+                <option value={comment.user.name} key={comment.id}>
+                  {comment.user.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="stars">
+            <div
+              className="star v00"
+              onMouseOver={() => {
+                setStarValue(0);
+              }}
+              onClick={() => {
+                avaliation(0);
+              }}
+            ></div>
+            <div
+              className="star v05"
+              style={
+                starValue >= 0.5
+                  ? {
+                      filter: "grayscale(0)",
+                      WebkitFilter: "grayscale(0) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+                  : {
+                      filter: "grayscale(1)",
+                      WebkitFilter: "grayscale(1) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+              }
+              onMouseLeave={() => {
+                setStarValue(evaluationValue);
+              }}
+              onMouseOver={() => {
+                setStarValue(0.5);
+              }}
+              onClick={() => {
+                avaliation(0.5);
+              }}
+            ></div>
+            <div
+              className="star v10"
+              style={
+                starValue >= 1
+                  ? {
+                      filter: "grayscale(0)",
+                      WebkitFilter: "grayscale(0) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+                  : {
+                      filter: "grayscale(1)",
+                      WebkitFilter: "grayscale(1) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+              }
+              onMouseLeave={() => {
+                setStarValue(evaluationValue);
+              }}
+              onMouseOver={() => {
+                setStarValue(1);
+              }}
+              onClick={() => {
+                avaliation(1);
+              }}
+            ></div>
+            <div
+              className="star v15"
+              style={
+                starValue >= 1.5
+                  ? {
+                      filter: "grayscale(0)",
+                      WebkitFilter: "grayscale(0) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+                  : {
+                      filter: "grayscale(1)",
+                      WebkitFilter: "grayscale(1) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+              }
+              onMouseLeave={() => {
+                setStarValue(evaluationValue);
+              }}
+              onMouseOver={() => {
+                setStarValue(1.5);
+              }}
+              onClick={() => {
+                avaliation(1.5);
+              }}
+            ></div>
+            <div
+              className="star v20"
+              style={
+                starValue >= 2
+                  ? {
+                      filter: "grayscale(0)",
+                      WebkitFilter: "grayscale(0) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+                  : {
+                      filter: "grayscale(1)",
+                      WebkitFilter: "grayscale(1) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+              }
+              onMouseLeave={() => {
+                setStarValue(evaluationValue);
+              }}
+              onMouseOver={() => {
+                setStarValue(2);
+              }}
+              onClick={() => {
+                avaliation(2);
+              }}
+            ></div>
+            <div
+              className="star v25"
+              style={
+                starValue >= 2.5
+                  ? {
+                      filter: "grayscale(0)",
+                      WebkitFilter: "grayscale(0) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+                  : {
+                      filter: "grayscale(1)",
+                      WebkitFilter: "grayscale(1) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+              }
+              onMouseLeave={() => {
+                setStarValue(evaluationValue);
+              }}
+              onMouseOver={() => {
+                setStarValue(2.5);
+              }}
+              onClick={() => {
+                avaliation(2.5);
+              }}
+            ></div>
+            <div
+              className="star v30"
+              style={
+                starValue >= 3
+                  ? {
+                      filter: "grayscale(0)",
+                      WebkitFilter: "grayscale(0) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+                  : {
+                      filter: "grayscale(1)",
+                      WebkitFilter: "grayscale(1) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+              }
+              onMouseLeave={() => {
+                setStarValue(evaluationValue);
+              }}
+              onMouseOver={() => {
+                setStarValue(3);
+              }}
+              onClick={() => {
+                avaliation(3);
+              }}
+            ></div>
+            <div
+              className="star v35"
+              style={
+                starValue >= 3.5
+                  ? {
+                      filter: "grayscale(0)",
+                      WebkitFilter: "grayscale(0) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+                  : {
+                      filter: "grayscale(1)",
+                      WebkitFilter: "grayscale(1) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+              }
+              onMouseLeave={() => {
+                setStarValue(evaluationValue);
+              }}
+              onMouseOver={() => {
+                setStarValue(3.5);
+              }}
+              onClick={() => {
+                avaliation(3.5);
+              }}
+            ></div>
+            <div
+              className="star v40"
+              style={
+                starValue >= 4
+                  ? {
+                      filter: "grayscale(0)",
+                      WebkitFilter: "grayscale(0) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+                  : {
+                      filter: "grayscale(1)",
+                      WebkitFilter: "grayscale(1) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+              }
+              onMouseLeave={() => {
+                setStarValue(evaluationValue);
+              }}
+              onMouseOver={() => {
+                setStarValue(4);
+              }}
+              onClick={() => {
+                avaliation(4);
+              }}
+            ></div>
+            <div
+              className="star v45"
+              style={
+                starValue >= 4.5
+                  ? {
+                      filter: "grayscale(0)",
+                      WebkitFilter: "grayscale(0) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+                  : {
+                      filter: "grayscale(1)",
+                      WebkitFilter: "grayscale(1) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+              }
+              onMouseLeave={() => {
+                setStarValue(evaluationValue);
+              }}
+              onMouseOver={() => {
+                setStarValue(4.5);
+              }}
+              onClick={() => {
+                avaliation(4.5);
+              }}
+            ></div>
+            <div
+              className="star v50"
+              style={
+                starValue >= 5
+                  ? {
+                      filter: "grayscale(0)",
+                      WebkitFilter: "grayscale(0) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+                  : {
+                      filter: "grayscale(1)",
+                      WebkitFilter: "grayscale(1) opacity(1)",
+                      backgroundImage: "url('/icons/star.png')",
+                    }
+              }
+              onMouseLeave={() => {
+                setStarValue(evaluationValue);
+              }}
+              onMouseOver={() => {
+                setStarValue(5);
+              }}
+              onClick={() => {
+                avaliation(5);
+              }}
+            ></div>
+          </div>
+        </div>
+
         <div className="buttons  divisions">
           <button className="discart" onClick={() => router.push("/home")}>
             Cancel

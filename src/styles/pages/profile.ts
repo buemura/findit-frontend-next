@@ -184,7 +184,7 @@ export const Portfolio = styled.div`
   }
   
   .horizontal-bar {
-    width: 100%;
+    max-width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
