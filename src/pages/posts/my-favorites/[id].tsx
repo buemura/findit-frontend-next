@@ -95,8 +95,10 @@ export default function Posts({ id }) {
     let category = text;
     console.log(category);
 
+    const completed = false;
     const result = await Services.updateService(
       service_id,
+      completed,
       title,
       category,
       description,
