@@ -28,7 +28,7 @@ export default function Posts() {
     (async () => {
       const id: string = Authentication.checkUserSession("");
       setMyId(id);
-      const data = await Services.getServiceByUserID(id);
+      const data = await Services.getAllServicesByUserID(id);
       const allCategories = await Categories.getAllCategories();
       setCategories(allCategories);
       setPosts(data);
@@ -48,77 +48,78 @@ export default function Posts() {
   }
 
   function showPosts() {
-    return (
-      posts.length != 0 ? (
-        posts.map((post) => (
-          <Feed key={post.id}>
-            {categories.map((c) =>
-              c.category === post.category ? (
-                <div
-                  key={c.id}
-                  className="category-image"
-                  style={{
-                    backgroundImage: `url(/icons/categories/${formatImageName(
-                      c.category
-                    )}.png)`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                  }}
-                ></div>
-              ) : (
-                <div key={c.id}></div>
-              )
-            )}
-            <div className="category-container">
-              <h2>{post.title}</h2>
+    return posts.length != 0 ? (
+      posts.map((post) => (
+        <Feed key={post.id}>
+          {categories.map((c) =>
+            c.category === post.category ? (
+              <div
+                key={c.id}
+                className="category-image"
+                style={{
+                  backgroundImage: `url(/icons/categories/${formatImageName(
+                    c.category
+                  )}.png)`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                }}
+              ></div>
+            ) : (
+              <div key={c.id}></div>
+            )
+          )}
+          <div className="category-container">
+            <h2>{post.title}</h2>
+            <div>
+              <div className="div-city">
+                <h3>Category: {post.category}</h3>
+                <p>
+                  {post.city}, {post.state} - {post.country}
+                </p>
+              </div>
               <div>
-                <div className="div-city">
-                  <h3>Category: {post.category}</h3>
-                  <p>
-                    {post.city}, {post.state} - {post.country}
-                  </p>
-                </div>
-                <div>
-                  <h3>R$ {post.price}</h3>
-                  <p>
-                    <strong>Posted by: </strong>
-                    {post.user.name}
-                  </p>
-                </div>
-                <div className="div-date">
-                  <p>{FormatDate.calculateDate(post.created_at)}</p>
-                </div>
+                <h3>R$ {post.price}</h3>
+                <p>
+                  <strong>Posted by: </strong>
+                  {post.user.name}
+                </p>
+              </div>
+              <div className="div-date">
+                <p>{FormatDate.calculateDate(post.created_at)}</p>
+              </div>
 
-                <div className="buttons">
-                  <button onClick={() => router.push(`/posts/${post.id}`)}>
-                    Show
-                    <img className="div-icon-show" src="/icons/file.png" />
-                  </button>
-                  <button onClick={() => router.push(`/posts/my-posts/${post.id}`)}>
-                    Edit
-                    <img className="div-icon-edit" src="/icons/pencil.png" />
-                  </button>
-                  <button onClick={() => { deleteService(post.id); }}>
-                    Remove
-                    <img className="div-icon-remove" src="/icons/trash-bin.png" />
-                  </button>
-                </div>
-
+              <div className="buttons">
+                <button onClick={() => router.push(`/posts/${post.id}`)}>
+                  Show
+                  <img className="div-icon-show" src="/icons/file.png" />
+                </button>
+                <button
+                  onClick={() => router.push(`/posts/my-posts/${post.id}`)}
+                >
+                  Edit
+                  <img className="div-icon-edit" src="/icons/pencil.png" />
+                </button>
+                <button
+                  onClick={() => {
+                    deleteService(post.id);
+                  }}
+                >
+                  Remove
+                  <img className="div-icon-remove" src="/icons/trash-bin.png" />
+                </button>
               </div>
             </div>
-          </Feed>
-        ))
-      ) : (
-        <Title>
-          <h1>No service posted yet</h1>
-        </Title>
-      )
-    )
+          </div>
+        </Feed>
+      ))
+    ) : (
+      <Title>
+        <h1>No service posted yet</h1>
+      </Title>
+    );
   }
 
-  function showUsers() {
-
-  }
+  function showUsers() {}
 
   return (
     <BodyStyled>
@@ -127,16 +128,27 @@ export default function Posts() {
         <div style={{ width: "100%", marginTop: "35px" }} className="h1-page">
           <h1>My Favorites</h1>
           <div className="change--view">
-            <div className={view === "posts" ? "options checked" : "options"} id="opt1" onClick={() => { setView("posts"); }} >Posts</div>
-            <div className={view === "users" ? "options checked" : "options"} id="opt2" onClick={() => { setView("users"); }} >Users</div>
+            <div
+              className={view === "posts" ? "options checked" : "options"}
+              id="opt1"
+              onClick={() => {
+                setView("posts");
+              }}
+            >
+              Posts
+            </div>
+            <div
+              className={view === "users" ? "options checked" : "options"}
+              id="opt2"
+              onClick={() => {
+                setView("users");
+              }}
+            >
+              Users
+            </div>
           </div>
         </div>
-        {
-          view === "posts" ?
-            showPosts()
-            :
-            showUsers()
-        }
+        {view === "posts" ? showPosts() : showUsers()}
       </MainContainer>
     </BodyStyled>
   );

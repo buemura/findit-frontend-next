@@ -27,9 +27,27 @@ export class Services {
     }
   }
 
-  static async getServiceByUserID(id: string) {
+  static async getAllServicesByUserID(id: string) {
     try {
-      const { data } = await api.get(`/api/services/user/${id}`);
+      const { data } = await api.get(`/api/services/user/${id}/all`);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async getActiveServicesByUserID(id: string) {
+    try {
+      const { data } = await api.get(`/api/services/user/${id}/active`);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async getInactiveServicesByUserID(id: string) {
+    try {
+      const { data } = await api.get(`/api/services/user/${id}/inactive`);
       return data;
     } catch (error) {
       console.log(error);
@@ -84,6 +102,7 @@ export class Services {
 
   static async updateService(
     id: string,
+    completed: boolean,
     title: string,
     category: string,
     description: string,
@@ -97,6 +116,7 @@ export class Services {
       await api.put(
         `/api/services/${id}`,
         {
+          completed,
           title,
           category,
           description,
