@@ -107,6 +107,7 @@ export default function Profile() {
               </Link>
             </div>
           </div>
+          
           <PersonalInfo>
             <div>
               <p>

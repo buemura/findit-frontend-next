@@ -15,6 +15,7 @@ import { Users } from "../../api/users";
 import { Chats } from "../../api/chats";
 import { Portfolios } from "../../api/portfolio";
 import { IUserData } from "../../config/interfaces";
+import { CSSTransition } from "react-transition-group";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { id } = params;
@@ -41,6 +42,8 @@ export default function UsersProfile({ id }) {
   });
   const [workdDone, setWorkdDone] = useState(0);
   const [portfolios, setPortfolios] = useState([]);
+  const [showMore, setShowMore] = useState(false);
+  const [imageId, setImageId] = useState("");
 
   const hasNoPhoto = "/icons/user-icon.png";
 
@@ -102,6 +105,7 @@ export default function UsersProfile({ id }) {
               <button onClick={sendMessage}>Send message</button>
             </div>
           </div>
+
           <PersonalInfo>
             <div>
               <p>
@@ -130,18 +134,80 @@ export default function UsersProfile({ id }) {
 
           <Portfolio>
             <h2>Portfolio</h2>
-            <div>
+            <div className="horizontal-bar">
               {portfolios.map((portfolio) => (
-                <img
-                  className="portfolio-image"
-                  src={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio.id}`}
-                  alt={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio.id}`}
-                />
+                <div key={portfolio.id} className="portfolio-container">
+                  <div
+                    className="portfolio-image"
+                    style={{
+                      backgroundImage: `url("${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio.id}")`,
+                    }}
+                  ></div>
+                  <p
+                    className="image-description"
+                    onClick={() => {
+                      setShowMore(true);
+                      setImageId(portfolio.id);
+                      console.log(showMore);
+                    }}
+                  >
+                    {
+                      "Clique para ver mais!"
+                    }
+                  </p>
+
+                  <CSSTransition
+                    in={showMore === true && portfolio.id === imageId}
+                    timeout={10}
+                    unmountOnExit
+                  >
+                    <div className={`show-more ${portfolio.id}`}>
+                      <p
+                        className="close-btn"
+                        onClick={() => {
+                          setShowMore(false);
+                          setImageId("");
+                        }}
+                      >
+                        X
+                      </p>
+                      <div
+                        className="show-portfolio-image"
+                        style={{
+                          backgroundImage: `url("${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio.id}")`,
+                        }}
+                      ></div>
+                      <p className="show-image-description">
+                        {
+                          `${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio.id}`
+                          // ${portfolio.photoDescription}
+                        }
+                      </p>
+                    </div>
+                  </CSSTransition>
+                </div>
               ))}
             </div>
           </Portfolio>
+
         </MainSection>
       </MainContainer>
     </BodyStyled>
   );
 }
+
+
+/*
+<Portfolio>
+  <h2>Portfolio</h2>
+  <div>
+    {portfolios.map((portfolio) => (
+      <img
+        className="portfolio-image"
+        src={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio.id}`}
+        alt={`${process.env.BACKEND_API}/api/users/${id}/portfolios-image/${portfolio.id}`}
+      />
+    ))}
+  </div>
+</Portfolio>
+*/
