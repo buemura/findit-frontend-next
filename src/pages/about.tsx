@@ -13,13 +13,8 @@ export default function About() {
         <Div>
           <h1 className="title">Find It</h1>
           <p className="presentation">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum
+            Esta aplicação é uma Plataforma para Anúncio de Serviços na qual simplifica a busca e publicação de serviços autônomos. Conta também com um gerenciador de serviços para garantir maior controle sobre os trabalhos executados e requeridos, sistema de conversa para comunicação entre solicitante e prestador de serviço, compatibilidade com todos os equipamentos que possuam acesso à internet, permitindo que qualquer pessoa com cadastro possa realizar publicações na página independente da categoria do serviço, possibilitando visibilidade à prestadores de serviços autônomos.
+
           </p>
           <p className="social-media-message">Get to know our social pages.</p>
           <div className="images-container">

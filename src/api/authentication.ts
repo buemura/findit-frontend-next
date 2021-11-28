@@ -39,8 +39,8 @@ export class Authentication {
       await api.post("/api/auth/logout", {
         token,
       });
-      localStorage.removeItem("token");
       router.push("/home");
+      localStorage.removeItem("token");
     } catch (err) {
       alert("Failed to Sign Out!");
     }
